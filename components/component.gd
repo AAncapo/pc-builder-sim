@@ -1,3 +1,3 @@
-class_name Component extends Spatial
+class_name Component extends Item
 
-var nametag:String = self.name
+var nametag: String = self.name

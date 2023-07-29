@@ -1,0 +1,140 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://gui/package_list.gd" type="Script" id=1]
+[ext_resource path="res://interactables/receiver.gd" type="Script" id=2]
+[ext_resource path="res://gui/object_preview_vport.gd" type="Script" id=3]
+
+[sub_resource type="BoxShape" id=16]
+extents = Vector3( 1.03572, 0.861465, 1.49759 )
+
+[sub_resource type="PlaneMesh" id=17]
+
+[sub_resource type="Animation" id=1]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("items:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "rotate_item"
+length = 3.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("items:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 360, 0 ) ]
+}
+
+[node name="receiver" type="StaticBody"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource( 2 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, -3.55271e-15, 0, 1, 0, 2.84217e-14, 0, 0.999999, 4.01399e-08, 0.734124, -0.750844 )
+shape = SubResource( 16 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 1.11683, 0, -5.88454e-08, 0, 1, 0, 6.48171e-08, 0, 0.856515, -0.040065, 0.02, -0.834648 )
+cast_shadow = 0
+mesh = SubResource( 17 )
+
+[node name="packages" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 2.84217e-14, 0, 1, 0, 0, -0.960956 )
+
+[node name="received_pckgs" type="Control" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 300, 0 )
+script = ExtResource( 1 )
+
+[node name="Control" type="Control" parent="received_pckgs"]
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
+rect_min_size = Vector2( 300, 0 )
+
+[node name="bg" type="ColorRect" parent="received_pckgs/Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.145098, 0.145098, 0.145098, 1 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="received_pckgs/Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 5.0
+margin_top = 5.0
+margin_right = -5.0
+margin_bottom = -5.0
+
+[node name="packages_list" type="TabContainer" parent="received_pckgs/Control/VBoxContainer"]
+unique_name_in_owner = true
+margin_right = 290.0
+margin_bottom = 546.0
+size_flags_vertical = 3
+
+[node name="exit" type="Button" parent="received_pckgs/Control/VBoxContainer"]
+margin_left = 105.0
+margin_top = 550.0
+margin_right = 185.0
+margin_bottom = 570.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 80, 20 )
+size_flags_horizontal = 4
+text = "exit"
+
+[node name="object_preview_3D" type="ViewportContainer" parent="received_pckgs"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -400.0
+margin_top = -200.0
+margin_right = -20.0
+margin_bottom = 200.0
+script = ExtResource( 3 )
+
+[node name="Viewport" type="Viewport" parent="received_pckgs/object_preview_3D"]
+size = Vector2( 400, 400 )
+transparent_bg = true
+handle_input_locally = false
+render_target_update_mode = 0
+
+[node name="Camera" type="Camera" parent="received_pckgs/object_preview_3D/Viewport"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 1.51154 )
+cull_mask = 1047557
+fov = 40.0
+far = 50.0
+
+[node name="items" type="Position3D" parent="received_pckgs/object_preview_3D/Viewport/Camera"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.87104e-08, 0, -1.42904 )
+
+[node name="MeshInstance" type="MeshInstance" parent="received_pckgs/object_preview_3D/Viewport/Camera/items"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="received_pckgs/object_preview_3D/Viewport/Camera"]
+autoplay = "rotate_item"
+anims/RESET = SubResource( 1 )
+anims/rotate_item = SubResource( 2 )
+
+[connection signal="tab_changed" from="received_pckgs/Control/VBoxContainer/packages_list" to="received_pckgs" method="_on_packages_list_tab_changed"]
+[connection signal="pressed" from="received_pckgs/Control/VBoxContainer/exit" to="received_pckgs" method="_on_exit_pressed"]

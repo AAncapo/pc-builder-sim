@@ -1,27 +1,44 @@
 extends Control
 
-onready var item_list_temp = preload("res://gui/item_list.tscn")
-onready var item_button_temp = preload("res://gui/item-button.tscn")
-var packages: Array
-#var cur_display_pckg: Package
+var pckg_items_temp = preload("res://gui/pckg_items.tscn")
+var button_temp = preload("res://gui/item_button.tscn")
+
+onready var obj_preview_vp = $"object_preview_3D"
+var packages = []
+var current_pckg: ItemsPackage
 
 
-func add_package(new_pckg):
+func add_package(new_pckg:ItemsPackage):
 	packages.append(new_pckg)
 	create_item_list(new_pckg)
+	if !current_pckg:
+		current_pckg = new_pckg
 
 
-func create_item_list(_pckg:Package):
-	var new_item_list = item_list_temp.instance()
-	$"%packages_tabs".add_child(new_item_list)
+func create_item_list(_pckg:ItemsPackage):
+	## add new package tab ##
+	var new_item_list = pckg_items_temp.instance()
+	$"%packages_list".add_child(new_item_list)
 	new_item_list.name = _pckg.sender
 	
-	var iButton_container = new_item_list.get_child(0)
-	
-	for i in _pckg.get_items():
-		var iButton = item_button_temp.instance()
-		iButton.item = i
-		iButton_container.add_child(iButton)
+	## instance buttons x items in pckg ##
+	var pckg_items = _pckg.get_items()
+	for item in pckg_items:
+		var ibutton: Button = button_temp.instance()
+		ibutton.item = item
+		new_item_list.add_child(ibutton)
+		
+		ibutton.connect("_pressed", self, "__on_ibutton_pressed")
+
+
+func __on_ibutton_pressed(b_item:Item):
+	var item_mesh = b_item.get_child(0).mesh.duplicate()
+	obj_preview_vp.display_item(item_mesh)
+
+
+func _on_packages_list_tab_changed(tab):
+	current_pckg = packages[tab]
+#	obj_preview_vp.update_items_to_display(current_pckg.get_items())
 
 
 func _on_exit_pressed():

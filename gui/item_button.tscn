@@ -2,8 +2,11 @@
 
 [ext_resource path="res://gui/item-button.gd" type="Script" id=1]
 
-[node name="item-button" type="Button"]
+[node name="item_button" type="Button"]
 margin_right = 290.0
 margin_bottom = 20.0
+rect_min_size = Vector2( 200, 30 )
 text = "item-1"
 script = ExtResource( 1 )
+
+[connection signal="pressed" from="." to="." method="_on_itembutton_pressed"]

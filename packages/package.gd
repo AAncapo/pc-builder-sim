@@ -1,9 +1,8 @@
-class_name Package extends MeshInstance
+class_name ItemsPackage extends MeshInstance
 
 export (Array, PackedScene) var custom_items = []
 export var sender := 'Personal'
-
-onready var items_holder = $items
+onready var pckg_items = $items
 
 
 func _ready():
@@ -14,8 +13,8 @@ func _ready():
 func create_new_package(_items: Array):
 	for i in _items:
 		var new_item = i.instance()
-		items_holder.add_child(new_item)
+		pckg_items.add_child(new_item)
 
 
-func get_items():
-	return items_holder.get_children()
+func get_items() -> Array:
+	return pckg_items.get_children()

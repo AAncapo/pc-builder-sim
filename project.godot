@@ -9,7 +9,7 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Spatial",
+"base": "Item",
 "class": "Component",
 "language": "GDScript",
 "path": "res://components/component.gd"
@@ -24,8 +24,13 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://player/inventory.gd"
 }, {
+"base": "Spatial",
+"class": "Item",
+"language": "GDScript",
+"path": "res://item/item.gd"
+}, {
 "base": "MeshInstance",
-"class": "Package",
+"class": "ItemsPackage",
 "language": "GDScript",
 "path": "res://packages/package.gd"
 }, {
@@ -43,7 +48,8 @@ _global_script_class_icons={
 "Component": "",
 "Interactable": "",
 "Inventory": "",
-"Package": "",
+"Item": "",
+"ItemsPackage": "",
 "Player": "",
 "Receiver": ""
 }

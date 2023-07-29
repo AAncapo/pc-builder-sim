@@ -12,7 +12,7 @@ albedo_color = Color( 0.145098, 0.145098, 0.145098, 1 )
 
 [sub_resource type="QuadMesh" id=16]
 
-[node name="players_pc" type="StaticBody" groups=["interactable"]]
+[node name="players_pc" type="StaticBody"]
 collision_layer = 4
 collision_mask = 0
 script = ExtResource( 1 )
