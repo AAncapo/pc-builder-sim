@@ -1,3 +1,3 @@
-class_name Component extends KinematicBody
+class_name Component extends Spatial
 
-var nametag:String = 'basic component'
+var nametag:String = self.name

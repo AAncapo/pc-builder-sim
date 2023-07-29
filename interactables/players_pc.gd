@@ -12,4 +12,4 @@ func exit():
 
 
 func _on_close_pressed():
-	exit()
+	Events.emit_signal("interaction_exited")

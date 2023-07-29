@@ -1,14 +1,21 @@
 class_name Package extends MeshInstance
 
-onready var item_template = preload("res://components/component.tscn")
-onready var items = $items
+export (Array, PackedScene) var custom_items = []
+export var sender := 'Personal'
+
+onready var items_holder = $items
+
 
 func _ready():
-	fill_package_w_random_items()
+	if !custom_items.empty():
+		create_new_package(custom_items)
 
 
-func fill_package_w_random_items():
-	var amount = randi()%5
-	for i in range(amount):
-		var new_item = item_template.instance()
-		items.add_child(new_item)
+func create_new_package(_items: Array):
+	for i in _items:
+		var new_item = i.instance()
+		items_holder.add_child(new_item)
+
+
+func get_items():
+	return items_holder.get_children()

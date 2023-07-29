@@ -10,16 +10,17 @@ var inventory
 
 
 func _ready():
+	toggle_mouse_mode()
 	if !inventory:
 		inventory = Inventory.new()
 	
-	Events.connect("exit_int", self, "exit_interaction")
+	Events.connect("interaction_exited", self, "_on_exit_interaction")
 
 
 func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("interact"):
 		if interact_obj:
-			exit_interaction()
+			_on_exit_interaction()
 		else:
 			if ray.is_colliding() && ray.get_collider() is Interactable:
 				interact_obj = ray.get_collider()
@@ -34,6 +35,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		cam.rotate_x(deg2rad(-event.relative.y * mouse_sensitivity))
 	
 	if event.is_action_pressed("ui_cancel"):
+		if interact_obj:
+			_on_exit_interaction()
+			return
 		toggle_mouse_mode()
 
 
@@ -42,7 +46,7 @@ func toggle_mouse_mode():
 	Input.set_mouse_mode(mouse_mode)
 
 
-func exit_interaction():
+func _on_exit_interaction():
 	interact_obj.exit()
 	interact_obj = null
 	toggle_mouse_mode()

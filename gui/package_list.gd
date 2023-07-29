@@ -1,19 +1,28 @@
 extends Control
 
-onready var item_button = load("res://gui/item-button.tscn")
-var package: Package
+onready var item_list_temp = preload("res://gui/item_list.tscn")
+onready var item_button_temp = preload("res://gui/item-button.tscn")
+var packages: Array
+#var cur_display_pckg: Package
 
 
-func create_item_list():
-	for b in $"%buttons".get_children():
-		b.queue_free()
+func add_package(new_pckg):
+	packages.append(new_pckg)
+	create_item_list(new_pckg)
+
+
+func create_item_list(_pckg:Package):
+	var new_item_list = item_list_temp.instance()
+	$"%packages_tabs".add_child(new_item_list)
+	new_item_list.name = _pckg.sender
 	
-	for i in package.items.get_children():
-		var button = item_button.instance()
-		button.item = i
-		$"%buttons".add_child(button)
+	var iButton_container = new_item_list.get_child(0)
 	
+	for i in _pckg.get_items():
+		var iButton = item_button_temp.instance()
+		iButton.item = i
+		iButton_container.add_child(iButton)
 
 
 func _on_exit_pressed():
-	Events.emit_signal("exit_int")
+	Events.emit_signal("interaction_exited")
