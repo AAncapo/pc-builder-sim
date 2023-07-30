@@ -9,4 +9,5 @@ rect_min_size = Vector2( 200, 30 )
 text = "item-1"
 script = ExtResource( 1 )
 
+[connection signal="mouse_entered" from="." to="." method="_on_item_button_mouse_entered"]
 [connection signal="pressed" from="." to="." method="_on_itembutton_pressed"]
