@@ -7,13 +7,14 @@ extends Control
 	# press bp_button in pj_list emit(build_project_selected) -> buildbench
 	# buildbench. set current_bp as the opened project and calls self.update_build_details()
 
-
 signal build_project_selected(bp)
 signal create_new_project(pj_name)
+signal uninstalled_component(component_key)
 
 onready var buildDetails := $build_details
 onready var buildSelector := $build_selector
 var bp_button_temp = preload("res://gui/bp_button.tscn")
+var rc_detail_temp = preload("res://gui/bp_rc_detail.tscn")
 
 
 func _ready():
@@ -33,7 +34,7 @@ func open_project(bp):
 	emit_signal("build_project_selected",bp)
 
 
-func update_build_details(bp:BuildProject):
+func update_bp_details(bp:BuildProject):
 	var required_list := $"%required"
 	for r in required_list.get_children():
 		r.queue_free()
@@ -41,11 +42,17 @@ func update_build_details(bp:BuildProject):
 	$"%pj_name".text = str(bp.project_name)
 	
 	for key in bp.r_components:
-		var cbox:= CheckBox.new()
-		cbox.text = str(key)
+		var rc_detail = rc_detail_temp.instance()
+		var _pressed = bp.r_components[key]['completed']
+		var _max = bp.r_components[key]['max']
+		var _added = bp.r_components[key]['added']
+		rc_detail.component_key_linked = key
+		rc_detail.update_values(str(key), _pressed, _added, _max)
 		
-		cbox.pressed = bp.r_components[key]['completed']
-		required_list.add_child(cbox)
+		required_list.add_child(rc_detail)
+		
+		if rc_detail.is_connected("uninstall", self,"_on_rc_uninstall_pressed"): return
+		rc_detail.connect("uninstall", self, "_on_rc_uninstall_pressed")
 
 
 func display_panel(gui_node):
@@ -63,6 +70,10 @@ func _on_new_project_pressed():
 
 func _on_ConfirmationDialog_confirmed():
 	emit_signal("create_new_project",$"%LineEdit".text)
+
+func _on_rc_uninstall_pressed(component_key):
+	emit_signal("uninstalled_component", component_key)
+
 
 func _on_back_pressed():
 	display_panel(buildSelector)

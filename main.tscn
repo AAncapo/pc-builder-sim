@@ -2,7 +2,7 @@
 
 [ext_resource path="res://player/player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://interactables/receiver.tscn" type="PackedScene" id=2]
-[ext_resource path="res://interactables/players_pc.tscn" type="PackedScene" id=3]
+[ext_resource path="res://interactables/laptop.tscn" type="PackedScene" id=3]
 [ext_resource path="res://packages/starter_pckg.tscn" type="PackedScene" id=4]
 [ext_resource path="res://main.gd" type="Script" id=5]
 [ext_resource path="res://interactables/buildbench.tscn" type="PackedScene" id=7]
@@ -34,7 +34,6 @@ albedo_color = Color( 0.643137, 0.643137, 0.643137, 1 )
 
 [node name="main" type="Spatial"]
 script = ExtResource( 5 )
-starter_pckg = ExtResource( 4 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 0.930238, 0.257673, -0.261269, 0, 0.711989, 0.70219, 0.366956, -0.653204, 0.66232, 0, 0, 0 )
@@ -87,11 +86,12 @@ transform = Transform( 0.105727, 0, 0, 0, 0.448526, 0, 0, 0, 0.600278, 1.26417, 
 mesh = SubResource( 10 )
 material/0 = SubResource( 9 )
 
-[node name="players_pc" parent="." instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.985209, -4.18074 )
+[node name="laptop" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.966506, -4.19837 )
 
 [node name="receiver" parent="." instance=ExtResource( 2 )]
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4.84346, 0, 0 )
+starter_pckg = ExtResource( 4 )
 
 [node name="Camera" parent="receiver/pckgs_gui/object_preview_3D/Viewport" index="0"]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 5.74458 )

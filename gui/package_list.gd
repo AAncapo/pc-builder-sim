@@ -15,7 +15,7 @@ func add_package(new_pckg:ItemsPackage):
 	new_item_list.name = new_pckg.sender
 	
 	## instance buttons x items in pckg ##
-	var pckg_items = new_pckg.pckg_items.get_children()
+	var pckg_items = new_pckg.pckg_items
 	for item in pckg_items:
 		var button: iButton = button_temp.instance()
 		button.item_linked = item

@@ -13,5 +13,6 @@ func generate_id(max_id_length: int = 8):
 
 func change_parent_to(_node:Node, new_parent: Node):
 	var prev_parent := _node.get_parent()
-	prev_parent.remove_child(_node)
+	if prev_parent:
+		prev_parent.remove_child(_node)
 	new_parent.add_child(_node)

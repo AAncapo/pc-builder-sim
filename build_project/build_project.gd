@@ -18,11 +18,6 @@ var r_components: Dictionary = {
 }
 
 
-func customize_required_max(new_ram_max=1, new_hdd_max=1):
-	r_components.get('ram')['max'] = new_ram_max
-	r_components.get('hdd')['max'] = new_hdd_max
-
-
 func add_component(new_component:Component) -> bool:
 	var cc = new_component.item_class
 	if !r_components.has(cc):
@@ -56,7 +51,7 @@ func add_component(new_component:Component) -> bool:
 		print("ERROR!: This build already has the max ",cc," components")
 		return false
 	
-	##TODO: ACTUALLY ADD COMPONENTS ##
+	## ACTUALLY ADD COMPONENTS ##
 	if cc=='case':
 		Utils.change_parent_to(new_component, build)
 	else:
@@ -69,4 +64,18 @@ func add_component(new_component:Component) -> bool:
 	#TODO: make in-game notification
 	Events.emit_signal("removed_item_from_inv",new_component)
 	print(cc,' installed successfully!')
+	return true
+
+
+## TODO! IMPLEMENT UNINSTALL CONPONENTS AND ADD BACK IN INVENTORY ##
+func remove_component(component_key: String) -> bool:
+	var ckey = component_key
+	if r_components.get(ckey)['added'] <= 0:
+		return false
+	
+	
+	r_components.get(ckey)['added'] -= 1
+	if r_components.get(ckey)['added'] < r_components.get(ckey)['required']:
+		r_components.get(ckey)['completed'] = false
+	
 	return true
