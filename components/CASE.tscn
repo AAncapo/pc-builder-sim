@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://components/component.tscn" type="PackedScene" id=1]
+
+[node name="CASE" instance=ExtResource( 1 )]
+item_class = "case"
+parent_class = 7
+
+[node name="s-motherboard" type="Position3D" parent="slots" index="0"]
+
+[node name="s-psu" type="Position3D" parent="slots" index="1"]
+
+[node name="s-hdd" type="Position3D" parent="slots" index="2"]
+
+[node name="hdd1" type="Position3D" parent="slots/s-hdd" index="0"]

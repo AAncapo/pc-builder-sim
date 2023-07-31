@@ -1,17 +1,21 @@
 class_name iButton extends Button
 
 signal _pressed(button)
-signal _hover(item)
+signal hover(item)
+signal stop_hover
 
 var item_linked: Item
 
+
 func _ready():
-	text = item_linked.nametag
+	text = item_linked.item_class
 
 
-func _on_itembutton_pressed():
+func _on_item_button_pressed():
 	emit_signal("_pressed",self)
 
-
 func _on_item_button_mouse_entered():
-	emit_signal("_hover", item_linked)
+	emit_signal("hover", item_linked)
+
+func _on_item_button_mouse_exited():
+	emit_signal("stop_hover")

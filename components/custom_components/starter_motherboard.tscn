@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://components/models/model_starter_motherboard.tscn" type="PackedScene" id=1]
+[ext_resource path="res://components/MOTHERBOARD.tscn" type="PackedScene" id=2]
+
+[node name="starter_motherboard" instance=ExtResource( 2 )]
+
+[node name="ram1" parent="slots/s-ram" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0408366, 0.0889881, 0.261283 )
+
+[node name="ram2" parent="slots/s-ram" index="1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0408366, 0.0889881, 0.293327 )
+
+[node name="s-cpu" parent="slots" index="1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0112975, 0.0778194, 0.0993996 )
+
+[node name="s-cpu_fan" parent="slots" index="2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0506233, 0.0774589, 0.0974482 )
+
+[node name="motherboard" parent="visual" index="0" instance=ExtResource( 1 )]

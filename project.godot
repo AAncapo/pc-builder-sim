@@ -9,6 +9,16 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Interactable",
+"class": "BuildBench",
+"language": "GDScript",
+"path": "res://interactables/buildbench.gd"
+}, {
+"base": "Node",
+"class": "BuildProject",
+"language": "GDScript",
+"path": "res://build_project/build_project.gd"
+}, {
 "base": "Item",
 "class": "Component",
 "language": "GDScript",
@@ -19,7 +29,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://interactables/interactable.gd"
 }, {
-"base": "Control",
+"base": "Resource",
 "class": "Inventory",
 "language": "GDScript",
 "path": "res://player/inventory.gd"
@@ -50,6 +60,8 @@ _global_script_classes=[ {
 "path": "res://gui/item-button.gd"
 } ]
 _global_script_class_icons={
+"BuildBench": "",
+"BuildProject": "",
 "Component": "",
 "Interactable": "",
 "Inventory": "",
@@ -68,7 +80,13 @@ config/icon="res://icon.png"
 
 [autoload]
 
-Events="*res://Events.gd"
+Events="*res://Globals/Events.gd"
+Utils="*res://Globals/Utils.gd"
+
+[display]
+
+window/size/test_width=800
+window/size/test_height=600
 
 [gui]
 
@@ -106,7 +124,7 @@ inventory={
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":69,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
-exit_interaction={
+rotate_item={
 "deadzone": 0.5,
 "events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":2,"pressed":false,"doubleclick":false,"script":null)
  ]

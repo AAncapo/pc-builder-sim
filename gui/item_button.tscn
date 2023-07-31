@@ -10,4 +10,5 @@ text = "item-1"
 script = ExtResource( 1 )
 
 [connection signal="mouse_entered" from="." to="." method="_on_item_button_mouse_entered"]
-[connection signal="pressed" from="." to="." method="_on_itembutton_pressed"]
+[connection signal="mouse_exited" from="." to="." method="_on_item_button_mouse_exited"]
+[connection signal="pressed" from="." to="." method="_on_item_button_pressed"]

@@ -2,20 +2,22 @@ class_name Player extends KinematicBody
 
 onready var cam = $CamBase
 onready var ray: RayCast = $CamBase/Camera/RayCast
-onready var inventory: Inventory = $Inventory
+onready var inventory_gui := $inventory_gui
 
 var mouse_sensitivity = 0.07
 
 var interact_obj: Interactable
+var camera_locked := false
 
 
 func _ready():
 	toggle_or_set_mouse_mode()
+	inventory_gui.hide()
 	Events.connect("interaction_exited", self, "_on_exit_interaction")
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion:
+	if event is InputEventMouseMotion && !camera_locked:
 		rotate_y(deg2rad(-event.relative.x * mouse_sensitivity))
 		cam.rotation_degrees.x = clamp(cam.rotation_degrees.x,-90,90)
 		cam.rotate_x(deg2rad(-event.relative.y * mouse_sensitivity))
@@ -25,14 +27,12 @@ func _unhandled_input(event: InputEvent) -> void:
 			return
 		if ray.is_colliding() && ray.get_collider() is Interactable:
 			interact_obj = ray.get_collider()
-			interact_obj.interact()
+			enter_interaction(interact_obj)
 			toggle_or_set_mouse_mode()
-	if Input.is_action_just_pressed("exit_interaction"):
-		_on_exit_interaction()
 	
-	if event.is_action_pressed('inventory'):
-		inventory.visible = !inventory.visible
-		toggle_or_set_mouse_mode(0 if inventory.visible else 2)
+	if event.is_action_pressed('inventory') && !interact_obj:
+		inventory_gui.visible = !inventory_gui.visible
+		toggle_or_set_mouse_mode(0 if inventory_gui.visible else 2)
 	
 	if event.is_action_pressed("ui_cancel"):
 		if interact_obj:
@@ -51,7 +51,15 @@ func toggle_or_set_mouse_mode(mouse_mode:int = -1):
 	Input.set_mouse_mode(mouse_mode)
 
 
+func enter_interaction(obj:Interactable):
+	$"%cursor".hide()
+	camera_locked = true
+	obj.interact()
+
+
 func _on_exit_interaction():
+	$"%cursor".show()
 	interact_obj.exit()
 	interact_obj = null
+	camera_locked = false
 	toggle_or_set_mouse_mode()
