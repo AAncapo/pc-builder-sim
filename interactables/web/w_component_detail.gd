@@ -1,4 +1,4 @@
-class_name wwwComponentDetails extends Control
+class_name wComponentDetails extends Control
 
 signal _pressed(_offer)
 

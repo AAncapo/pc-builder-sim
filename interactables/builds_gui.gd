@@ -24,7 +24,7 @@ func _ready():
 func add_project(project):
 	var button = bp_button_temp.instance()
 	button.bp_linked = project
-	$"%pj_list".add_child(button)
+	$"%bpj_list".add_child(button)
 	
 	button.connect("_pressed",self, "open_project")
 

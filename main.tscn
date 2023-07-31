@@ -66,25 +66,25 @@ mesh = SubResource( 11 )
 skeleton = NodePath("../..")
 material/0 = SubResource( 12 )
 
-[node name="buildbench" parent="." instance=ExtResource( 7 )]
+[node name="table" type="Spatial" parent="room"]
+transform = Transform( 0.136895, 0, 0, 0, 0.666667, 0, 0, 0, 0.2, 0, -0.12282, -0.887016 )
 
-[node name="table" type="Spatial" parent="."]
-transform = Transform( 0.684475, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.27134, -4.43508 )
-
-[node name="MeshInstance" type="MeshInstance" parent="table"]
+[node name="MeshInstance" type="MeshInstance" parent="room/table"]
 transform = Transform( 1.40211, 0, 0, 0, 0.0718723, 0, 0, 0, 0.657221, 0, -0.414657, 0 )
 mesh = SubResource( 8 )
 material/0 = SubResource( 9 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="table"]
+[node name="MeshInstance2" type="MeshInstance" parent="room/table"]
 transform = Transform( 0.105727, 0, 0, 0, 0.448526, 0, 0, 0, 0.600278, -1.28478, -0.904023, 0 )
 mesh = SubResource( 10 )
 material/0 = SubResource( 9 )
 
-[node name="MeshInstance3" type="MeshInstance" parent="table"]
+[node name="MeshInstance3" type="MeshInstance" parent="room/table"]
 transform = Transform( 0.105727, 0, 0, 0, 0.448526, 0, 0, 0, 0.600278, 1.26417, -0.904023, 0 )
 mesh = SubResource( 10 )
 material/0 = SubResource( 9 )
+
+[node name="buildbench" parent="." instance=ExtResource( 7 )]
 
 [node name="laptop" parent="." instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.966506, -4.19837 )
@@ -92,9 +92,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.966506, -4.19837 )
 [node name="receiver" parent="." instance=ExtResource( 2 )]
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4.84346, 0, 0 )
 starter_pckg = ExtResource( 4 )
-
-[node name="Camera" parent="receiver/pckgs_gui/object_preview_3D/Viewport" index="0"]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 5.74458 )
 
 [node name="gui" type="Control" parent="."]
 visible = false
@@ -151,4 +148,3 @@ margin_bottom = 87.0
 text = "continue"
 
 [editable path="player"]
-[editable path="receiver"]

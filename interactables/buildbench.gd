@@ -2,20 +2,20 @@ class_name BuildBench extends Interactable
 
 onready var bp_pos := $"%bp_pos"
 onready var builds_gui := $"%builds"
-var build_proj_template = preload("res://build_project/build_project.tscn")
+var bp_template = preload("res://build_project/build_project.tscn")
 var is_active := false
 var dragging := false
 var current_bp: BuildProject
 
 
-func _process(delta):
+func _process(_delta):
 	$buildbench_gui.visible = is_active
 	if is_active:
 		dragging = Input.is_action_pressed("rotate_item")
 
 
 func _unhandled_input(event):
-	if event is InputEventMouseMotion && dragging:
+	if event is InputEventMouseMotion && dragging && current_bp:
 		current_bp.rotate_y(deg2rad(event.relative.x * 0.8))
 		current_bp.rotation_degrees.y = wrapf(current_bp.rotation_degrees.y, 0.0, 360.0)
 
@@ -27,7 +27,7 @@ func exit():
 
 
 func _on_builds_create_new_project(pj_name):
-	var new_project:BuildProject = build_proj_template.instance()
+	var new_project:BuildProject = bp_template.instance()
 	new_project.id = Utils.generate_id()
 	new_project.project_name = str(pj_name)
 	builds_gui.add_project(new_project)

@@ -1,9 +1,0 @@
-[gd_scene format=2]
-
-[node name="pckg_items" type="VBoxContainer"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0

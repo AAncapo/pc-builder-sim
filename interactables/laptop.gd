@@ -13,8 +13,3 @@ func interact():
 
 func exit():
 	$www.hide()
-
-
-func _on_close_pressed():
-	$www.buy_items()
-	Events.emit_signal("interaction_exited")
