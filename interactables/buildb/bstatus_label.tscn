@@ -1,8 +1,8 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://gui/gui_rc_detail.gd" type="Script" id=1]
+[ext_resource path="res://interactables/buildb/bstatus_label.gd" type="Script" id=1]
 
-[node name="r_status_label" type="HBoxContainer"]
+[node name="bstatus_label" type="HBoxContainer"]
 anchor_right = 0.256
 anchor_bottom = 0.05
 margin_right = -22.144

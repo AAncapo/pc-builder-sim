@@ -52,7 +52,7 @@ func add_component(new_component:Component) -> bool:
 	
 	## ACTUALLY ADD COMPONENTS ##
 	if cc=='case':
-		Utils.change_parent_to(new_component, bBase)
+		Utils.change_parent(new_component, bBase)
 	else:
 		var components = bBase.get_children()
 		for c in components:
@@ -77,4 +77,12 @@ func remove_component(component_key: String) -> bool:
 	if rc.get(ckey)['added'] < rc.get(ckey)['required']:
 		rc.get(ckey)['completed'] = false
 	
+	return true
+
+
+func is_completed():
+	for k in rc.keys():
+		if !rc[k]['completed']:
+			return false
+	print(category,' completed')
 	return true

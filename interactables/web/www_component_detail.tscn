@@ -37,11 +37,9 @@ valign = 1
 
 [node name="link" type="Button" parent="HBoxContainer"]
 margin_left = 130.0
-margin_top = 15.0
 margin_right = 630.0
-margin_bottom = 35.0
+margin_bottom = 50.0
 rect_min_size = Vector2( 500, 0 )
-size_flags_vertical = 4
 text = "Ram Kingston DDR3 1333"
 flat = true
 

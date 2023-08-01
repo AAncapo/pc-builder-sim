@@ -13,16 +13,17 @@ enum ItemClass {
 export (ItemClass) var item_class setget ,get_item_class
 export (ItemClass) var parent_class setget ,get_parent_class
 export (String) var name_tag
-var hdd_slots := 0
-var ram_slots := 0
+var hdd_slots := 0 setget ,get_hdd_slots
+var ram_slots := 0 setget ,get_ram_slots
 
 
 func _ready():
-	match item_class:
-		ItemClass.CASE:
-			hdd_slots = $slots.get_node("s-hdd").get_child_count()
-		ItemClass.MOTHERBOARD:
-			ram_slots = $slots.get_node("s-ram").get_child_count()
+#	match item_class:
+#		ItemClass.CASE:
+#			hdd_slots = $slots.get_node("s-hdd").get_child_count()
+#		ItemClass.MOTHERBOARD:
+#			ram_slots = $slots.get_node("s-ram").get_child_count()
+	pass
 
 
 func install_component(component:Component):
@@ -42,12 +43,19 @@ func install_component(component:Component):
 						# if subslot is free
 						if ss.get_child_count() == 0:
 							## install component in sub_slot
-							Utils.change_parent_to(component,ss)
+							Utils.change_parent(component,ss)
 							return true
 				else:
 					## install component in unique slot #3
-					Utils.change_parent_to(component,s)
+					Utils.change_parent(component,s)
 					return true
+
+
+func get_hdd_slots():
+	return $slots.get_node("s-hdd").get_child_count() if item_class==ItemClass.CASE else 0
+
+func get_ram_slots():
+	return $slots.get_node("s-ram").get_child_count() if item_class==ItemClass.MOTHERBOARD else 0
 
 
 func get_item_class():

@@ -32,7 +32,6 @@ func buy_items():
 	var items = []
 	for o in item_chart:
 		items.append(o.item_linked)
-	print(items)
 	send_package(items)
 
 

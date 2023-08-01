@@ -5,7 +5,7 @@
 [ext_resource path="res://interactables/laptop.tscn" type="PackedScene" id=3]
 [ext_resource path="res://packages/starter_pckg.tscn" type="PackedScene" id=4]
 [ext_resource path="res://main.gd" type="Script" id=5]
-[ext_resource path="res://interactables/buildbench.tscn" type="PackedScene" id=7]
+[ext_resource path="res://interactables/buildb/buildbench.tscn" type="PackedScene" id=7]
 
 [sub_resource type="CubeMesh" id=1]
 flip_faces = true
@@ -42,7 +42,10 @@ shadow_enabled = true
 shadow_color = Color( 0.74902, 0.74902, 0.74902, 1 )
 
 [node name="player" parent="." instance=ExtResource( 1 )]
-transform = Transform( 0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 0, 0, 0 )
+transform = Transform( 0.0579996, 0, 0.998317, 0, 1, 0, -0.998317, 0, 0.0579996, 0, 0, 0 )
+
+[node name="Camera" parent="player/CamBase" index="0"]
+fov = 70.0
 
 [node name="room" type="MeshInstance" parent="."]
 transform = Transform( 5, 0, 0, 0, 1.5, 0, 0, 0, 5, 0, 1.45557, 0 )
@@ -67,7 +70,7 @@ skeleton = NodePath("../..")
 material/0 = SubResource( 12 )
 
 [node name="table" type="Spatial" parent="room"]
-transform = Transform( 0.136895, 0, 0, 0, 0.666667, 0, 0, 0, 0.2, 0, -0.12282, -0.887016 )
+transform = Transform( 0.0971586, 0, 0.140895, 0, 0.666667, 0, -0.0964389, 0, 0.141946, -0.591713, -0.12282, -0.664883 )
 
 [node name="MeshInstance" type="MeshInstance" parent="room/table"]
 transform = Transform( 1.40211, 0, 0, 0, 0.0718723, 0, 0, 0, 0.657221, 0, -0.414657, 0 )
@@ -85,9 +88,10 @@ mesh = SubResource( 10 )
 material/0 = SubResource( 9 )
 
 [node name="buildbench" parent="." instance=ExtResource( 7 )]
+transform = Transform( -0.957993, 0, 0.286792, 0, 1, 0, -0.286792, 0, -0.957993, -2.14792, 1.27134, 3.51128 )
 
 [node name="laptop" parent="." instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.966506, -4.19837 )
+transform = Transform( 0.760032, 0, 0.649886, 0, 1, 0, -0.649886, 0, 0.760032, -2.85869, 0.966506, -3.21468 )
 
 [node name="receiver" parent="." instance=ExtResource( 2 )]
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4.84346, 0, 0 )

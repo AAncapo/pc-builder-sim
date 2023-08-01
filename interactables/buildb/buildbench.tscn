@@ -1,9 +1,9 @@
 [gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://interactables/buildbench.gd" type="Script" id=1]
-[ext_resource path="res://interactables/components_list.gd" type="Script" id=2]
+[ext_resource path="res://interactables/buildb/buildbench.gd" type="Script" id=1]
+[ext_resource path="res://interactables/buildb/components_list.gd" type="Script" id=2]
 [ext_resource path="res://gui/filter_button.tscn" type="PackedScene" id=3]
-[ext_resource path="res://interactables/builds_gui.gd" type="Script" id=4]
+[ext_resource path="res://interactables/buildb/builds_gui.gd" type="Script" id=4]
 
 [sub_resource type="BoxShape" id=13]
 
@@ -255,9 +255,25 @@ margin_bottom = -36.0
 align = 1
 placeholder_text = "New Build Project"
 
+[node name="send_button" type="Button" parent="buildbench_gui"]
+unique_name_in_owner = true
+visible = false
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -6.0
+margin_top = -20.0
+margin_right = 6.0
+grow_horizontal = 2
+grow_vertical = 0
+rect_min_size = Vector2( 200, 40 )
+text = "SEND"
+
 [connection signal="build_project_selected" from="buildbench_gui/builds" to="." method="_on_build_project_selected"]
 [connection signal="create_new_project" from="buildbench_gui/builds" to="." method="_on_create_new_project"]
 [connection signal="uninstalled_component" from="buildbench_gui/builds" to="." method="_on_uninstalled_component"]
 [connection signal="pressed" from="buildbench_gui/builds/VBoxContainer/ProjectList/VBoxContainer/new_project" to="buildbench_gui/builds" method="_on_new_project_pressed"]
 [connection signal="install_component" from="buildbench_gui/components_gui" to="." method="_on_components_gui_install_component"]
 [connection signal="confirmed" from="buildbench_gui/ConfirmationDialog" to="buildbench_gui/builds" method="_on_ConfirmationDialog_confirmed"]
+[connection signal="pressed" from="buildbench_gui/send_button" to="." method="_on_send_button_pressed"]
