@@ -18,4 +18,4 @@ func set_values(rb:BuildRequest, a:wClient, desc:String, pfp=null):
 
 
 func _on_link_pressed():
-	emit_signal("_pressed",self)
+	emit_signal("_pressed",brequest)

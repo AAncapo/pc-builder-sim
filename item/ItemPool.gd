@@ -1,6 +1,7 @@
 class_name ItemPool extends Resource
 
-var items_folder_path := "res://components/custom_components/"
+##TODO: PLACEHOLDER ##
+var items_folder_path := "res://item/components/custom_components/"
 var all_items = []
 
 func _init():

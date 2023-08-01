@@ -5,7 +5,7 @@ onready var builds_gui := $"%builds"
 var bp_template = preload("res://build_project/build_project.tscn")
 var is_active := false
 var dragging := false
-var current_bp: BuildProject
+var current_bp: Build
 
 
 func _process(_delta):
@@ -26,15 +26,6 @@ func exit():
 	is_active = false
 
 
-func _on_builds_create_new_project(pj_name):
-	var new_project:BuildProject = bp_template.instance()
-	new_project.id = Utils.generate_id()
-	new_project.project_name = str(pj_name)
-	builds_gui.add_project(new_project)
-	
-	bp_pos.add_child(new_project)
-
-
 func _on_components_gui_install_component(component):
 	if current_bp:
 		#check if current_bp can add component
@@ -42,13 +33,26 @@ func _on_components_gui_install_component(component):
 			builds_gui.update_bp_details(current_bp)
 
 
-func _on_builds_build_project_selected(bp):
+func _on_create_new_project(pj_name, br):
+	var new_project: Build = bp_template.instance()
+	new_project.id_ = Utils.generate_id()
+	new_project.name_ = str(pj_name)
+	
+	new_project.category = 'personal'
+	if br:
+		new_project.category = 'requested'
+	
+	$buildbench_gui/builds.add_project(new_project)
+	bp_pos.add_child(new_project)
+
+
+func _on_build_project_selected(bp):
 	current_bp = bp
 	for bp in bp_pos.get_children():
 		bp.visible = bp == current_bp
 	builds_gui.update_bp_details(current_bp)
 
 
-func _on_builds_uninstalled_component(component_key):
+func _on_uninstalled_component(component_key):
 	if current_bp.remove_component(component_key):
 		builds_gui.update_bp_details(current_bp)

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://components/component.tscn" type="PackedScene" id=1]
+[ext_resource path="res://item/components/component.tscn" type="PackedScene" id=1]
 
 [node name="HDD" instance=ExtResource( 1 )]
 item_class = 5

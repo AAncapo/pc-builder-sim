@@ -28,7 +28,7 @@ func add_new_component(item):
 
 func _on_bp_item_installed(item:Item):
 	for button in components.get_children():
-		if button.item_linked.item_id == item.item_id:
+		if button.item_linked.id_ == item.id_:
 			button.queue_free()
 
 

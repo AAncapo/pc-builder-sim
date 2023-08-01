@@ -1,12 +1,12 @@
 extends Node
 
 
-func generate_id(max_id_length: int = 8):
+func generate_id(_length: int = 8):
 	randomize()
 	var chars = "abcdefghijklmnopqrstuvwxyz0123456789"
-	max_id_length = max(4,chars.length())
+	var id_length = min(_length,chars.length())
 	var id := ""
-	for ch in max_id_length:
+	for ch in id_length:
 		id += chars[randi()%chars.length()]
 	return id
 

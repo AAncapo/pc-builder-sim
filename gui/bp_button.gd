@@ -1,18 +1,5 @@
-extends Button
-
-signal _pressed(bp)
-#signal _hover(item)
-
-var bp_linked: BuildProject
+class_name PBuildButton extends LinkedButton
 
 func _ready():
-	text = bp_linked.project_name
+	text = item_linked.name_
 
-
-func _on_bp_button_pressed():
-	emit_signal("_pressed",bp_linked)
-
-
-func _on_bp_button_mouse_entered():
-#	emit_signal("_hover", bp_linked)
-	pass

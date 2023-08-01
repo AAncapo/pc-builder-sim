@@ -8,5 +8,3 @@ margin_bottom = 20.0
 rect_min_size = Vector2( 0, 20 )
 text = "build project button"
 script = ExtResource( 1 )
-
-[connection signal="pressed" from="." to="." method="_on_bp_button_pressed"]

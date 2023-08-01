@@ -2,7 +2,7 @@ class_name Receiver extends Interactable
 
 export (PackedScene) var starter_pckg
 onready var pckg_models := $pckg_models
-onready var pckgs_gui := $pckgs_gui
+onready var pckgs_gui := $packages_gui
 
 
 func _ready():

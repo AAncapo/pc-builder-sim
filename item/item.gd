@@ -1,10 +1,10 @@
 class_name Item extends Spatial
 
-var item_id
-#var pckg_origin: ItemsPackage
+var id_
+var name_
 
 func _ready():
-	item_id = Utils.generate_id(10)
+	id_ = Utils.generate_id(10)
 
 func get_mesh():
 	pass

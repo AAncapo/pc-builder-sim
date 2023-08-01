@@ -8,7 +8,7 @@ var item_chart = []
 
 
 func generate_item_offer():
-	var path = str("res://components/custom_components/",itemPool.all_items[randi()%itemPool.all_items.size()])
+	var path = str("res://item/components/custom_components/",itemPool.all_items[randi()%itemPool.all_items.size()])
 	var item_ps = load(path)
 	var item = item_ps.instance()
 	$"%itemsOnSale".add_child(item)

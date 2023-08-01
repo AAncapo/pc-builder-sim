@@ -7,5 +7,4 @@ var profile_img: StreamTexture  #TODO: add profile images
 func getClientId():
 	if !id:
 		id = Utils.generate_id(10)
-		print('id generated')
 	return id

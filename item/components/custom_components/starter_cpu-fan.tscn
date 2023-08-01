@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://item/components/models/model_starter_cpufan.tscn" type="PackedScene" id=1]
+[ext_resource path="res://item/components/CPU-FAN.tscn" type="PackedScene" id=2]
+
+[node name="starter_cpu-fan" instance=ExtResource( 2 )]
+
+[node name="cpu_fan" parent="visual" index="0" instance=ExtResource( 1 )]

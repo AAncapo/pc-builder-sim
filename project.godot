@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Item",
+"class": "Build",
+"language": "GDScript",
+"path": "res://item/build/build.gd"
+}, {
 "base": "Interactable",
 "class": "BuildBench",
 "language": "GDScript",
@@ -27,7 +32,7 @@ _global_script_classes=[ {
 "base": "Item",
 "class": "Component",
 "language": "GDScript",
-"path": "res://components/component.gd"
+"path": "res://item/components/component.gd"
 }, {
 "base": "StaticBody",
 "class": "Interactable",
@@ -54,15 +59,25 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://packages/package.gd"
 }, {
+"base": "Button",
+"class": "LinkedButton",
+"language": "GDScript",
+"path": "res://gui/linked_button.gd"
+}, {
+"base": "LinkedButton",
+"class": "PBuildButton",
+"language": "GDScript",
+"path": "res://gui/bp_button.gd"
+}, {
 "base": "KinematicBody",
 "class": "Player",
 "language": "GDScript",
 "path": "res://player/player.gd"
 }, {
-"base": "Button",
+"base": "LinkedButton",
 "class": "RBuildButton",
 "language": "GDScript",
-"path": "res://interactables/buildb/bb_rb_button.gd"
+"path": "res://interactables/buildb/rb_button.gd"
 }, {
 "base": "Interactable",
 "class": "Receiver",
@@ -90,6 +105,7 @@ _global_script_classes=[ {
 "path": "res://interactables/web/w_request_post.gd"
 } ]
 _global_script_class_icons={
+"Build": "",
 "BuildBench": "",
 "BuildProject": "",
 "BuildRequest": "",
@@ -99,6 +115,8 @@ _global_script_class_icons={
 "Item": "",
 "ItemPool": "",
 "ItemsPackage": "",
+"LinkedButton": "",
+"PBuildButton": "",
 "Player": "",
 "RBuildButton": "",
 "Receiver": "",
