@@ -1,9 +1,12 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://interactables/buildb/buildbench.gd" type="Script" id=1]
 [ext_resource path="res://interactables/buildb/components_list.gd" type="Script" id=2]
 [ext_resource path="res://gui/filter_button.tscn" type="PackedScene" id=3]
 [ext_resource path="res://interactables/buildb/builds_gui.gd" type="Script" id=4]
+[ext_resource path="res://gui/fonts/roboto_bold_18.tres" type="DynamicFont" id=5]
+[ext_resource path="res://gui/themes/action_button_theme.tres" type="Theme" id=7]
+[ext_resource path="res://gui/fonts/roboto_regular_16.tres" type="DynamicFont" id=8]
 
 [sub_resource type="BoxShape" id=13]
 
@@ -78,81 +81,72 @@ color = Color( 0.145098, 0.145098, 0.145098, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_vertical = 3
+custom_constants/separation = 10
 
 [node name="Label" type="Label" parent="buildbench_gui/builds/VBoxContainer"]
 margin_right = 280.0
-margin_bottom = 14.0
+margin_bottom = 22.0
+custom_fonts/font = ExtResource( 5 )
 text = "BUILD PROJECTS"
 align = 1
 
 [node name="ProjectList" type="ScrollContainer" parent="buildbench_gui/builds/VBoxContainer"]
-margin_top = 18.0
+margin_top = 32.0
 margin_right = 280.0
-margin_bottom = 297.0
+margin_bottom = 580.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="buildbench_gui/builds/VBoxContainer/ProjectList"]
 margin_right = 280.0
-margin_bottom = 279.0
+margin_bottom = 548.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_constants/separation = 10
 
 [node name="filters" type="HBoxContainer" parent="buildbench_gui/builds/VBoxContainer/ProjectList/VBoxContainer"]
 unique_name_in_owner = true
 margin_right = 280.0
-margin_bottom = 20.0
+margin_bottom = 21.0
 alignment = 1
 
 [node name="all" parent="buildbench_gui/builds/VBoxContainer/ProjectList/VBoxContainer/filters" instance=ExtResource( 3 )]
-margin_left = 36.0
-margin_right = 71.0
+margin_left = 34.0
+margin_right = 64.0
+margin_bottom = 21.0
+theme = ExtResource( 7 )
 text = "ALL"
 
 [node name="personal" parent="buildbench_gui/builds/VBoxContainer/ProjectList/VBoxContainer/filters" instance=ExtResource( 3 )]
-margin_left = 75.0
-margin_right = 154.0
+margin_left = 68.0
+margin_right = 150.0
+margin_bottom = 21.0
+theme = ExtResource( 7 )
 text = "PERSONAL"
 
 [node name="requested" parent="buildbench_gui/builds/VBoxContainer/ProjectList/VBoxContainer/filters" instance=ExtResource( 3 )]
-margin_left = 158.0
-margin_right = 244.0
+margin_left = 154.0
+margin_right = 245.0
+margin_bottom = 21.0
+theme = ExtResource( 7 )
 text = "REQUESTED"
 
 [node name="new_project" type="Button" parent="buildbench_gui/builds/VBoxContainer/ProjectList/VBoxContainer"]
-margin_top = 24.0
-margin_right = 280.0
-margin_bottom = 44.0
-rect_min_size = Vector2( 0, 20 )
+margin_left = 40.0
+margin_top = 31.0
+margin_right = 240.0
+margin_bottom = 52.0
+rect_min_size = Vector2( 200, 20 )
+size_flags_horizontal = 6
+theme = ExtResource( 7 )
 text = "start new build project"
 
 [node name="bp_list" type="VBoxContainer" parent="buildbench_gui/builds/VBoxContainer/ProjectList/VBoxContainer"]
 unique_name_in_owner = true
-margin_top = 48.0
+margin_top = 62.0
 margin_right = 280.0
-margin_bottom = 279.0
+margin_bottom = 548.0
 size_flags_vertical = 3
-
-[node name="BuildDetails" type="Control" parent="buildbench_gui/builds/VBoxContainer"]
-margin_top = 301.0
-margin_right = 280.0
-margin_bottom = 580.0
-size_flags_vertical = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="buildbench_gui/builds/VBoxContainer/BuildDetails"]
-margin_right = 40.0
-margin_bottom = 40.0
-
-[node name="build_name" type="Label" parent="buildbench_gui/builds/VBoxContainer/BuildDetails/VBoxContainer"]
-unique_name_in_owner = true
-margin_right = 40.0
-margin_bottom = 14.0
-
-[node name="required" type="VBoxContainer" parent="buildbench_gui/builds/VBoxContainer/BuildDetails/VBoxContainer"]
-unique_name_in_owner = true
-margin_top = 18.0
-margin_right = 40.0
-margin_bottom = 18.0
 
 [node name="components_gui" type="Control" parent="buildbench_gui"]
 anchor_left = 1.0
@@ -183,49 +177,54 @@ grow_horizontal = 0
 
 [node name="Label" type="Label" parent="buildbench_gui/components_gui/VBoxContainer"]
 margin_right = 240.0
-margin_bottom = 14.0
+margin_bottom = 22.0
+custom_fonts/font = ExtResource( 5 )
 text = "Components"
 align = 1
 
 [node name="search_filters" type="HBoxContainer" parent="buildbench_gui/components_gui/VBoxContainer"]
-margin_top = 18.0
+margin_top = 26.0
 margin_right = 240.0
-margin_bottom = 38.0
+margin_bottom = 47.0
 grow_horizontal = 0
 rect_min_size = Vector2( 200, 20 )
 alignment = 1
 
 [node name="Label" type="Label" parent="buildbench_gui/components_gui/VBoxContainer/search_filters"]
-margin_left = 17.0
-margin_top = 3.0
-margin_right = 74.0
-margin_bottom = 17.0
+margin_left = 25.0
+margin_top = 1.0
+margin_right = 86.0
+margin_bottom = 20.0
+custom_fonts/font = ExtResource( 8 )
 text = "filter by: "
 
 [node name="broken" type="Button" parent="buildbench_gui/components_gui/VBoxContainer/search_filters"]
-margin_left = 78.0
-margin_right = 134.0
-margin_bottom = 20.0
+margin_left = 90.0
+margin_right = 140.0
+margin_bottom = 21.0
+theme = ExtResource( 7 )
 toggle_mode = true
 text = "broken"
 
 [node name="new" type="Button" parent="buildbench_gui/components_gui/VBoxContainer/search_filters"]
-margin_left = 138.0
-margin_right = 176.0
-margin_bottom = 20.0
+margin_left = 144.0
+margin_right = 175.0
+margin_bottom = 21.0
+theme = ExtResource( 7 )
 toggle_mode = true
 text = "new"
 
 [node name="used" type="Button" parent="buildbench_gui/components_gui/VBoxContainer/search_filters"]
-margin_left = 180.0
-margin_right = 223.0
-margin_bottom = 20.0
+margin_left = 179.0
+margin_right = 215.0
+margin_bottom = 21.0
+theme = ExtResource( 7 )
 toggle_mode = true
 text = "used"
 
 [node name="comps_list" type="VBoxContainer" parent="buildbench_gui/components_gui/VBoxContainer"]
 unique_name_in_owner = true
-margin_top = 42.0
+margin_top = 51.0
 margin_right = 240.0
 margin_bottom = 570.0
 grow_horizontal = 0

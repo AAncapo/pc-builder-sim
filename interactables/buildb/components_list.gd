@@ -19,7 +19,7 @@ func _ready():
 
 func add_new_component(item):
 	if item is Component:
-		var new_button: iButton = ibutton_temp.instance()
+		var new_button = ibutton_temp.instance()
 		new_button.item_linked = item
 		components.add_child(new_button)
 		
@@ -32,5 +32,5 @@ func _on_bp_item_installed(item:Item):
 			button.queue_free()
 
 
-func __on_ibutton_pressed(button:iButton):
+func __on_ibutton_pressed(button):
 	emit_signal("install_component",button.item_linked)

@@ -30,7 +30,7 @@ func _on_components_gui_install_component(component):
 	if current_bp:
 		#check if current_bp can add component
 		if current_bp.add_component(component):
-			builds_gui.update_bp_details(current_bp)
+#			builds_gui.update_bp_details(current_bp)
 			if current_bp.is_completed():
 				if current_bp.category == 'requested':
 					$"%send_button".show()
@@ -53,12 +53,12 @@ func _on_build_project_selected(bp):
 	current_bp = bp
 	for bp in bp_pos.get_children():
 		bp.visible = bp == current_bp
-	builds_gui.update_bp_details(current_bp)
+#	builds_gui.update_bp_details(current_bp)
 
 
 func _on_uninstalled_component(component_key):
 	if current_bp.remove_component(component_key):
-		builds_gui.update_bp_details(current_bp)
+#		builds_gui.update_bp_details(current_bp)
 		if current_bp.is_completed():
 			if current_bp.category == 'requested':
 				$"%send_button".hide()
@@ -68,5 +68,5 @@ func _on_send_button_pressed():
 	if current_bp.category=='requested':
 		builds_gui.remove_project_button(current_bp)
 		current_bp.queue_free()
-		builds_gui.update_bp_details(null)
+#		builds_gui.update_bp_details(null)
 		$"%send_button".hide()

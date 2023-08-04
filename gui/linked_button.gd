@@ -11,6 +11,8 @@ func set_values(value):
 	item_linked = value
 	if item_linked is Build:
 		$"%client_name".text = item_linked.name_
+	else:
+		text = str(item_linked.item_class)
 
 
 func _ready():

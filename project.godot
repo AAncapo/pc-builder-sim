@@ -69,11 +69,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://interactables/receiver.gd"
 }, {
-"base": "Button",
-"class": "iButton",
-"language": "GDScript",
-"path": "res://gui/item-button.gd"
-}, {
 "base": "Node",
 "class": "wClient",
 "language": "GDScript",
@@ -102,7 +97,6 @@ _global_script_class_icons={
 "LinkedButton": "",
 "Player": "",
 "Receiver": "",
-"iButton": "",
 "wClient": "",
 "wComponentDetails": "",
 "wRequestPost": ""

@@ -2,12 +2,12 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/chasis_cover.glb-d5396aea01fd1f432cffaafe3a4b1016.scn"
+path="res://.import/case_cover.glb-ff23b741dd8ecb471184ceb79dd9a5a8.scn"
 
 [deps]
 
-source_file="res://assets/chasis_cover.glb"
-dest_files=[ "res://.import/chasis_cover.glb-d5396aea01fd1f432cffaafe3a4b1016.scn" ]
+source_file="res://assets/case_cover.glb"
+dest_files=[ "res://.import/case_cover.glb-ff23b741dd8ecb471184ceb79dd9a5a8.scn" ]
 
 [params]
 

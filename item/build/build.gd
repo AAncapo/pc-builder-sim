@@ -4,6 +4,7 @@ signal component_not_supported
 signal component_max_reached
 
 onready var bBase := $base
+onready var status_view := $Status
 var category  ## personal/requested
 
 var rc: Dictionary = {
@@ -14,6 +15,7 @@ var rc: Dictionary = {
 	'cpu_fan': {'required':1,'added':0,'max':1,'completed':false },
 	'hdd': { 'required':1,'added':0,'max':1,'completed':false },
 	'psu': { 'required':1,'added':0,'max':1,'completed':false },
+	'case_cover': { 'required':1,'added':0,'max':1,'completed':false}
 }
 
 
@@ -38,7 +40,11 @@ func add_component(new_component:Component) -> bool:
 			return false
 		if cc!='motherboard' && rc['motherboard']['added'] < 1 && rc['case']['added'] > 0:
 			return false
-			
+		
+		## REJECT CASE_COVER if everything else isnt installed yet ##
+		if cc=='case_cover' && !is_completed(true):
+			return false
+		
 		rc.get(cc)['added'] += 1
 		
 		## set as completed if required satisfied ##
@@ -63,6 +69,7 @@ func add_component(new_component:Component) -> bool:
 	#TODO: make in-game notification
 	Events.emit_signal("removed_item_from_inv",new_component)
 	print(cc,' installed successfully!')
+	status_view.update_pc_status(self)
 	return true
 
 
@@ -77,12 +84,14 @@ func remove_component(component_key: String) -> bool:
 	if rc.get(ckey)['added'] < rc.get(ckey)['required']:
 		rc.get(ckey)['completed'] = false
 	
+	status_view.update_status(self)
 	return true
 
 
-func is_completed():
+func is_completed(exclude_cover = false):
 	for k in rc.keys():
 		if !rc[k]['completed']:
+			if exclude_cover && k=='case_cover': continue
 			return false
 	print(category,' completed')
 	return true

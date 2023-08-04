@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://item/components/CASE_COVER.tscn" type="PackedScene" id=1]
+[ext_resource path="res://item/components/models/m_starter_case_cover.tscn" type="PackedScene" id=2]
+
+[node name="starter_case_cover" instance=ExtResource( 1 )]
+name_tag = "GSUS Case Cover"
+
+[node name="m_starter_case" parent="visual" index="0" instance=ExtResource( 2 )]

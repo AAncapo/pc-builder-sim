@@ -1,9 +1,14 @@
 extends Control
 
-onready var pckgs_list := $"%packages_list"
-onready var obj_preview_vp = $"%object_preview_3D"
-var button_container_temp = preload("res://gui/item_buttons_container.tscn")
-var button_temp = preload("res://gui/item_button.tscn")
+signal pckg_removed(p)
+signal display_item(item_mesh)  #connect to 3D obj preview viewport
+
+onready var pckg_tab_container := $"%TabContainer"
+var buttonContainr = preload("res://gui/item_buttons_container.tscn")
+var itemButton = preload("res://gui/item_button.tscn")
+var current_pckg_tab setget ,get_current_pckg_tab 
+func get_current_pckg_tab():
+	return pckg_tab_container.get_current_tab_control()
 
 
 func _ready():
@@ -12,45 +17,46 @@ func _ready():
 
 func add_package(new_pckg:ItemsPackage):
 	## add new package tab ##
-	var itemlist = button_container_temp.instance()
-	pckgs_list.add_child(itemlist)
+	var itemlist = buttonContainr.instance()
 	itemlist.name = new_pckg.sender
+	itemlist.items_owner = new_pckg
+	pckg_tab_container.add_child(itemlist)
 	
 	## instance buttons x items in pckg ##
 	var items = new_pckg.pckg_items
 	for i in items:
-		var button: iButton = button_temp.instance()
+		var button = itemButton.instance()
 		button.item_linked = i
 		itemlist.add_items(button)
-		button.connect("hover", self, "_on_item_button_hover")
-		button.connect("stop_hover",self,"_on_item_button_stop_hover")
-		button.connect("_pressed", self, "_on_item_button_pressed")
+		button.connect("_pressed", self, "_on_itemb_pressed")
+#		button.connect("_mouse_enter",self,"_on_itemb_mouse_enter")
+#		button.connect("_mouse_exit",self,"_on_itemb_mouse_exit")
 
 
-func _on_item_button_hover(_item:Item):
-	var item_mesh = _item.get_mesh()
+func _on_itemb_mouse_enter(button):
+	var item_mesh = button.item_linked.get_mesh()
 	if item_mesh:
-		obj_preview_vp.display_item(item_mesh)
+		emit_signal("display_item",item_mesh)
+
+func _on_itemb_mouse_exit():
+	emit_signal("display_item",null)
 
 
-func _on_item_button_stop_hover():
-	obj_preview_vp.display_item(null)
-
-
-func _on_item_button_pressed(_button:iButton):
+func _on_itemb_pressed(_button:LinkedButton):
 	Events.emit_signal("added_item_to_inv", _button.item_linked)
 	_button.queue_free()
-	
 	yield(get_tree().create_timer(0.1),"timeout")
-	var current_item_list = pckgs_list.get_current_tab_control().get_items()
-	if current_item_list.empty():
-		pckgs_list.get_current_tab_control().queue_free()
+	var _item_list = self.current_pckg_tab.get_items()
+	if _item_list.empty():
+		emit_signal("pckg_removed",self.current_pckg_tab.items_owner)
+		self.current_pckg_tab.queue_free()
 
 
 func _on_take_all_pressed():
-	var current_item_list = pckgs_list.get_current_tab_control().get_items()
-	for button in current_item_list:
-		_on_item_button_pressed(button)
+	if self.current_pckg_tab:
+		var _item_list = self.current_pckg_tab.get_items()
+		for button in _item_list:
+			_on_itemb_pressed(button)
 
 func _on_exit_pressed():
 	Events.emit_signal("interaction_exited")

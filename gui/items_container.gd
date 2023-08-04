@@ -1,5 +1,6 @@
 extends ScrollContainer
 # items container #
+var items_owner
 
 func add_items(item_button):
 	$VBoxContainer.add_child(item_button)

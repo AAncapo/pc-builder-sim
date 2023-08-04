@@ -10,7 +10,7 @@ func _ready():
 
 
 func __on_item_added(new_item):
-	var ibutton:iButton = button_temp.instance()
+	var ibutton = button_temp.instance()
 	ibutton.item_linked = new_item
 	allItems.add_child(ibutton)
 	inv.stored_items.append(new_item)

@@ -8,6 +8,7 @@ enum ItemClass {
 	RAM,
 	HDD,
 	PSU,
+	CASE_COVER,
 	NULL
 }
 export (ItemClass) var item_class setget ,get_item_class
@@ -15,15 +16,6 @@ export (ItemClass) var parent_class setget ,get_parent_class
 export (String) var name_tag
 var hdd_slots := 0 setget ,get_hdd_slots
 var ram_slots := 0 setget ,get_ram_slots
-
-
-func _ready():
-#	match item_class:
-#		ItemClass.CASE:
-#			hdd_slots = $slots.get_node("s-hdd").get_child_count()
-#		ItemClass.MOTHERBOARD:
-#			ram_slots = $slots.get_node("s-ram").get_child_count()
-	pass
 
 
 func install_component(component:Component):

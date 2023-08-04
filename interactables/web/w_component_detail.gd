@@ -7,12 +7,14 @@ var is_new := true setget setIsNew
 var price := 0.00 setget setPrice
 var description setget setDescription
 var posted_date setget setPostedDate
+var icon setget setIcon
 
 
 func set_values(item:Item,_new:bool, _price:float, desc:String, date = 'now'):
 	item_linked = item
 	self.is_new = _new
 	self.price = _price
+	self.icon = item_linked.icon_
 	self.description = desc
 	self.posted_date = date
 
@@ -32,6 +34,9 @@ func setDescription(value):
 func setPostedDate(value):
 	posted_date = value
 
+func setIcon(value):
+	icon = value
+	$HBoxContainer/icon.texture = value
 
 func _on_link_pressed():
 	emit_signal("_pressed",self)

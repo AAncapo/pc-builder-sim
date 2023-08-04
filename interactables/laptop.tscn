@@ -41,3 +41,4 @@ mesh = SubResource( 16 )
 transform = Transform( 1, 0, 0, 0, 0.829379, 0.558686, 0, -0.558686, 0.829379, 0, 0.707953, 0.18817 )
 
 [node name="www" parent="." instance=ExtResource( 2 )]
+visible = false

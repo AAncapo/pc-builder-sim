@@ -35,18 +35,25 @@ text = "$9999.99"
 align = 1
 valign = 1
 
-[node name="link" type="Button" parent="HBoxContainer"]
+[node name="icon" type="TextureRect" parent="HBoxContainer"]
 margin_left = 130.0
-margin_right = 630.0
+margin_right = 180.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 0 )
+expand = true
+
+[node name="link" type="Button" parent="HBoxContainer"]
+margin_left = 200.0
+margin_right = 700.0
 margin_bottom = 50.0
 rect_min_size = Vector2( 500, 0 )
 text = "Ram Kingston DDR3 1333"
 flat = true
 
 [node name="posted_date" type="Label" parent="HBoxContainer"]
-margin_left = 650.0
+margin_left = 720.0
 margin_top = 18.0
-margin_right = 717.0
+margin_right = 787.0
 margin_bottom = 32.0
 text = "3 days ago"
 
