@@ -15,7 +15,7 @@ var rc: Dictionary = {
 	'cpu_fan': {'required':1,'added':0,'max':1,'completed':false },
 	'hdd': { 'required':1,'added':0,'max':1,'completed':false },
 	'psu': { 'required':1,'added':0,'max':1,'completed':false },
-	'case_cover': { 'required':1,'added':0,'max':1,'completed':false}
+	'case_cover': { 'required':1,'added':0,'max':1,'completed':false},
 }
 
 
@@ -69,6 +69,7 @@ func add_component(new_component:Component) -> bool:
 	#TODO: make in-game notification
 	Events.emit_signal("removed_item_from_inv",new_component)
 	print(cc,' installed successfully!')
+	
 	status_view.update_pc_status(self)
 	return true
 
@@ -78,7 +79,6 @@ func remove_component(component_key: String) -> bool:
 	var ckey = component_key
 	if rc.get(ckey)['added'] <= 0:
 		return false
-	
 	
 	rc.get(ckey)['added'] -= 1
 	if rc.get(ckey)['added'] < rc.get(ckey)['required']:

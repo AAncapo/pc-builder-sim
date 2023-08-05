@@ -45,11 +45,13 @@ func _on_itemb_mouse_exit():
 func _on_itemb_pressed(_button:LinkedButton):
 	Events.emit_signal("added_item_to_inv", _button.item_linked)
 	_button.queue_free()
+	
 	yield(get_tree().create_timer(0.1),"timeout")
 	var _item_list = self.current_pckg_tab.get_items()
 	if _item_list.empty():
 		emit_signal("pckg_removed",self.current_pckg_tab.items_owner)
 		self.current_pckg_tab.queue_free()
+	
 
 
 func _on_take_all_pressed():
@@ -60,3 +62,7 @@ func _on_take_all_pressed():
 
 func _on_exit_pressed():
 	Events.emit_signal("interaction_exited")
+
+
+func _on_TabController_empty():
+	_on_exit_pressed()

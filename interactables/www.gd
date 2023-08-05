@@ -13,5 +13,4 @@ func _ready():
 
 
 func _on_close_pressed():
-	componentStore.buy_items()
 	Events.emit_signal("interaction_exited")

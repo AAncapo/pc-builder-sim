@@ -1,15 +1,16 @@
-extends Interactable
+class_name Laptop extends Interactable
 
 onready var interaction_pos = $cam_interaction_point
-
+onready var web := $www
 
 func _ready():
-	$www.hide()
+	web.hide()
 
 
 func interact():
-	$www.show()
+	web.show()
 
 
 func exit():
-	$www.hide()
+	web.hide()
+	web.componentStore.buy_items()

@@ -1,5 +1,6 @@
 extends VBoxContainer
 
+signal empty
 
 onready var tabsContainer := $"%TabContainer"
 onready var tabName = $"%current_tab_name"
@@ -48,3 +49,6 @@ func on_tab_child_exited():
 	if self.current_tab:
 		tabName.text = self.current_tab.name
 	enable_nav_buttons(tabsContainer.get_tab_count() > 1)
+	if tabsContainer.get_tab_count() == 0:
+		emit_signal("empty")
+

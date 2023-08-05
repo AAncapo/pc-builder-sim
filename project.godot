@@ -54,6 +54,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://packages/package.gd"
 }, {
+"base": "Interactable",
+"class": "Laptop",
+"language": "GDScript",
+"path": "res://interactables/laptop.gd"
+}, {
 "base": "Button",
 "class": "LinkedButton",
 "language": "GDScript",
@@ -94,6 +99,7 @@ _global_script_class_icons={
 "Item": "",
 "ItemPool": "",
 "ItemsPackage": "",
+"Laptop": "",
 "LinkedButton": "",
 "Player": "",
 "Receiver": "",

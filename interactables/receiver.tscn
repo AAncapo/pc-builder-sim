@@ -136,6 +136,7 @@ theme = ExtResource( 4 )
 text = "exit"
 
 [connection signal="pckg_removed" from="ReceivedPackages" to="." method="_on_ReceivedPackages_pckg_removed"]
+[connection signal="empty" from="ReceivedPackages/HBoxContainer/Control/TabController" to="ReceivedPackages" method="_on_TabController_empty"]
 [connection signal="pressed" from="ReceivedPackages/HBoxContainer/Control/TabController/HBoxContainer/prev" to="ReceivedPackages/HBoxContainer/Control/TabController" method="_on_prev_pressed"]
 [connection signal="pressed" from="ReceivedPackages/HBoxContainer/Control/TabController/HBoxContainer/next" to="ReceivedPackages/HBoxContainer/Control/TabController" method="_on_next_pressed"]
 [connection signal="child_entered_tree" from="ReceivedPackages/HBoxContainer/Control/TabController/TabContainer" to="ReceivedPackages/HBoxContainer/Control/TabController" method="_on_TabContainer_child_entered_tree"]
