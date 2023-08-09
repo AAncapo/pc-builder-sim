@@ -34,20 +34,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://interactables/interactable.gd"
 }, {
-"base": "Resource",
-"class": "Inventory",
-"language": "GDScript",
-"path": "res://player/inventory.gd"
-}, {
 "base": "Spatial",
 "class": "Item",
 "language": "GDScript",
 "path": "res://item/item.gd"
-}, {
-"base": "Resource",
-"class": "ItemPool",
-"language": "GDScript",
-"path": "res://item/ItemPool.gd"
 }, {
 "base": "MeshInstance",
 "class": "ItemsPackage",
@@ -63,6 +53,11 @@ _global_script_classes=[ {
 "class": "LinkedButton",
 "language": "GDScript",
 "path": "res://gui/linked_button.gd"
+}, {
+"base": "Node",
+"class": "Manufactor",
+"language": "GDScript",
+"path": "res://manufactor/manufactor.gd"
 }, {
 "base": "KinematicBody",
 "class": "Player",
@@ -95,12 +90,11 @@ _global_script_class_icons={
 "BuildRequest": "",
 "Component": "",
 "Interactable": "",
-"Inventory": "",
 "Item": "",
-"ItemPool": "",
 "ItemsPackage": "",
 "Laptop": "",
 "LinkedButton": "",
+"Manufactor": "",
 "Player": "",
 "Receiver": "",
 "wClient": "",
@@ -118,6 +112,8 @@ config/icon="res://icon.png"
 
 Events="*res://Globals/Events.gd"
 Utils="*res://Globals/Utils.gd"
+Market="*res://market.tscn"
+Inventory="*res://inventory.tscn"
 
 [debug]
 

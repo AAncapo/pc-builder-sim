@@ -2,6 +2,7 @@ extends Control
 
 signal create_new_project(pj_name, br)
 signal build_project_selected(bp)
+signal rename_build(new_name)
 signal uninstalled_component(component_key)
 
 onready var bp_list := $"%bp_list"
@@ -16,24 +17,23 @@ func _ready():
 
 
 func _on_new_project_pressed():
-	$"%ConfirmationDialog".popup()
+	emit_signal("create_new_project")
+	$"%RenameDialog".popup()
 	$"%LineEdit".grab_focus()
 
 
-func _on_ConfirmationDialog_confirmed():
-	#TODO: send mmore information packed about the project
-	emit_signal("create_new_project",$"%LineEdit".text, null)
+func _on_RenameDialog_confirmed():
+	emit_signal("rename_build",$"%LineEdit".text)
 
 ## wRequestPost send here the info about the request and creates a new build project automatically ##
 func _on_request_accepted(br):
-## when a request is accepted it should be the same process as when a personal project has its name confirmed
-	emit_signal("create_new_project",br.client.id,br)
+	emit_signal("create_new_project",br)
 
 
-func add_project(project:Build):
+func add_project(build):
 	var bbutton = bButton.instance()
-	bbutton.item_linked = project
-	bbutton.filter_tag = project.category
+	bbutton.item_linked = build
+	bbutton.filter_tag = build.category
 	bp_list.add_child(bbutton)
 	bbutton.connect("_pressed",self, "open_project")
 

@@ -3,24 +3,30 @@ class_name Build extends Item
 signal component_not_supported
 signal component_max_reached
 
-onready var bBase := $base
+onready var case_slot := $"s-case"
 onready var status_view := $Status
-var category  ## personal/requested
+var name_:String
+var category:String
+var build_data = {}
 
 var rc: Dictionary = {
 	'case': { 'required':1,'added':0,'max':1,'completed':false },
-	'motherboard': { 'required':1,'added':0,'max':1,'completed':false},
+	'motherboard': { 'required':1,'added':0,'max':1,'completed':false },
 	'ram': { 'required':1,'added':0,'max':1,'completed':false },
 	'cpu': { 'required':1,'added':0,'max':1,'completed':false },
 	'cpu_fan': {'required':1,'added':0,'max':1,'completed':false },
 	'hdd': { 'required':1,'added':0,'max':1,'completed':false },
 	'psu': { 'required':1,'added':0,'max':1,'completed':false },
-	'case_cover': { 'required':1,'added':0,'max':1,'completed':false},
 }
 
 
-func add_component(new_component:Component) -> bool:
-	var cc = new_component.item_class
+func _ready():
+	status_view.update_pc_status(self)
+
+
+func add_component(item_data:Dictionary) -> bool:
+	##TODO: get component data as object
+	var cc = item_data.item_class
 	if !rc.has(cc):
 		#TODO: make in-game notification
 		emit_signal("component_not_supported")
@@ -31,18 +37,14 @@ func add_component(new_component:Component) -> bool:
 		
 		## set HDD/RAM max ##
 		if cc == 'case':
-			rc.get('hdd')['max'] = new_component.hdd_slots
+			rc.hdd['max'] = item_data.hdd_slots
 		if cc == 'motherboard':
-			rc.get('ram')['max'] = new_component.ram_slots
+			rc.case['max'] = item_data.ram_slots
 		
 		## REJECT component if case/mboard havent been added ##
-		if cc!='case' && rc['case']['added'] < 1:
+		if cc!='case' && rc.case['added'] < 1:
 			return false
-		if cc!='motherboard' && rc['motherboard']['added'] < 1 && rc['case']['added'] > 0:
-			return false
-		
-		## REJECT CASE_COVER if everything else isnt installed yet ##
-		if cc=='case_cover' && !is_completed(true):
+		if cc!='motherboard' && rc.motherboard['added'] < 1 && rc.case['added'] > 0:
 			return false
 		
 		rc.get(cc)['added'] += 1
@@ -57,19 +59,20 @@ func add_component(new_component:Component) -> bool:
 		return false
 	
 	## ACTUALLY ADD COMPONENTS ##
+	var component = Inventory.get_item(item_data)
 	if cc=='case':
-		Utils.change_parent(new_component, bBase)
+		Utils.change_parent(component, case_slot)
 	else:
-		var components = bBase.get_children()
+		var components = case_slot.get_children()
 		for c in components:
-			if !c.install_component(new_component):
+			if !c.install_component(component):
 				#TODO: make in-game notification
 				print('ERROR occurred while trying to install ', cc)
 				return false
 	#TODO: make in-game notification
-	Events.emit_signal("removed_item_from_inv",new_component)
-	print(cc,' installed successfully!')
+	Inventory.emit_signal("removed_item",component)
 	
+	print(cc,' installed successfully!')
 	status_view.update_pc_status(self)
 	return true
 
@@ -77,8 +80,7 @@ func add_component(new_component:Component) -> bool:
 ## TODO! IMPLEMENT UNINSTALL CONPONENTS AND ADD BACK IN INVENTORY ##
 func remove_component(component_key: String) -> bool:
 	var ckey = component_key
-	if rc.get(ckey)['added'] <= 0:
-		return false
+	if rc.get(ckey)['added'] <= 0: return false
 	
 	rc.get(ckey)['added'] -= 1
 	if rc.get(ckey)['added'] < rc.get(ckey)['required']:
@@ -88,10 +90,10 @@ func remove_component(component_key: String) -> bool:
 	return true
 
 
-func is_completed(exclude_cover = false):
+func is_completed(exclude_cover = true):
 	for k in rc.keys():
 		if !rc[k]['completed']:
 			if exclude_cover && k=='case_cover': continue
-			return false
-	print(category,' completed')
+			else: return false
+	print(build_data.category,' completed')
 	return true

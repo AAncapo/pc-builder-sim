@@ -20,7 +20,7 @@ albedo_texture = SubResource( 3 )
 [node name="Build" type="Spatial"]
 script = ExtResource( 1 )
 
-[node name="base" type="Position3D" parent="."]
+[node name="s-case" type="Position3D" parent="."]
 
 [node name="Status" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.30652, 0.711038, 0 )

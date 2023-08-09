@@ -16,3 +16,7 @@ func change_parent(_node:Node, new_parent: Node):
 	if prev_parent:
 		prev_parent.remove_child(_node)
 	new_parent.add_child(_node)
+
+func remove_all_children(parent):
+	for n in parent.get_children():
+		n.queue_free()

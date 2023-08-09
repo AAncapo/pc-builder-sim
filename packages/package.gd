@@ -1,18 +1,14 @@
 class_name ItemsPackage extends MeshInstance
 
-export (Array, PackedScene) var custom_items = []
-export (String) var sender
-export (String) var pckg_name
+export var starter_package = false
 var pckg_items = []
+var sender
+var pckg_name
 
 
 func _ready():
-	if !custom_items.empty():
-		var items = []
-		for ci in custom_items:
-			var item = ci.instance()
-			items.append(item)
-		create_new_package(pckg_name,sender,items)
+	if starter_package:
+		create_new_package('starter package','tutorial',Market.generate_starter_pckg())
 
 
 func create_new_package(_name:String,_from:String,_items: Array):

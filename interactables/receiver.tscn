@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://gui/package_list.gd" type="Script" id=1]
 [ext_resource path="res://interactables/receiver.gd" type="Script" id=2]
+[ext_resource path="res://packages/starter_pckg.tscn" type="PackedScene" id=3]
 [ext_resource path="res://gui/themes/action_button_theme.tres" type="Theme" id=4]
 [ext_resource path="res://gui/themes/gui_base_theme.tres" type="Theme" id=6]
 [ext_resource path="res://gui/icons/left-arrow-16x16.png" type="Texture" id=7]
@@ -18,6 +19,7 @@ extents = Vector3( 1.03572, 0.861465, 1.49759 )
 collision_layer = 4
 collision_mask = 0
 script = ExtResource( 2 )
+starter_pckg = ExtResource( 3 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, -3.55271e-15, 0, 1, 0, 2.84217e-14, 0, 0.999999, 4.01399e-08, 0.734124, -0.750844 )

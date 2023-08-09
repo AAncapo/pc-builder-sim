@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://gui/item-button.gd" type="Script" id=1]
+[ext_resource path="res://gui/linked_button.gd" type="Script" id=1]
 [ext_resource path="res://gui/themes/gui_base_theme.tres" type="Theme" id=2]
 
 [node name="item_button" type="Button"]
@@ -11,5 +11,6 @@ margin_right = -5.0
 rect_min_size = Vector2( 200, 30 )
 size_flags_horizontal = 3
 theme = ExtResource( 2 )
-text = "item-1"
+clip_text = true
+align = 0
 script = ExtResource( 1 )

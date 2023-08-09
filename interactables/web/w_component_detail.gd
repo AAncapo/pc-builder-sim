@@ -1,8 +1,8 @@
 class_name wComponentDetails extends Control
 
-signal _pressed(_offer)
+signal _pressed(_deal)
 
-var item_linked: Item
+var item_linked: Dictionary
 var is_new := true setget setIsNew
 var price := 0.00 setget setPrice
 var description setget setDescription
@@ -10,12 +10,12 @@ var posted_date setget setPostedDate
 var icon setget setIcon
 
 
-func set_values(item:Item,_new:bool, _price:float, desc:String, date = 'now'):
-	item_linked = item
+func set_values(item_data:Dictionary,_new:bool, _price:float, date = 'now'):
+	item_linked = item_data
 	self.is_new = _new
 	self.price = _price
-	self.icon = item_linked.icon_
-	self.description = desc
+#	self.icon = item_linked.icon_
+	self.description = item_data.name_
 	self.posted_date = date
 
 

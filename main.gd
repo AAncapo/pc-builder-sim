@@ -1,4 +1,5 @@
 extends Spatial
 
 func _init():
-	randomize()
+#	randomize()
+	pass

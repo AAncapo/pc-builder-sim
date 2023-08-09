@@ -11,7 +11,7 @@ func update_pc_status(build:Build):
 	for r in required_list.get_children():
 		r.queue_free()
 	
-	$"%name".text = str(build.name_)
+	$"%name".text = str(build.category.capitalize(),': ',build.name_.capitalize())
 	for key in build.rc:
 		var bstatus_label = bStatus.instance()
 		var _pressed = build.rc[key]['completed']

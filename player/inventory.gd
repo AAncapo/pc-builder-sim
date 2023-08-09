@@ -1,13 +1,37 @@
-class_name Inventory extends Resource
+extends Spatial  ## Inventory ##
 
-var stored_items = []
+signal added_item(item_dict, override)
+signal removed_item(item)
 
-func _init():
-	Events.connect("added_item_to_inv", self, "add_item")
-	Events.connect("removed_item_from_inv", self, "remove_item")
+onready var items = $items
 
-func add_item(item:Item):
-	stored_items.append(item)
 
-func remove_item(item:Item):
-	stored_items.remove(stored_items.find(item))
+func get_item(data):
+	for i in items.get_children():
+		if i.data.id == data.id:
+			return i
+
+
+func _on_inventory_added_item(item_dict, override):
+	for i in items.get_children():
+		if i.data.id == item_dict.id:
+			if !override:
+				item_dict.id = Utils.generate_id()
+			else:
+				i.queue_free()
+	var path
+	if item_dict.item_class != 'build':
+		path = str("res://item/components/custom_components/starter_",item_dict.item_class,".tscn")
+	else:
+		path = "res://item/build/build.tscn"
+	var packed_scn = load(path)
+	var _item = packed_scn.instance()
+	_item.data = item_dict
+	$items.add_child(_item)
+
+
+func _on_inventory_removed_item(item):
+	for i in items.get_children():
+		if i==item:
+			i.queue_free()
+			return

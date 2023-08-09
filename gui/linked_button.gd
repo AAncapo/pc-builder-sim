@@ -6,13 +6,10 @@ signal _mouse_exit(button)
 
 var filter_tag
 
-var item_linked: Item setget set_values
+var item_linked setget set_values
 func set_values(value):
 	item_linked = value
-	if item_linked is Build:
-		$"%client_name".text = item_linked.name_
-	else:
-		text = str(item_linked.item_class)
+	text = item_linked.name_
 
 
 func _ready():

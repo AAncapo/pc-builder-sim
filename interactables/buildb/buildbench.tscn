@@ -1,12 +1,11 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://interactables/buildb/buildbench.gd" type="Script" id=1]
-[ext_resource path="res://interactables/buildb/components_list.gd" type="Script" id=2]
 [ext_resource path="res://gui/filter_button.tscn" type="PackedScene" id=3]
 [ext_resource path="res://interactables/buildb/builds_gui.gd" type="Script" id=4]
 [ext_resource path="res://gui/fonts/roboto_bold_18.tres" type="DynamicFont" id=5]
+[ext_resource path="res://gui/inventory_gui.tscn" type="PackedScene" id=6]
 [ext_resource path="res://gui/themes/action_button_theme.tres" type="Theme" id=7]
-[ext_resource path="res://gui/fonts/roboto_regular_16.tres" type="DynamicFont" id=8]
 
 [sub_resource type="BoxShape" id=13]
 
@@ -148,89 +147,9 @@ margin_right = 280.0
 margin_bottom = 548.0
 size_flags_vertical = 3
 
-[node name="components_gui" type="Control" parent="buildbench_gui"]
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-margin_left = -250.0
-margin_top = -290.0
-margin_bottom = 290.0
-grow_horizontal = 0
-rect_min_size = Vector2( 250, 0 )
-mouse_filter = 2
-script = ExtResource( 2 )
+[node name="inventory_gui" parent="buildbench_gui" instance=ExtResource( 6 )]
 
-[node name="bg" type="ColorRect" parent="buildbench_gui/components_gui"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-color = Color( 0.145098, 0.145098, 0.145098, 1 )
-
-[node name="VBoxContainer" type="VBoxContainer" parent="buildbench_gui/components_gui"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 5.0
-margin_top = 5.0
-margin_right = -5.0
-margin_bottom = -5.0
-grow_horizontal = 0
-
-[node name="Label" type="Label" parent="buildbench_gui/components_gui/VBoxContainer"]
-margin_right = 240.0
-margin_bottom = 22.0
-custom_fonts/font = ExtResource( 5 )
-text = "Components"
-align = 1
-
-[node name="search_filters" type="HBoxContainer" parent="buildbench_gui/components_gui/VBoxContainer"]
-margin_top = 26.0
-margin_right = 240.0
-margin_bottom = 47.0
-grow_horizontal = 0
-rect_min_size = Vector2( 200, 20 )
-alignment = 1
-
-[node name="Label" type="Label" parent="buildbench_gui/components_gui/VBoxContainer/search_filters"]
-margin_left = 25.0
-margin_top = 1.0
-margin_right = 86.0
-margin_bottom = 20.0
-custom_fonts/font = ExtResource( 8 )
-text = "filter by: "
-
-[node name="broken" type="Button" parent="buildbench_gui/components_gui/VBoxContainer/search_filters"]
-margin_left = 90.0
-margin_right = 140.0
-margin_bottom = 21.0
-theme = ExtResource( 7 )
-toggle_mode = true
-text = "broken"
-
-[node name="new" type="Button" parent="buildbench_gui/components_gui/VBoxContainer/search_filters"]
-margin_left = 144.0
-margin_right = 175.0
-margin_bottom = 21.0
-theme = ExtResource( 7 )
-toggle_mode = true
-text = "new"
-
-[node name="used" type="Button" parent="buildbench_gui/components_gui/VBoxContainer/search_filters"]
-margin_left = 179.0
-margin_right = 215.0
-margin_bottom = 21.0
-theme = ExtResource( 7 )
-toggle_mode = true
-text = "used"
-
-[node name="comps_list" type="VBoxContainer" parent="buildbench_gui/components_gui/VBoxContainer"]
-unique_name_in_owner = true
-margin_top = 51.0
-margin_right = 240.0
-margin_bottom = 570.0
-grow_horizontal = 0
-size_flags_vertical = 3
-
-[node name="ConfirmationDialog" type="ConfirmationDialog" parent="buildbench_gui"]
+[node name="RenameDialog" type="ConfirmationDialog" parent="buildbench_gui"]
 unique_name_in_owner = true
 anchor_left = 0.5
 anchor_top = 0.5
@@ -243,7 +162,7 @@ margin_bottom = 34.0
 rect_min_size = Vector2( 150, 52.5 )
 window_title = "New project name"
 
-[node name="LineEdit" type="LineEdit" parent="buildbench_gui/ConfirmationDialog"]
+[node name="LineEdit" type="LineEdit" parent="buildbench_gui/RenameDialog"]
 unique_name_in_owner = true
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -271,8 +190,11 @@ text = "SEND"
 
 [connection signal="build_project_selected" from="buildbench_gui/builds" to="." method="_on_build_project_selected"]
 [connection signal="create_new_project" from="buildbench_gui/builds" to="." method="_on_create_new_project"]
+[connection signal="rename_build" from="buildbench_gui/builds" to="." method="_on_builds_rename_build"]
 [connection signal="uninstalled_component" from="buildbench_gui/builds" to="." method="_on_uninstalled_component"]
 [connection signal="pressed" from="buildbench_gui/builds/VBoxContainer/ProjectList/VBoxContainer/new_project" to="buildbench_gui/builds" method="_on_new_project_pressed"]
-[connection signal="install_component" from="buildbench_gui/components_gui" to="." method="_on_components_gui_install_component"]
-[connection signal="confirmed" from="buildbench_gui/ConfirmationDialog" to="buildbench_gui/builds" method="_on_ConfirmationDialog_confirmed"]
+[connection signal="install_component" from="buildbench_gui/inventory_gui" to="." method="_on_inventory_gui_install_component"]
+[connection signal="confirmed" from="buildbench_gui/RenameDialog" to="buildbench_gui/builds" method="_on_RenameDialog_confirmed"]
 [connection signal="pressed" from="buildbench_gui/send_button" to="." method="_on_send_button_pressed"]
+
+[editable path="buildbench_gui/inventory_gui"]

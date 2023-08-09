@@ -14,9 +14,7 @@ func _ready():
 
 
 func spawn_pckg(pckg:ItemsPackage):
-	## instance package model in 3D world as visual representation ##
 	pckg_models.add_child(pckg)
-	## update gui pckg lists ##
 	pckgs_gui.add_package(pckg)
 
 

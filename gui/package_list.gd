@@ -4,7 +4,7 @@ signal pckg_removed(p)
 signal display_item(item_mesh)  #connect to 3D obj preview viewport
 
 onready var pckg_tab_container := $"%TabContainer"
-var buttonContainr = preload("res://gui/item_buttons_container.tscn")
+var buttonContainr = preload("res://gui/items_container.tscn")
 var itemButton = preload("res://gui/item_button.tscn")
 var current_pckg_tab setget ,get_current_pckg_tab 
 func get_current_pckg_tab():
@@ -18,7 +18,7 @@ func _ready():
 func add_package(new_pckg:ItemsPackage):
 	## add new package tab ##
 	var itemlist = buttonContainr.instance()
-	itemlist.name = new_pckg.sender
+	itemlist.name = new_pckg.pckg_name
 	itemlist.items_owner = new_pckg
 	pckg_tab_container.add_child(itemlist)
 	
@@ -34,7 +34,7 @@ func add_package(new_pckg:ItemsPackage):
 
 
 func _on_itemb_mouse_enter(button):
-	var item_mesh = button.item_linked.get_mesh()
+	var item_mesh = button.item_linked['mesh']
 	if item_mesh:
 		emit_signal("display_item",item_mesh)
 
@@ -43,7 +43,7 @@ func _on_itemb_mouse_exit():
 
 
 func _on_itemb_pressed(_button:LinkedButton):
-	Events.emit_signal("added_item_to_inv", _button.item_linked)
+	Inventory.emit_signal("added_item",_button.item_linked, false)
 	_button.queue_free()
 	
 	yield(get_tree().create_timer(0.1),"timeout")
