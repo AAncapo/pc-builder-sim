@@ -22,7 +22,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "BuildRequest",
 "language": "GDScript",
-"path": "res://interactables/buildb/build_request.gd"
+"path": "res://interactables/buildb/request.gd"
 }, {
 "base": "Item",
 "class": "Component",

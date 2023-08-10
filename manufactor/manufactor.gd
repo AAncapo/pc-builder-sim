@@ -67,3 +67,47 @@ func generate_cpu():
 		cur_series_max += 100
 	
 	return cpus
+
+func generate_ram():
+	var rams = []
+	var ram_dict = {}
+	ram_dict.id = Utils.generate_id()
+	ram_dict.item_class = 'ram'
+	ram_dict.parent_class = 'motherboard'
+	ram_dict.name_ = 'Corsair 4GB 1333Mhz'
+	
+	rams.append(ram_dict)
+	return rams
+
+func generate_cooler():
+	var coolers = []
+	var cooler_dict = {}
+	cooler_dict.id = Utils.generate_id()
+	cooler_dict.item_class = 'cooler'
+	cooler_dict.parent_class = 'motherboard'
+	cooler_dict.name_ = 'CoolerMaster'
+	
+	coolers.append(cooler_dict)
+	return coolers
+
+func generate_psu():
+	var psus = []
+	var psu_dict = {}
+	psu_dict.id = Utils.generate_id()
+	psu_dict.item_class = 'psu'
+	psu_dict.parent_class = 'case'
+	psu_dict.name_ = 'EVGA 600w'
+	
+	psus.append(psu_dict)
+	return psus
+
+func generate_hdd():
+	var hdds = []
+	var hdd_dict = {}
+	hdd_dict.id = Utils.generate_id()
+	hdd_dict.item_class = 'hdd'
+	hdd_dict.parent_class = 'case'
+	hdd_dict.name_ = 'Seagate 1TB'
+	
+	hdds.append(hdd_dict)
+	return hdds

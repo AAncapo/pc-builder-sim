@@ -114,8 +114,8 @@ margin_bottom = 539.0
 size_flags_vertical = 3
 
 [node name="body" type="VBoxContainer" parent="TabContainer/wwwComponentStore/site/ScrollContainer"]
-margin_right = 710.0
-margin_bottom = 241.0
+margin_right = 996.0
+margin_bottom = 509.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 10
@@ -506,9 +506,6 @@ margin_bottom = 20.0
 grow_horizontal = 0
 rect_min_size = Vector2( 40, 0 )
 text = "X"
-
-[node name="itemsOnSale" type="Node" parent="."]
-unique_name_in_owner = true
 
 [connection signal="pressed" from="TabContainer/wBazaar/site/ScrollContainer/body/create_post" to="TabContainer/wBazaar" method="_on_create_post_pressed"]
 [connection signal="confirmed" from="TabContainer/wBazaar/AcceptDialog" to="TabContainer/wBazaar" method="_on_AcceptDialog_confirmed"]

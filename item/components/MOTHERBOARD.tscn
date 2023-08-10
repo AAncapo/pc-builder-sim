@@ -1,11 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://item/components/component.tscn" type="PackedScene" id=1]
-[ext_resource path="res://gui/icons/components/mboard.jpg" type="Texture" id=2]
 
 [node name="MOTHERBOARD" instance=ExtResource( 1 )]
-icon_ = ExtResource( 2 )
-item_class = 1
 
 [node name="s-ram" type="Position3D" parent="slots" index="0"]
 
@@ -15,4 +12,4 @@ item_class = 1
 
 [node name="s-cpu" type="Position3D" parent="slots" index="1"]
 
-[node name="s-cpu_fan" type="Position3D" parent="slots" index="2"]
+[node name="s-cooler" type="Position3D" parent="slots" index="2"]

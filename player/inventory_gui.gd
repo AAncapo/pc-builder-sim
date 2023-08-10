@@ -1,6 +1,6 @@
 extends Control
 
-signal install_component(component_data)
+signal item_selected(component_data)
 
 onready var allItems := $"%All"
 var button_temp = preload("res://gui/item_button.tscn")
@@ -12,6 +12,8 @@ func _ready():
 
 
 func __on_item_added(new_item, _override):
+	_override = new_item.item_class == 'build'
+	
 	var button = button_temp.instance()
 	button.item_linked = new_item
 	allItems.add_child(button)
@@ -19,7 +21,7 @@ func __on_item_added(new_item, _override):
 	
 
 func __on_button_pressed(button):
-	emit_signal("install_component",button.item_linked)
+	emit_signal("item_selected",button.item_linked)
 
 
 func __on_item_removed(item):

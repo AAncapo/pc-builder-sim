@@ -5,27 +5,24 @@ signal component_max_reached
 
 onready var case_slot := $"s-case"
 onready var status_view := $Status
-var name_:String
-var category:String
-var build_data = {}
+
 
 var rc: Dictionary = {
 	'case': { 'required':1,'added':0,'max':1,'completed':false },
 	'motherboard': { 'required':1,'added':0,'max':1,'completed':false },
 	'ram': { 'required':1,'added':0,'max':1,'completed':false },
 	'cpu': { 'required':1,'added':0,'max':1,'completed':false },
-	'cpu_fan': {'required':1,'added':0,'max':1,'completed':false },
+	'cooler': {'required':1,'added':0,'max':1,'completed':false },
 	'hdd': { 'required':1,'added':0,'max':1,'completed':false },
 	'psu': { 'required':1,'added':0,'max':1,'completed':false },
 }
 
 
-func _ready():
-	status_view.update_pc_status(self)
+#func _ready():
+#	status_view.update_pc_status(self)
 
 
 func add_component(item_data:Dictionary) -> bool:
-	##TODO: get component data as object
 	var cc = item_data.item_class
 	if !rc.has(cc):
 		#TODO: make in-game notification
@@ -48,10 +45,6 @@ func add_component(item_data:Dictionary) -> bool:
 			return false
 		
 		rc.get(cc)['added'] += 1
-		
-		## set as completed if required satisfied ##
-		if (rc.get(cc)['added'] >= rc.get(cc)['required']):
-			rc.get(cc)['completed'] = true
 	else:
 		#TODO: make in-game notification
 		emit_signal("component_max_reached")
@@ -59,7 +52,7 @@ func add_component(item_data:Dictionary) -> bool:
 		return false
 	
 	## ACTUALLY ADD COMPONENTS ##
-	var component = Inventory.get_item(item_data)
+	var component = Inventory.get_as_item(item_data)
 	if cc=='case':
 		Utils.change_parent(component, case_slot)
 	else:
@@ -69,11 +62,13 @@ func add_component(item_data:Dictionary) -> bool:
 				#TODO: make in-game notification
 				print('ERROR occurred while trying to install ', cc)
 				return false
+	data[cc] = item_data
+#	print(build_data)
 	#TODO: make in-game notification
 	Inventory.emit_signal("removed_item",component)
 	
 	print(cc,' installed successfully!')
-	status_view.update_pc_status(self)
+#	status_view.update_pc_status(self)
 	return true
 
 
@@ -87,13 +82,4 @@ func remove_component(component_key: String) -> bool:
 		rc.get(ckey)['completed'] = false
 	
 	status_view.update_status(self)
-	return true
-
-
-func is_completed(exclude_cover = true):
-	for k in rc.keys():
-		if !rc[k]['completed']:
-			if exclude_cover && k=='case_cover': continue
-			else: return false
-	print(build_data.category,' completed')
 	return true

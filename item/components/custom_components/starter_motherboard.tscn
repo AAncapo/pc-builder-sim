@@ -14,7 +14,4 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0408366, 0.0889881, 0.29332
 [node name="s-cpu" parent="slots" index="1"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0112975, 0.0778194, 0.0993996 )
 
-[node name="s-cpu_fan" parent="slots" index="2"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0506233, 0.0774589, 0.0974482 )
-
 [node name="motherboard" parent="visual" index="0" instance=ExtResource( 2 )]
