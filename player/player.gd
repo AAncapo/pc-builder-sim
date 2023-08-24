@@ -2,7 +2,6 @@ class_name Player extends KinematicBody
 
 onready var cam = $CamBase
 onready var ray: RayCast = $CamBase/Camera/RayCast
-onready var inventory_gui := $inventory_gui
 
 var mouse_sensitivity = 0.07
 
@@ -12,7 +11,6 @@ var camera_locked := false
 
 func _ready():
 	toggle_or_set_mouse_mode()
-	inventory_gui.hide()
 	Events.connect("interaction_exited", self, "_on_exit_interaction")
 
 
@@ -30,9 +28,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			enter_interaction(interact_obj)
 			toggle_or_set_mouse_mode()
 	
-	if event.is_action_pressed('inventory') && !interact_obj:
-		inventory_gui.visible = !inventory_gui.visible
-		toggle_or_set_mouse_mode(0 if inventory_gui.visible else 2)
+#	if event.is_action_pressed('inventory') && !interact_obj:
+#		inventory_gui.visible = !inventory_gui.visible
+#		toggle_or_set_mouse_mode(0 if inventory_gui.visible else 2)
 	
 	if event.is_action_pressed("ui_cancel"):
 		if interact_obj:

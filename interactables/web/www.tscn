@@ -410,7 +410,7 @@ visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
-margin_top = 32.0
+margin_top = 37.0
 margin_right = -4.0
 margin_bottom = -4.0
 script = ExtResource( 4 )
@@ -425,48 +425,48 @@ margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
 
 [node name="back" type="Button" parent="TabContainer/wwwRequestForum/site/misc_header"]
-margin_right = 20.0
+margin_right = 10.0
 margin_bottom = 40.0
 text = "<"
 
 [node name="forward" type="Button" parent="TabContainer/wwwRequestForum/site/misc_header"]
-margin_left = 24.0
-margin_right = 44.0
+margin_left = 14.0
+margin_right = 24.0
 margin_bottom = 40.0
 text = ">"
 
 [node name="misc_dir" type="LineEdit" parent="TabContainer/wwwRequestForum/site/misc_header"]
-margin_left = 48.0
-margin_right = 948.0
+margin_left = 28.0
+margin_right = 978.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
 editable = false
 placeholder_text = "revolico.com/search?category-computers"
 
 [node name="Button" type="Button" parent="TabContainer/wwwRequestForum/site/misc_header"]
-margin_left = 952.0
-margin_right = 964.0
+margin_left = 982.0
+margin_right = 984.0
 margin_bottom = 40.0
 
 [node name="Button2" type="Button" parent="TabContainer/wwwRequestForum/site/misc_header"]
-margin_left = 968.0
-margin_right = 980.0
+margin_left = 988.0
+margin_right = 990.0
 margin_bottom = 40.0
 
 [node name="Button3" type="Button" parent="TabContainer/wwwRequestForum/site/misc_header"]
-margin_left = 984.0
+margin_left = 994.0
 margin_right = 996.0
 margin_bottom = 40.0
 
 [node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/wwwRequestForum/site"]
 margin_top = 44.0
 margin_right = 996.0
-margin_bottom = 544.0
+margin_bottom = 539.0
 size_flags_vertical = 3
 
 [node name="body" type="VBoxContainer" parent="TabContainer/wwwRequestForum/site/ScrollContainer"]
 margin_right = 996.0
-margin_bottom = 500.0
+margin_bottom = 495.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 10
@@ -493,7 +493,7 @@ valign = 1
 unique_name_in_owner = true
 margin_top = 130.0
 margin_right = 996.0
-margin_bottom = 500.0
+margin_bottom = 495.0
 size_flags_vertical = 3
 
 [node name="close" type="Button" parent="."]

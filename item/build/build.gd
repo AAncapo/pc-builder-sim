@@ -4,8 +4,7 @@ signal component_not_supported
 signal component_max_reached
 
 onready var case_slot := $"s-case"
-onready var status_view := $Status
-
+#var installed_components = []
 
 var rc: Dictionary = {
 	'case': { 'required':1,'added':0,'max':1,'completed':false },
@@ -16,10 +15,6 @@ var rc: Dictionary = {
 	'hdd': { 'required':1,'added':0,'max':1,'completed':false },
 	'psu': { 'required':1,'added':0,'max':1,'completed':false },
 }
-
-
-#func _ready():
-#	status_view.update_pc_status(self)
 
 
 func add_component(item_data:Dictionary) -> bool:
@@ -45,6 +40,7 @@ func add_component(item_data:Dictionary) -> bool:
 			return false
 		
 		rc.get(cc)['added'] += 1
+#		installed_components.append(item_data)
 	else:
 		#TODO: make in-game notification
 		emit_signal("component_max_reached")
@@ -52,7 +48,7 @@ func add_component(item_data:Dictionary) -> bool:
 		return false
 	
 	## ACTUALLY ADD COMPONENTS ##
-	var component = Inventory.get_as_item(item_data)
+	var component = Inventory.get_item_from_dict(item_data)
 	if cc=='case':
 		Utils.change_parent(component, case_slot)
 	else:
@@ -62,13 +58,15 @@ func add_component(item_data:Dictionary) -> bool:
 				#TODO: make in-game notification
 				print('ERROR occurred while trying to install ', cc)
 				return false
-	data[cc] = item_data
-#	print(build_data)
+	
+	if !data.has('installed_components'):
+		data.installed_components = []
+	data['installed_components'].append(item_data)
+	
 	#TODO: make in-game notification
 	Inventory.emit_signal("removed_item",component)
 	
 	print(cc,' installed successfully!')
-#	status_view.update_pc_status(self)
 	return true
 
 
@@ -81,5 +79,4 @@ func remove_component(component_key: String) -> bool:
 	if rc.get(ckey)['added'] < rc.get(ckey)['required']:
 		rc.get(ckey)['completed'] = false
 	
-	status_view.update_status(self)
 	return true

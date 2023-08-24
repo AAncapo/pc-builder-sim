@@ -1,10 +1,10 @@
 extends Node  ## Market ##
 
 onready var manufactr = $manufactor
-#var item_classes = ['case','motherboard','cpu','cpu_cooler','ram','hdd','psu']
 var world_items = {
 	#item_class : [all_items]
-}
+	}
+var clients = []
 
 
 func _ready():
@@ -16,6 +16,8 @@ func _ready():
 	world_items.ram = manufactr.generate_ram()
 	world_items.cooler = manufactr.generate_cooler()
 	
+	for i in range(10):
+		clients.append(generate_client())
 
 
 func get_item(key=null):
@@ -32,3 +34,22 @@ func generate_starter_pckg():
 		
 		items.append(world_items.get(i)[0])
 	return items
+
+
+func generate_client():
+	var client = wClient.new()
+	client.name_ = rnames[randi()%rnames.size()]
+	client.budget = floor(rand_range(500,2000))
+	return client
+
+
+func get_client():
+	for cl in clients:
+		if !cl.posted_request:
+			return cl
+	var client = generate_client()
+	clients.append(client)
+	return client
+
+
+var rnames = ['Riri','Linus','Yon','Kiba89','Ancapoo','Stiv','Jay','Arnold S.', 'Drake','Marshall','Luda']

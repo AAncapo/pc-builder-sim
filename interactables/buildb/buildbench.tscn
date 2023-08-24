@@ -1,8 +1,14 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://interactables/buildb/buildbench.gd" type="Script" id=1]
-[ext_resource path="res://gui/inventory_gui.tscn" type="PackedScene" id=6]
+[ext_resource path="res://interactables/buildb/build_status.gd" type="Script" id=2]
+[ext_resource path="res://gui/themes/gui_base_theme.tres" type="Theme" id=3]
+[ext_resource path="res://gui/component_button.tscn" type="PackedScene" id=4]
+[ext_resource path="res://interactables/buildb/request_status.gd" type="Script" id=5]
+[ext_resource path="res://gui/inventory_gui.gd" type="Script" id=6]
 [ext_resource path="res://gui/themes/action_button_theme.tres" type="Theme" id=7]
+[ext_resource path="res://gui/filter_button.tscn" type="PackedScene" id=8]
+[ext_resource path="res://gui/items_container.tscn" type="PackedScene" id=9]
 
 [sub_resource type="BoxShape" id=13]
 
@@ -49,7 +55,7 @@ material/0 = SubResource( 9 )
 unique_name_in_owner = true
 transform = Transform( 1, 0, 0, 0, 1, 0, -3.55271e-15, 0, 1, 0, -0.348499, 0 )
 
-[node name="bb_gui" type="Control" parent="."]
+[node name="build_mode_gui" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 10.0
@@ -58,42 +64,7 @@ margin_right = -10.0
 margin_bottom = -10.0
 mouse_filter = 2
 
-[node name="inventory_gui" parent="bb_gui" instance=ExtResource( 6 )]
-
-[node name="All" parent="bb_gui/inventory_gui/VBoxContainer/TabContainer" index="0"]
-margin_top = 24.0
-
-[node name="Components" parent="bb_gui/inventory_gui/VBoxContainer/TabContainer" index="1"]
-margin_top = 24.0
-
-[node name="Tools" parent="bb_gui/inventory_gui/VBoxContainer/TabContainer" index="2"]
-margin_top = 24.0
-
-[node name="RenameDialog" type="ConfirmationDialog" parent="bb_gui"]
-unique_name_in_owner = true
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -89.5
-margin_top = -34.0
-margin_right = 89.5
-margin_bottom = 34.0
-rect_min_size = Vector2( 150, 52.5 )
-window_title = "New project name"
-
-[node name="LineEdit" type="LineEdit" parent="bb_gui/RenameDialog"]
-unique_name_in_owner = true
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 8.0
-margin_top = 8.0
-margin_right = -8.0
-margin_bottom = -36.0
-align = 1
-placeholder_text = "New Build Project"
-
-[node name="new_project" type="Button" parent="bb_gui"]
+[node name="new_project" type="Button" parent="build_mode_gui"]
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -106,7 +77,183 @@ size_flags_horizontal = 6
 theme = ExtResource( 7 )
 text = "start new build project"
 
-[connection signal="item_selected" from="bb_gui/inventory_gui" to="." method="_on_inventory_gui_item_selected"]
-[connection signal="pressed" from="bb_gui/new_project" to="." method="_on_new_project_pressed"]
+[node name="buildmode_inventory" type="Control" parent="build_mode_gui"]
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+rect_min_size = Vector2( 200, 0 )
+size_flags_vertical = 3
+script = ExtResource( 6 )
 
-[editable path="bb_gui/inventory_gui"]
+[node name="bg" type="ColorRect" parent="build_mode_gui/buildmode_inventory"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.145098, 0.145098, 0.145098, 1 )
+
+[node name="HBoxContainer" type="VBoxContainer" parent="build_mode_gui/buildmode_inventory"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+size_flags_vertical = 3
+
+[node name="item_buttons_container" parent="build_mode_gui/buildmode_inventory/HBoxContainer" instance=ExtResource( 9 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 200.0
+margin_bottom = 580.0
+
+[node name="filters" parent="build_mode_gui/buildmode_inventory/HBoxContainer/item_buttons_container" index="0"]
+margin_right = 200.0
+margin_bottom = 21.0
+
+[node name="filter_button" parent="build_mode_gui/buildmode_inventory/HBoxContainer/item_buttons_container/filters" index="0" instance=ExtResource( 8 )]
+margin_left = 29.0
+margin_right = 75.0
+margin_bottom = 21.0
+text = "Builds"
+
+[node name="filter_button2" parent="build_mode_gui/buildmode_inventory/HBoxContainer/item_buttons_container/filters" index="1" instance=ExtResource( 8 )]
+margin_left = 79.0
+margin_right = 171.0
+margin_bottom = 21.0
+text = "Components"
+
+[node name="ScrollContainer" parent="build_mode_gui/buildmode_inventory/HBoxContainer/item_buttons_container" index="1"]
+margin_top = 25.0
+margin_right = 200.0
+margin_bottom = 580.0
+
+[node name="list" parent="build_mode_gui/buildmode_inventory/HBoxContainer/item_buttons_container/ScrollContainer" index="0"]
+margin_right = 200.0
+margin_bottom = 555.0
+
+[node name="request_status" type="Control" parent="build_mode_gui"]
+unique_name_in_owner = true
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -125.0
+margin_top = -100.0
+margin_right = 125.0
+margin_bottom = -50.0
+grow_horizontal = 2
+grow_vertical = 0
+rect_min_size = Vector2( 250, 50 )
+size_flags_vertical = 3
+script = ExtResource( 5 )
+
+[node name="PanelContainer" type="PanelContainer" parent="build_mode_gui/request_status"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_vertical = 0
+theme = ExtResource( 3 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="build_mode_gui/request_status/PanelContainer"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 248.0
+margin_bottom = 48.0
+grow_vertical = 0
+alignment = 1
+
+[node name="bname" type="Label" parent="build_mode_gui/request_status/PanelContainer/VBoxContainer"]
+margin_right = 246.0
+margin_bottom = 19.0
+text = "No build selected"
+align = 1
+
+[node name="stats" type="VBoxContainer" parent="build_mode_gui/request_status/PanelContainer/VBoxContainer"]
+margin_top = 23.0
+margin_right = 246.0
+margin_bottom = 46.0
+size_flags_vertical = 3
+
+[node name="b_installed_components" type="Control" parent="build_mode_gui"]
+unique_name_in_owner = true
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+
+[node name="PanelContainer" type="PanelContainer" parent="build_mode_gui/b_installed_components"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 320.0
+grow_vertical = 2
+rect_min_size = Vector2( 320, 100 )
+size_flags_vertical = 3
+theme = ExtResource( 3 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="build_mode_gui/b_installed_components/PanelContainer"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 318.0
+margin_bottom = 578.0
+custom_constants/separation = 0
+
+[node name="status_label" type="Label" parent="build_mode_gui/b_installed_components/PanelContainer/VBoxContainer"]
+margin_right = 316.0
+margin_bottom = 19.0
+text = "PC Status"
+align = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="build_mode_gui/b_installed_components/PanelContainer/VBoxContainer"]
+margin_left = 18.0
+margin_top = 19.0
+margin_right = 298.0
+margin_bottom = 576.0
+size_flags_horizontal = 6
+size_flags_vertical = 3
+scroll_horizontal_enabled = false
+
+[node name="cbuttons" type="VBoxContainer" parent="build_mode_gui/b_installed_components/PanelContainer/VBoxContainer/ScrollContainer"]
+unique_name_in_owner = true
+margin_right = 280.0
+margin_bottom = 557.0
+rect_min_size = Vector2( 280, 0 )
+size_flags_vertical = 3
+
+[node name="case" parent="build_mode_gui/b_installed_components/PanelContainer/VBoxContainer/ScrollContainer/cbuttons" instance=ExtResource( 4 )]
+margin_right = 280.0
+margin_bottom = 23.0
+
+[node name="motherboard" parent="build_mode_gui/b_installed_components/PanelContainer/VBoxContainer/ScrollContainer/cbuttons" instance=ExtResource( 4 )]
+margin_top = 27.0
+margin_right = 280.0
+margin_bottom = 50.0
+
+[node name="cpu" parent="build_mode_gui/b_installed_components/PanelContainer/VBoxContainer/ScrollContainer/cbuttons" instance=ExtResource( 4 )]
+margin_top = 54.0
+margin_right = 280.0
+margin_bottom = 77.0
+
+[node name="cooler" parent="build_mode_gui/b_installed_components/PanelContainer/VBoxContainer/ScrollContainer/cbuttons" instance=ExtResource( 4 )]
+margin_top = 81.0
+margin_right = 280.0
+margin_bottom = 104.0
+
+[node name="memory" parent="build_mode_gui/b_installed_components/PanelContainer/VBoxContainer/ScrollContainer/cbuttons" instance=ExtResource( 4 )]
+margin_top = 108.0
+margin_right = 280.0
+margin_bottom = 131.0
+
+[node name="storage" parent="build_mode_gui/b_installed_components/PanelContainer/VBoxContainer/ScrollContainer/cbuttons" instance=ExtResource( 4 )]
+margin_top = 135.0
+margin_right = 280.0
+margin_bottom = 158.0
+
+[node name="psu" parent="build_mode_gui/b_installed_components/PanelContainer/VBoxContainer/ScrollContainer/cbuttons" instance=ExtResource( 4 )]
+margin_top = 162.0
+margin_right = 280.0
+margin_bottom = 185.0
+
+[connection signal="pressed" from="build_mode_gui/new_project" to="." method="_on_new_project_pressed"]
+[connection signal="item_selected" from="build_mode_gui/buildmode_inventory" to="." method="_on_buildmode_inventory_item_selected"]
+[connection signal="_pressed" from="build_mode_gui/buildmode_inventory/HBoxContainer/item_buttons_container/filters/filter_button" to="build_mode_gui/buildmode_inventory/HBoxContainer/item_buttons_container" method="_on_filter_button__pressed"]
+[connection signal="_pressed" from="build_mode_gui/buildmode_inventory/HBoxContainer/item_buttons_container/filters/filter_button2" to="build_mode_gui/buildmode_inventory/HBoxContainer/item_buttons_container" method="_on_filter_button__pressed"]
+
+[editable path="build_mode_gui/buildmode_inventory/HBoxContainer/item_buttons_container"]

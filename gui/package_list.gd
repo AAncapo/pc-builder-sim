@@ -27,7 +27,7 @@ func add_package(new_pckg:ItemsPackage):
 	for i in items:
 		var button = itemButton.instance()
 		button.item_linked = i
-		itemlist.add_items(button)
+		itemlist.add_item(button)
 		button.connect("_pressed", self, "_on_itemb_pressed")
 #		button.connect("_mouse_enter",self,"_on_itemb_mouse_enter")
 #		button.connect("_mouse_exit",self,"_on_itemb_mouse_exit")

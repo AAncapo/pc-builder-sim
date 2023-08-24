@@ -2,7 +2,7 @@ extends Control
 
 signal item_selected(component_data)
 
-onready var allItems := $"%All"
+onready var list = $HBoxContainer/item_buttons_container
 var button_temp = preload("res://gui/item_button.tscn")
 
 
@@ -16,7 +16,7 @@ func __on_item_added(new_item, _override):
 	
 	var button = button_temp.instance()
 	button.item_linked = new_item
-	allItems.add_child(button)
+	list.add_item(button)
 	button.connect("_pressed",self,"__on_button_pressed")
 	
 
@@ -25,7 +25,7 @@ func __on_button_pressed(button):
 
 
 func __on_item_removed(item):
-	for b in allItems.get_children():
+	for b in list.get_items():
 		if b.item_linked.id == item.data.id:
 			b.queue_free()
 			return

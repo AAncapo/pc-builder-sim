@@ -6,9 +6,10 @@ signal removed_item(item)
 onready var items = $items
 
 
-func get_as_item(data):
+func get_item_from_dict(data):
 	for i in items.get_children():
 		if i.data.id == data.id:
+			i.set_process(true)
 			return i
 
 
@@ -28,7 +29,8 @@ func _on_inventory_added_item(item_dict, override):
 	var packed_scn = load(path)
 	var _item = packed_scn.instance()
 	_item.data = item_dict
-	$items.add_child(_item)
+	_item.set_process(false)
+	items.add_child(_item)
 
 
 func _on_inventory_removed_item(item):

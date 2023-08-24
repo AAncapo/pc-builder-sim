@@ -1,5 +1,9 @@
 class_name Component extends Item
 
+var power_comsumption: int
+var component_class: String
+var parent_cclass: String
+
 
 func install_component(component:Component):
 	var slots = []
@@ -11,7 +15,7 @@ func install_component(component:Component):
 	# if have any slot
 	if !slots.empty():
 		for s in slots:
-			if s.name==str('s-',component.data.item_class):
+			if s.name == str('s-',component.data.item_class):
 				# if slot have subslots
 				if s.get_child_count() > 0:
 					for ss in s.get_children():

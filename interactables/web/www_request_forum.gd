@@ -4,16 +4,14 @@ extends Control
 var wReqPostT = preload("res://interactables/web/w_request_post.tscn")
 
 
-func generate_new_request():
-	var br = BuildRequest.new()
-	br.client = wClient.new()
-	br.r_description = 'Hi my name is Timmy, i want beeg pc to play minecraft!!!!'
+func generate_new_request_post():
+	var new_request_post: wRequestPost = wReqPostT.instance()
+	var c = Market.get_client()
+	c.generate_request()
+	new_request_post.set_values(c)
 	
-	var new_brequest_post: wRequestPost = wReqPostT.instance()
-	new_brequest_post.set_values(br, br.client, br.r_description)
-	
-	$"%posts".add_child(new_brequest_post)
-	new_brequest_post.connect("_pressed",self,"_on_post_pressed")
+	$"%posts".add_child(new_request_post)
+	new_request_post.connect("_pressed",self,"_on_post_pressed")
 
 
 func _on_post_pressed(post):

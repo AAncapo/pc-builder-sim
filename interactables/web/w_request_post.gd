@@ -3,19 +3,12 @@ class_name wRequestPost extends Control
 signal _pressed(post)
 
 var _client: wClient
-var description
-var profile_img
-var brequest: BuildRequest
 
-func set_values(rb:BuildRequest, a:wClient, desc:String, pfp=null):
-	brequest = rb
-	_client = a
-	description = desc
-	profile_img = pfp
-	
-	$link.text = str(_client.id,'  -  ',description)
-	$link.icon = profile_img
+func set_values(client:wClient):
+	_client = client
+	$link.text = str(client.name_,'  -  ',client.request.description)
 
 
 func _on_link_pressed():
-	emit_signal("_pressed",brequest)
+	emit_signal("_pressed",self)
+	$link.disabled = true
