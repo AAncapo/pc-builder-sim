@@ -29,8 +29,6 @@ func add_package(new_pckg:ItemsPackage):
 		button.item_linked = i
 		itemlist.add_item(button)
 		button.connect("_pressed", self, "_on_itemb_pressed")
-#		button.connect("_mouse_enter",self,"_on_itemb_mouse_enter")
-#		button.connect("_mouse_exit",self,"_on_itemb_mouse_exit")
 
 
 func _on_itemb_mouse_enter(button):
@@ -43,7 +41,7 @@ func _on_itemb_mouse_exit():
 
 
 func _on_itemb_pressed(_button:LinkedButton):
-	Inventory.emit_signal("added_item",_button.item_linked, false)
+	Inventory.add_item(_button.item_linked, false)
 	_button.queue_free()
 	
 	yield(get_tree().create_timer(0.1),"timeout")
@@ -61,7 +59,7 @@ func _on_take_all_pressed():
 			_on_itemb_pressed(button)
 
 func _on_exit_pressed():
-	Events.emit_signal("interaction_exited")
+	Events.emit_signal("interaction_ended")
 
 
 func _on_TabController_empty():

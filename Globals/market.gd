@@ -1,6 +1,7 @@
 extends Node  ## Market ##
 
-onready var manufactr = $manufactor
+#onready var manufactr = $manufactor
+var manufactors = []
 var world_items = {
 	#item_class : [all_items]
 	}
@@ -8,16 +9,28 @@ var clients = []
 
 
 func _ready():
-	world_items.cpu = manufactr.generate_cpu()
-	world_items.motherboard = manufactr.generate_mobo()
-	world_items.case = manufactr.generate_case()
-	world_items.hdd = manufactr.generate_hdd()
-	world_items.psu = manufactr.generate_psu()
-	world_items.ram = manufactr.generate_ram()
-	world_items.cooler = manufactr.generate_cooler()
+	manufactors = [
+		Manufactor.CpuManufactor.new(),
+		Manufactor.MoboManufactor.new(),
+		Manufactor.CaseManufactor.new(),
+		Manufactor.MemManufactor.new(),
+		Manufactor.PsuManufactor.new(),
+		Manufactor.StorageManufactor.new(),
+		Manufactor.CoolerManufactor.new(),
+	]
+	for m in manufactors:
+		var mnfctr = m
+		world_items[m.component_class] = mnfctr.generate_components()
 	
-	for i in range(10):
+	
+	for _i in range(10):
 		clients.append(generate_client())
+	
+	#TODO: use wait until tree is ready function
+	yield(get_tree().create_timer(1.0),"timeout")
+	
+	for _i in range(5):
+		get_client().generate_request()
 
 
 func get_item(key=null):
@@ -36,14 +49,14 @@ func generate_starter_pckg():
 	return items
 
 
-func generate_client():
-	var client = wClient.new()
+func generate_client() -> Client:
+	var client = Client.new()
 	client.name_ = rnames[randi()%rnames.size()]
 	client.budget = floor(rand_range(500,2000))
 	return client
 
 
-func get_client():
+func get_client() -> Client:
 	for cl in clients:
 		if !cl.posted_request:
 			return cl

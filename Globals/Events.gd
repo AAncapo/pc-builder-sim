@@ -1,8 +1,13 @@
 extends Node
 
 signal new_package(pckg)
-signal interaction_exited
+signal interaction_started(obj)
+signal interaction_ended
 
-## Web ##
+signal new_client_request(req)
 signal request_accepted(post)
-signal request_completed(post)
+signal request_completed(request)
+
+signal component_installed(cdata)
+signal component_uninstalled(cdata)
+signal no_slot_available(cdata)

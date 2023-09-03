@@ -1,14 +1,14 @@
 class_name wRequestPost extends Control
 
-signal _pressed(post)
+signal _pressed(req)
 
-var _client: wClient
+var request: BuildRequest
 
-func set_values(client:wClient):
-	_client = client
-	$link.text = str(client.name_,'  -  ',client.request.description)
+func set_values(req):
+	request = req
+	$link.text = str(request.client.name_,'  -  ',request.description)
 
 
 func _on_link_pressed():
-	emit_signal("_pressed",self)
+	emit_signal("_pressed",request)
 	$link.disabled = true

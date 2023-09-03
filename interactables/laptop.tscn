@@ -17,6 +17,7 @@ albedo_color = Color( 0.145098, 0.145098, 0.145098, 1 )
 collision_layer = 4
 collision_mask = 0
 script = ExtResource( 1 )
+uiControl = NodePath("www")
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.292551, 0 )
@@ -37,8 +38,7 @@ material/0 = SubResource( 15 )
 transform = Transform( 1.70169, 0, 0, 0, 0.0432348, 0.99968, 0, -1.7103, 0.0252696, 0, 1.01923, 0.0104027 )
 mesh = SubResource( 16 )
 
-[node name="cam_interaction_point" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.829379, 0.558686, 0, -0.558686, 0.829379, 0, 0.707953, 0.18817 )
-
 [node name="www" parent="." instance=ExtResource( 2 )]
-visible = false
+mouse_filter = 2
+
+[editable path="www"]

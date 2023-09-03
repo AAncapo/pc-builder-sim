@@ -10,12 +10,12 @@ var posted_date setget setPostedDate
 var icon setget setIcon
 
 
-func set_values(item_data:Dictionary,_new:bool, _price:float, date = 'now'):
-	item_linked = item_data
+func set_values(item:Dictionary,_new:bool, _price:float, date = 'now'):
+	item_linked = item
 	self.is_new = _new
 	self.price = _price
 #	self.icon = item_linked.icon_
-	self.description = item_data.name_
+	self.description = item_linked.name_
 	self.posted_date = date
 
 

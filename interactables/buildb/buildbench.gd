@@ -1,30 +1,23 @@
 class_name BuildBench extends Interactable
 
 onready var bbase := $"%buildBase"
-onready var binstalled := $"%b_installed_components"
-onready var br_status := $"%request_status"
-var is_active := false
+
 var dragging := false
-var current_bp: Build setget set_current_build
+var current_bp setget set_current_build
 func set_current_build(value):
 	current_bp = value
-	if current_bp != null:
-		br_status.current_build_data = current_bp.data
-		for br in build_requests:
-			if br.id == current_bp.data.id:
-				binstalled.update_status(current_bp.data)
-var build_requests = []
+	ui_control._update(current_bp)
+var request_db = preload("res://request/RequestDatabase.tres")
 
 
 func _ready():
 	Events.connect("request_accepted",self, "_on_request_accepted")
+	Events.connect("request_completed",self, "_on_request_completed")
 
 
 func _process(_delta):
-	$build_mode_gui.visible = is_active
-	if is_active:
+	if ui_control.visible:
 		dragging = Input.is_action_pressed("rotate_item")
-
 
 func _unhandled_input(event):
 	if event is InputEventMouseMotion && dragging && current_bp:
@@ -32,58 +25,53 @@ func _unhandled_input(event):
 		current_bp.rotation_degrees.y = wrapf(current_bp.rotation_degrees.y, 0.0, 360.0)
 
 
-func interact():
-	is_active = true
-func exit():
-	is_active = false
+func _on_request_accepted(req):
+	create_new_build(req)
+	request_db.accepted_requests.append(req)
 
 
-func _on_buildmode_inventory_item_selected(component_data):
-	if component_data.item_class == 'build':
-		for b in bbase.get_children():
-			b.visible = component_data.id == b.data.id
-		
-		for b in bbase.get_children():
-			if b.visible: 
-				self.current_bp = b
-				binstalled.update_status(current_bp.data)
-				return
-	
-		var build = Inventory.get_item_from_dict(component_data)
-		Utils.change_parent(build, bbase)
-		self.current_bp = build
-		return
-	else:
-		if current_bp:
-			current_bp.add_component(component_data)
-			#update build info ui
-			binstalled.update_status(current_bp.data)
-	
-	#update request status ui
-	br_status.current_build_data = current_bp.data
+func _on_request_completed(req):
+	for ar in request_db.accepted_requests:
+		if ar == req:
+			request_db.completed_requests.append(ar)
+			request_db.accepted_requests.remove(request_db.accepted_requests.find(ar))
+			if current_bp.data['request'] == req:
+				#TODO: send to client
+				current_bp.data['request'].client.posted_request = false
+				Inventory.remove_item(current_bp)
+				self.current_bp = null
 
 
-func create_new_build(client:wClient=null):
+func _on_BuildModeUI_start_new_build():
+	create_new_build(BuildRequest.new())
+
+
+func create_new_build(req:BuildRequest):
 	var bdata = {}
-	bdata.item_class = 'build'
-	bdata.id = str(Utils.generate_id())
+	bdata.id = Utils.generate_id()
+	bdata.class_ = 'build'
+	bdata.required_components = {'case':{}}
+	var name_ = str(req.client.name_,"'s ",req.get_request_class(),' PC') if req.client else 'New Custom Build'
+	bdata.name_ = name_
+	bdata.request = req
 	
-	if client:
-		bdata.name_ = str(client.name_,"'s ",client.request.get_request_class(),' PC')
-		bdata.request = client.request
-	else:
-		bdata.name_ = 'New Custom Build'
-		var r = BuildRequest.new()
-		r.request_class = r.RequestClass.Undefined
-		r.id = Utils.generate_id()
-		bdata.request = r
-	Inventory.emit_signal("added_item",bdata,true)
+	var build = load("res://item/build/build.tscn").instance()
+	bbase.add_child(build)
+	build.data = bdata
+	Inventory.add_item(bdata,true)
 
 
-func _on_new_project_pressed():
-	create_new_build()
+func _on_BuildModeUI_build_selected(bdict):
+	var builds = bbase.get_children()
+	# show selected build and hide the rest #
+	for b in builds:
+		b.visible = bdict.id == b.data.id
+		# set selected as the current_build #
+		if b.visible: self.current_bp = b
 
 
-func _on_request_accepted(post:wRequestPost):
-	create_new_build(post._client)
-	build_requests.append(post._client.request)
+func _on_BuildModeUI_component_selected(cdict):
+	if current_bp:
+		if current_bp.install_component(cdict):
+			current_bp.added_components.append(cdict)
+		ui_control._update(current_bp)

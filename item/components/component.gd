@@ -1,33 +1,48 @@
 class_name Component extends Item
 
-var power_comsumption: int
-var component_class: String
-var parent_cclass: String
+
+var slots = []
+var class_: String
+var specs = {}
+
+var installed_components = []
+var required_components = {}
 
 
-func install_component(component:Component):
-	var slots = []
-	if data.item_class=='case' && component.data.parent_class == 'motherboard':
-		var mboardSlot = $slots.get_node_or_null("s-motherboard")
-		if mboardSlot: 
-			return mboardSlot.get_child(0).install_component(component)
+func install_component(cdata:Dictionary):
 	slots = $slots.get_children()
-	# if have any slot
-	if !slots.empty():
-		for s in slots:
-			if s.name == str('s-',component.data.item_class):
-				# if slot have subslots
-				if s.get_child_count() > 0:
-					for ss in s.get_children():
-						# if subslot is free
-						if ss.get_child_count() == 0:
-							## install component in sub_slot
-							Utils.change_parent(component,ss)
-							return true
-				else:
-					## install component in unique slot #3
-					Utils.change_parent(component,s)
-					return true
+	for s in slots:
+		if s.name == str('s-',cdata.class_):
+			# if slot have subslots
+			if s.get_child_count() > 0:
+				for ss in s.get_children():
+					# if subslot is free
+					if ss.get_child_count() == 0:
+						## install in sub_slot ##
+						add_component(cdata,ss)
+						return true
+				Events.emit_signal("no_slot_available",cdata)
+			else:
+				## install in unique slot ##
+				add_component(cdata,s)
+				return true
+	## this component hasnt any slot available for component ##
+	for ic in installed_components:
+		if ic.install_component(cdata):
+			return true
+
+
+func add_component(cdata, parent):
+	var component = get_item_from_dict(cdata)
+	parent.add_child(component)
+	installed_components.append(component)
+	Events.emit_signal("component_installed",cdata)
+
+
+func get_item_from_dict(data:Dictionary) -> Item:
+	var path = str("res://item/components/custom_components/starter_",data.class_,".tscn")
+	var item = load(path).instance()
+	return item
 
 
 func get_mesh():

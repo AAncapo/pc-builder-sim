@@ -32,7 +32,7 @@ func _on_AcceptDialog_confirmed():
 		add_post(selected_item)
 		
 		# remove item from inventory #
-		Events.emit_signal("removed_item_from_inv",selected_item)
+		Inventory.emit_signal("removed_item_from_inv",selected_item)
 		
 		selected_item = null
 

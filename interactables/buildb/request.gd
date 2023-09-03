@@ -9,10 +9,10 @@ enum RequestClass {
 	Modeling,
 	Writing,
 }
-var request_class = RequestClass.VideoEditing setget setRequiredComponents, get_request_class
-var id
-var description
+var request_class = RequestClass.Undefined setget setRequiredComponents, get_request_class
+var id setget ,getId
 var client
+var description
 
 var default_specs = { 'cpu':{},'motherboard':{},'memory':{},'case':{},'storage':{},'cooler':{},'psu':{} }
 var specs = default_specs
@@ -34,3 +34,7 @@ func setRequiredComponents(value):
 
 func get_request_class():
 	return RequestClass.keys()[request_class]
+
+func getId():
+	if !id: id = Utils.generate_id()
+	return id

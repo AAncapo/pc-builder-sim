@@ -1,40 +1,35 @@
 extends Spatial  ## Inventory ##
 
-signal added_item(item_dict, override)
-signal removed_item(item)
+signal added_item(item_data)
+signal removed_item(item_data)
 
-onready var items = $items
-
-
-func get_item_from_dict(data):
-	for i in items.get_children():
-		if i.data.id == data.id:
-			i.set_process(true)
-			return i
+var items = []
 
 
-func _on_inventory_added_item(item_dict, override):
-	for i in items.get_children():
-		if i.data.id == item_dict.id:
+#func get_item_from_dict(data):
+#	for i in items:
+#		if i.data.id == data.id:
+#			i.set_process(true)
+#			return i
+
+
+func add_item(item:Dictionary, override: bool):
+	for i in items:
+		if i.id == item.id:
 			if !override:
-				item_dict.id = Utils.generate_id()
+				item['id'] = Utils.generate_id()
 			else:
 				i.queue_free()
-	var path
-	if item_dict.item_class != 'build':
-		#TODO: also check if is from a client
-		path = str("res://item/components/custom_components/starter_",item_dict.item_class,".tscn")
-	else:
-		path = "res://item/build/build.tscn"
-	var packed_scn = load(path)
-	var _item = packed_scn.instance()
-	_item.data = item_dict
-	_item.set_process(false)
-	items.add_child(_item)
+	items.append(item)
+	
+	emit_signal("added_item",item)
 
 
-func _on_inventory_removed_item(item):
-	for i in items.get_children():
-		if i==item:
+func remove_item(item_data):
+	for i in items:
+		print(i.data.id,' ',item_data.id)
+		if i.data.id==item_data.id:
 			i.queue_free()
+			emit_signal("removed_item",item_data)
+			print('removed')
 			return

@@ -1,113 +1,140 @@
 class_name Manufactor extends Node
 
-var cpu_models = ['Nova','Hyper','Ripper']
 
-
-func generate_mobo():
-	var mobos = []
-	var mobo_dict = {}
-	mobo_dict.id = Utils.generate_id()
-	mobo_dict.item_class = 'motherboard'
-	mobo_dict.parent_class = 'case'
-	mobo_dict.name_ = 'MEGABYTE Z99 DDR3'
-	mobo_dict.form_factor = 'ATX'
-	mobo_dict.ram_slots = 2
+class CpuManufactor:
 	
-	mobos.append(mobo_dict)
-	return mobos
-
-
-func generate_case():
-	var cases = []
-	var case = {}
-	case.id = Utils.generate_id()
-	case.item_class = 'case'
-	case.parent_class = 'build'
-	case.name_ = 'Thermaltake 222 EVo'
-	case.form_factor = 'MidTower'
-	case.hdd_slots = 2
+	var component_class = 'cpu'
+	var manufactor_name = 'CORE'
+	var currentSerie:int = 100
+	var serieStep:int = 55 if randf()<0.5 else 200
 	
-	cases.append(case)
-	return cases
-
-
-func generate_cpu():
-	var cpus = []
-	var cur_gen = 1
-	var cores = 2
-	var cache = 2.0
-	var threads = 0
-	var frequency = 1.6
-	for g in range(cpu_models.size()):
-		var cur_series_max = 200
-		var mdl = cpu_models[g]
-		var serie = 100
-		while(serie < cur_series_max):
-			var cpu = {
-				'id':Utils.generate_id(),
-				'item_class':'cpu',
-				'parent_class':'motherboard',
-				'name_':str(mdl,' ',cur_gen,serie,' ',frequency,'Ghz ',cores,'-core',' ',threads,' threads ',cache,'mb cache'),
-				'model':mdl,
-				'gen':cur_gen,
-				'serie':serie,
-				'cores':cores,
-				'cache':floor(cache),
-				'threads':threads,
-				'base_frecuency':frequency,
+	const LAST_GEN:int = 10
+	var currentGen:int = 1
+	
+	const MAX_CORES:int = 24
+	const MIN_CORES:int = 2
+	var coreStep:int = 2
+	var currentCoreCount:int = 2
+	
+	const MAX_FREQUENCY:float = 4.0
+	const MIN_FREQUENCY:float = 1.1
+	var freqStep:float = 0.05
+	var currentFreq:float = 1.0
+	var required_components = {'cooler':{}}
+	
+	func generate_components() -> Array:
+		var cpus = []
+		while(currentGen <= LAST_GEN):
+			var generated_per_gen = 5 if randf()<0.8 else 7
+			for _m in range(generated_per_gen):
+				## generate all cpus for the current model
+				# assign serie
+				var specs = {}
+				specs.generation = currentGen
+				specs.serie = currentSerie
+				currentSerie += serieStep
+				# assign frequency
+				if currentFreq >= MAX_FREQUENCY:
+					currentFreq = MAX_FREQUENCY
+				specs.base_frequency = currentFreq
+				specs.turbo_frequency = currentFreq+rand_range(currentFreq,currentFreq+rand_range(0.5,2.0))
+				
+				currentFreq += freqStep
+				# assign cores
+				if currentCoreCount >= MAX_CORES:
+					currentCoreCount = MAX_CORES
+				specs.cores = currentCoreCount
+				if randf()>0.7:
+					currentCoreCount += coreStep
+				
+				var name_ = str(manufactor_name,' ',specs['generation'],specs['serie'],' ',specs['cores'],'-core ',specs['base_frequency'],'Ghz')
+				var component_data = {
+					'id':Utils.generate_id(),
+					'class_':component_class,
+					'name_':name_,
+					'specs':specs,
+					'required_components':required_components
 				}
-			cpus.append(cpu)
-			serie += 10
-			cores += 2
-			cache += 0.1
-			threads += 2
-			frequency += 0.1
-		
-		cur_gen += 1
-		cur_series_max += 100
-	
-	return cpus
+				cpus.append(component_data)
+			currentGen += 1
+		return cpus
 
-func generate_ram():
-	var rams = []
-	var ram_dict = {}
-	ram_dict.id = Utils.generate_id()
-	ram_dict.item_class = 'ram'
-	ram_dict.parent_class = 'motherboard'
-	ram_dict.name_ = 'Corsair 4GB 1333Mhz'
-	
-	rams.append(ram_dict)
-	return rams
+class MoboManufactor:
+	var component_class = 'motherboard'
+	func generate_components():
+		var mobos = []
+		var mobo = {
+			'id':Utils.generate_id(),
+			'class_':component_class,
+			'name_':'MOBO MEGABYTE Z99 DDR3',
+			'specs':{ 'form_factor':0, 'memory_slots':2 },
+			'required_components':{'cpu':{},'memory':{}}
+		}
+		mobos.append(mobo)
+		return mobos
 
-func generate_cooler():
-	var coolers = []
-	var cooler_dict = {}
-	cooler_dict.id = Utils.generate_id()
-	cooler_dict.item_class = 'cooler'
-	cooler_dict.parent_class = 'motherboard'
-	cooler_dict.name_ = 'CoolerMaster'
+class CaseManufactor:
 	
-	coolers.append(cooler_dict)
-	return coolers
+	var component_class = 'case'
+	func generate_components():
+		var cases = []
+		var case = {
+			'id':Utils.generate_id(),
+			'class_':component_class,
+			'name_':'CASE Thermaltake 222 EVo',
+			'specs':{'form_factor':0,'storage_slots':2},
+			'required_components': {'motherboard':{},'psu':{},'storage':{}}
+		}
+		cases.append(case)
+		return cases
 
-func generate_psu():
-	var psus = []
-	var psu_dict = {}
-	psu_dict.id = Utils.generate_id()
-	psu_dict.item_class = 'psu'
-	psu_dict.parent_class = 'case'
-	psu_dict.name_ = 'EVGA 600w'
+class MemManufactor:
 	
-	psus.append(psu_dict)
-	return psus
+	var component_class = 'memory'
+	func generate_components():
+		var mems = []
+		var mem = {}
+		mem.id = Utils.generate_id()
+		mem.class_ = component_class
+		mem.name_ = 'RAM Revengeance 16GB 1333Mhz'
+		mem.specs = { 'size':16 }
+		mem.required_components = {}
+		mems.append(mem)
+		return mems
 
-func generate_hdd():
-	var hdds = []
-	var hdd_dict = {}
-	hdd_dict.id = Utils.generate_id()
-	hdd_dict.item_class = 'hdd'
-	hdd_dict.parent_class = 'case'
-	hdd_dict.name_ = 'Seagate 1TB'
+class CoolerManufactor:
+	var component_class = 'cooler'
+	func generate_components():
+		var coolers = []
+		var cooler = {}
+		cooler.id = Utils.generate_id()
+		cooler.class_ = component_class
+		cooler.name_ = 'COOLER CoolerMaster'
+		cooler.specs = {}
+		coolers.append(cooler)
+		return coolers
+
+class PsuManufactor:
+	var component_class = 'psu'
+	func generate_components():
+		var psus = []
+		var psu = {}
+		psu.id = Utils.generate_id()
+		psu.class_ = component_class
+		psu.name_ = 'PSU EVGA 600w'
+		psu.specs = {}
+		psus.append(psu)
+		return psus
+
+class StorageManufactor:
 	
-	hdds.append(hdd_dict)
-	return hdds
+	var component_class = 'storage'
+	func generate_components():
+		var hdds = []
+		var storage = {}
+		storage.id = Utils.generate_id()
+		storage.class_ = component_class
+		storage.name_ = 'HDD Seagate 1TB'
+		storage.specs = { 'size':1000 }
+		hdds.append(storage)
+		return hdds

@@ -9,7 +9,7 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Item",
+"base": "Component",
 "class": "Build",
 "language": "GDScript",
 "path": "res://item/build/build.gd"
@@ -24,10 +24,25 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://interactables/buildb/request.gd"
 }, {
+"base": "Component",
+"class": "Case",
+"language": "GDScript",
+"path": "res://item/components/case.gd"
+}, {
+"base": "Node",
+"class": "Client",
+"language": "GDScript",
+"path": "res://interactables/web/client.gd"
+}, {
 "base": "Item",
 "class": "Component",
 "language": "GDScript",
 "path": "res://item/components/component.gd"
+}, {
+"base": "Component",
+"class": "Cooler",
+"language": "GDScript",
+"path": "res://item/components/cooler.gd"
 }, {
 "base": "Component",
 "class": "Cpu",
@@ -64,6 +79,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://manufactor/manufactor.gd"
 }, {
+"base": "Component",
+"class": "Memory",
+"language": "GDScript",
+"path": "res://item/components/memory.gd"
+}, {
+"base": "Component",
+"class": "Motherboard",
+"language": "GDScript",
+"path": "res://item/components/motherboard.gd"
+}, {
 "base": "KinematicBody",
 "class": "Player",
 "language": "GDScript",
@@ -79,10 +104,15 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://interactables/receiver.gd"
 }, {
-"base": "Node",
-"class": "wClient",
+"base": "Resource",
+"class": "RequestDatabase",
 "language": "GDScript",
-"path": "res://interactables/web/client.gd"
+"path": "res://request/request_database.gd"
+}, {
+"base": "Component",
+"class": "Storage",
+"language": "GDScript",
+"path": "res://item/components/storage.gd"
 }, {
 "base": "Control",
 "class": "wComponentDetails",
@@ -98,7 +128,10 @@ _global_script_class_icons={
 "Build": "",
 "BuildBench": "",
 "BuildRequest": "",
+"Case": "",
+"Client": "",
 "Component": "",
+"Cooler": "",
 "Cpu": "",
 "Interactable": "",
 "Item": "",
@@ -106,10 +139,13 @@ _global_script_class_icons={
 "Laptop": "",
 "LinkedButton": "",
 "Manufactor": "",
+"Memory": "",
+"Motherboard": "",
 "Player": "",
 "Psu": "",
 "Receiver": "",
-"wClient": "",
+"RequestDatabase": "",
+"Storage": "",
 "wComponentDetails": "",
 "wRequestPost": ""
 }
@@ -135,8 +171,12 @@ gdscript/warnings/return_value_discarded=false
 
 [display]
 
+window/size/width=1280
+window/size/height=720
 window/size/test_width=800
 window/size/test_height=600
+window/stretch/mode="2d"
+window/stretch/aspect="keep"
 
 [gui]
 

@@ -3,7 +3,7 @@ class_name Receiver extends Interactable
 export (PackedScene) var starter_pckg
 
 onready var pckg_models := $pckg_models
-onready var pckgs_gui := $ReceivedPackages
+onready var pckgs_gui := $ReceiverUI
 
 
 func _ready():
@@ -20,12 +20,6 @@ func spawn_pckg(pckg:ItemsPackage):
 
 func __on_Event_new_package(pckg):
 	spawn_pckg(pckg)
-
-
-func interact():
-	pckgs_gui.show()
-func exit():
-	pckgs_gui.hide()
 
 
 func _on_ReceivedPackages_pckg_removed(p):

@@ -3,16 +3,16 @@ extends Control
 
 var wReqPostT = preload("res://interactables/web/w_request_post.tscn")
 
-
-func generate_new_request_post():
-	var new_request_post: wRequestPost = wReqPostT.instance()
-	var c = Market.get_client()
-	c.generate_request()
-	new_request_post.set_values(c)
-	
-	$"%posts".add_child(new_request_post)
-	new_request_post.connect("_pressed",self,"_on_post_pressed")
+func _ready():
+	Events.connect("new_client_request",self,"_on_new_client_request")
 
 
-func _on_post_pressed(post):
-	Events.emit_signal("request_accepted",post)
+func _on_new_client_request(req):
+	var req_post: wRequestPost = wReqPostT.instance()
+	req_post.set_values(req)
+	$"%posts".add_child(req_post)
+	req_post.connect("_pressed",self,"_on_post_pressed")
+
+
+func _on_post_pressed(req):
+	Events.emit_signal("request_accepted",req)

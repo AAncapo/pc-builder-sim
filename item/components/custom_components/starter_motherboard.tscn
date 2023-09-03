@@ -5,13 +5,16 @@
 
 [node name="starter_motherboard" instance=ExtResource( 1 )]
 
-[node name="ram1" parent="slots/s-ram" index="0"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0408366, 0.0889881, 0.261283 )
+[node name="memory1" parent="slots/s-memory" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0621505, 0.260687 )
 
-[node name="ram2" parent="slots/s-ram" index="1"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0408366, 0.0889881, 0.293327 )
+[node name="memory2" parent="slots/s-memory" index="1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.063877, 0.293489 )
 
 [node name="s-cpu" parent="slots" index="1"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0112975, 0.0778194, 0.0993996 )
+
+[node name="s-cooler" parent="slots" index="2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.081141, 0.100131 )
 
 [node name="motherboard" parent="visual" index="0" instance=ExtResource( 2 )]

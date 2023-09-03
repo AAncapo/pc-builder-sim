@@ -3,8 +3,8 @@
 [ext_resource path="res://player/player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://interactables/receiver.tscn" type="PackedScene" id=2]
 [ext_resource path="res://interactables/laptop.tscn" type="PackedScene" id=3]
-[ext_resource path="res://main.gd" type="Script" id=5]
 [ext_resource path="res://interactables/buildb/buildbench.tscn" type="PackedScene" id=7]
+[ext_resource path="res://main.gd" type="Script" id=11]
 
 [sub_resource type="CubeMesh" id=1]
 flip_faces = true
@@ -32,7 +32,7 @@ albedo_color = Color( 0.643137, 0.643137, 0.643137, 1 )
 [sub_resource type="CubeMesh" id=10]
 
 [node name="main" type="Spatial"]
-script = ExtResource( 5 )
+script = ExtResource( 11 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 0.930238, 0.257673, -0.261269, 0, 0.711989, 0.70219, 0.366956, -0.653204, 0.66232, 0, 0, 0 )
@@ -80,70 +80,43 @@ transform = Transform( 0.105727, 0, 0, 0, 0.448526, 0, 0, 0, 0.600278, 1.26417, 
 mesh = SubResource( 10 )
 material/0 = SubResource( 9 )
 
-[node name="player" parent="." instance=ExtResource( 1 )]
-transform = Transform( 0.0579996, 0, 0.998317, 0, 1, 0, -0.998317, 0, 0.0579996, 0, 0, 0 )
-
 [node name="receiver" parent="." instance=ExtResource( 2 )]
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4.84346, 0, 0 )
+interactionPoint = NodePath("Position3D")
+
+[node name="ReceiverUI" parent="receiver" index="3"]
+visible = false
+
+[node name="Position3D" type="Position3D" parent="receiver"]
+transform = Transform( -0.999974, -0.00183055, 0.00698953, 6.86449e-09, 0.967374, 0.253353, -0.00722523, 0.253346, -0.967349, -0.026937, 0.729204, -1.11543 )
 
 [node name="buildbench" parent="." instance=ExtResource( 7 )]
 transform = Transform( -0.957993, 0, 0.286792, 0, 1, 0, -0.286792, 0, -0.957993, -2.14792, 1.27134, 3.51128 )
+interactionPoint = NodePath("Position3D2")
+
+[node name="BuildModeUI" parent="buildbench" index="3"]
+visible = false
+
+[node name="Position3D2" type="Position3D" parent="buildbench"]
+transform = Transform( 0.963942, 0.0217955, -0.265217, 1.35792e-08, 0.996641, 0.0819038, 0.266111, -0.0789505, 0.960704, -0.0285745, 0.118605, 0.277371 )
 
 [node name="laptop" parent="." instance=ExtResource( 3 )]
 transform = Transform( 0.760032, 0, 0.649886, 0, 1, 0, -0.649886, 0, 0.760032, -2.85869, 0.966506, -3.21468 )
+interactionPoint = NodePath("Position3D2")
 
-[node name="gui" type="Control" parent="."]
+[node name="www" parent="laptop" index="2"]
 visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
 
-[node name="new_package_notif" type="Control" parent="gui"]
-visible = false
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -20.0
-margin_right = 20.0
-margin_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
-rect_min_size = Vector2( 300, 100 )
+[node name="Position3D2" type="Position3D" parent="laptop"]
+transform = Transform( 0.997422, -0.0656521, 0.0289537, 0.059402, 0.981865, 0.180034, -0.0402482, -0.17785, 0.983234, -0.0280629, 0.0452576, 0.511836 )
 
-[node name="bg" type="ColorRect" parent="gui/new_package_notif"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-color = Color( 0.145098, 0.145098, 0.145098, 1 )
+[node name="player" parent="." instance=ExtResource( 1 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0 )
 
-[node name="VBoxContainer" type="VBoxContainer" parent="gui/new_package_notif"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 20.0
-margin_top = 5.0
-margin_right = -20.0
-margin_bottom = -5.0
-custom_constants/separation = 5
-alignment = 1
-
-[node name="Label" type="Label" parent="gui/new_package_notif/VBoxContainer"]
-margin_top = 2.0
-margin_right = 260.0
-margin_bottom = 33.0
-text = "NEW ITEMS ARRIVED!
-Check the RECEIVER at the door!!"
-align = 1
-
-[node name="CheckBox" type="CheckBox" parent="gui/new_package_notif/VBoxContainer"]
-margin_top = 38.0
-margin_right = 260.0
-margin_bottom = 62.0
-text = "Don't show this again"
-
-[node name="Button" type="Button" parent="gui/new_package_notif/VBoxContainer"]
-margin_top = 67.0
-margin_right = 260.0
-margin_bottom = 87.0
-text = "continue"
-
+[editable path="receiver"]
+[editable path="receiver/ReceiverUI"]
+[editable path="buildbench"]
+[editable path="buildbench/BuildModeUI"]
+[editable path="laptop"]
+[editable path="laptop/www"]
 [editable path="player"]

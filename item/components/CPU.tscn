@@ -5,3 +5,5 @@
 
 [node name="CPU" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
+
+[node name="s-cooler" type="Position3D" parent="slots" index="0"]

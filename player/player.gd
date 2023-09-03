@@ -11,7 +11,7 @@ var camera_locked := false
 
 func _ready():
 	toggle_or_set_mouse_mode()
-	Events.connect("interaction_exited", self, "_on_exit_interaction")
+	Events.connect("interaction_ended", self, "_on_interaction_ended")
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -28,13 +28,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			enter_interaction(interact_obj)
 			toggle_or_set_mouse_mode()
 	
-#	if event.is_action_pressed('inventory') && !interact_obj:
-#		inventory_gui.visible = !inventory_gui.visible
-#		toggle_or_set_mouse_mode(0 if inventory_gui.visible else 2)
-	
 	if event.is_action_pressed("ui_cancel"):
 		if interact_obj:
-			_on_exit_interaction()
+			_on_interaction_ended()
 			return
 		toggle_or_set_mouse_mode()
 
@@ -52,10 +48,12 @@ func toggle_or_set_mouse_mode(mouse_mode:int = -1):
 func enter_interaction(obj:Interactable):
 	$"%cursor".hide()
 	camera_locked = true
-	obj.interact()
+	cam.look_at(obj.interaction_point.global_translation,Vector3.UP)
+	interact_obj.enter()
+#	Events.emit_signal("interaction_started",interact_obj)
 
 
-func _on_exit_interaction():
+func _on_interaction_ended():
 	$"%cursor".show()
 	interact_obj.exit()
 	interact_obj = null
