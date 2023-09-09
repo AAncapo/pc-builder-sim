@@ -71,7 +71,12 @@ func _on_BuildModeUI_build_selected(bdict):
 
 
 func _on_BuildModeUI_component_selected(cdict):
+	if cdict['installed'] == true:
+		Events.emit_signal("component_already_installed",cdict)
+		return
+		
 	if current_bp:
 		if current_bp.install_component(cdict):
+			cdict['installed'] = true
 			current_bp.added_components.append(cdict)
 		ui_control._update(current_bp)

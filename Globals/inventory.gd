@@ -6,13 +6,6 @@ signal removed_item(item_data)
 var items = []
 
 
-#func get_item_from_dict(data):
-#	for i in items:
-#		if i.data.id == data.id:
-#			i.set_process(true)
-#			return i
-
-
 func add_item(item:Dictionary, override: bool):
 	for i in items:
 		if i.id == item.id:

@@ -12,6 +12,7 @@ func _ready():
 	Events.connect("component_installed",self,"_on_component_installed")
 	Events.connect("component_uninstalled",self,"_on_component_uninstalled")
 	Events.connect("no_slot_available",self,"_on_no_slot_available")
+	Events.connect("component_already_installed",self,"_on_component_already_installed")
 
 
 func _update(current_bp):
@@ -29,6 +30,8 @@ func _on_component_uninstalled(cdata):
 	update_notif_label(str(cdata.name_,' UNINSTALLED!'))
 func _on_no_slot_available(cdata):
 	update_notif_label(str('No Slot Available for ',cdata.name_))
+func _on_component_already_installed(cdata):
+	update_notif_label(str(cdata.name_,' already installed!'))
 
 func update_notif_label(new_text):
 	var notif_lbl = $"%Label"

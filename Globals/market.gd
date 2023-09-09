@@ -10,13 +10,13 @@ var clients = []
 
 func _ready():
 	manufactors = [
-		Manufactor.CpuManufactor.new(),
-		Manufactor.MoboManufactor.new(),
-		Manufactor.CaseManufactor.new(),
-		Manufactor.MemManufactor.new(),
-		Manufactor.PsuManufactor.new(),
-		Manufactor.StorageManufactor.new(),
-		Manufactor.CoolerManufactor.new(),
+		CpuManufactor.new(),
+		MoboManufactor.new(),
+		CaseManufactor.new(),
+		MemManufactor.new(),
+		PsuManufactor.new(),
+		StorageManufactor.new(),
+		CoolerManufactor.new(),
 	]
 	for m in manufactors:
 		var mnfctr = m
