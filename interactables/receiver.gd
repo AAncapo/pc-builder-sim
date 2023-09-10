@@ -21,7 +21,7 @@ func spawn_pckg(pckg:ItemsPackage):
 func __on_Event_new_package(pckg):
 	spawn_pckg(pckg)
 
-
-func _on_ReceivedPackages_pckg_removed(p):
+## delete the pckg representative model when its empty
+func _on_ReceiverUI_pckg_removed(p):
 	for pckg in pckg_models.get_children():
 		if pckg == p: pckg.queue_free()

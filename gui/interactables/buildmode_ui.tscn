@@ -249,6 +249,7 @@ custom_styles/normal = SubResource( 1 )
 align = 1
 valign = 1
 
+[connection signal="_update" from="b_installed_components" to="." method="_on_b_installed_components__update"]
 [connection signal="pressed" from="request_status/PanelContainer/VBoxContainer/send" to="request_status" method="_on_send_pressed"]
 [connection signal="pressed" from="buildmode_inventory/VBoxContainer/Builds/VBoxContainer/builds_bttn" to="buildmode_inventory" method="_on_builds_bttn_pressed"]
 [connection signal="pressed" from="buildmode_inventory/VBoxContainer/Builds/VBoxContainer/new_project" to="." method="_on_new_project_pressed"]

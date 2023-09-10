@@ -1,7 +1,8 @@
 class_name Build extends Component
 
 var request
-var added_components = []
+var added_components = []  #all components installed in build
+
 
 func is_completed() -> bool:
 	for rc in required_components:
@@ -10,6 +11,11 @@ func is_completed() -> bool:
 	return true
 
 
-## TODO! IMPLEMENT UNINSTALL CONPONENTS AND ADD BACK IN INVENTORY ##
-func remove_component(component):
-	pass
+func uninstall_component(cdata):
+	for ac in added_components:
+		if ac.id == cdata.id:
+			# add back to inventory
+			Inventory.add_item(ac,true)
+			added_components.remove(added_components.find(ac))
+			# remove from build
+			Events.emit_signal("component_uninstalled",ac)

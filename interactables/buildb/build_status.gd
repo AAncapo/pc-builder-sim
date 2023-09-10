@@ -1,6 +1,9 @@
 extends Control
 
+signal _update(b)
+
 onready var componentButtons := $"%cbuttons"
+var current_build:Build
 
 
 func _ready():
@@ -8,14 +11,15 @@ func _ready():
 		cb.connect("uninstall_pressed",self,"_on_cb_uninstall_pressed")
 
 
-func update_status(current_bp:Build):
+func update_status(build:Build):
 	for cb in componentButtons.get_children():
 		cb.component_linked = null
-	
-	if !current_bp:
+	if !build:
+		hide()
 		return
-	var added_components = current_bp.added_components
-	
+	show()
+	current_build = build
+	var added_components = build.added_components
 	if added_components:
 		for ac in added_components:
 			for cb in componentButtons.get_children():
@@ -24,5 +28,5 @@ func update_status(current_bp:Build):
 
 
 func _on_cb_uninstall_pressed(component):
-	#TODO
-	pass
+	current_build.uninstall_component(component)
+	emit_signal("_update",current_build)

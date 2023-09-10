@@ -1,4 +1,4 @@
-extends Button
+class_name FilterButton extends Button
 
 signal _pressed(button)
 

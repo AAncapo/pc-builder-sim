@@ -20,41 +20,41 @@ custom_constants/separation = 20
 
 [node name="new" type="Label" parent="HBoxContainer"]
 margin_top = 18.0
-margin_right = 30.0
+margin_right = 36.0
 margin_bottom = 32.0
-text = "NEW"
+text = "NEW?"
 align = 1
 valign = 1
 
 [node name="price" type="Label" parent="HBoxContainer"]
-margin_left = 50.0
+margin_left = 56.0
 margin_top = 18.0
-margin_right = 110.0
+margin_right = 96.0
 margin_bottom = 32.0
-text = "$9999.99"
+text = "$price"
 align = 1
 valign = 1
 
 [node name="icon" type="TextureRect" parent="HBoxContainer"]
-margin_left = 130.0
-margin_right = 180.0
+margin_left = 116.0
+margin_right = 166.0
 margin_bottom = 50.0
 rect_min_size = Vector2( 50, 0 )
 expand = true
 
 [node name="link" type="Button" parent="HBoxContainer"]
-margin_left = 200.0
-margin_right = 700.0
+margin_left = 186.0
+margin_right = 686.0
 margin_bottom = 50.0
 rect_min_size = Vector2( 500, 0 )
-text = "Ram Kingston DDR3 1333"
+text = "item name"
 flat = true
 
 [node name="posted_date" type="Label" parent="HBoxContainer"]
-margin_left = 720.0
+margin_left = 706.0
 margin_top = 18.0
-margin_right = 787.0
+margin_right = 782.0
 margin_bottom = 32.0
-text = "3 days ago"
+text = "posted date"
 
 [connection signal="pressed" from="HBoxContainer/link" to="." method="_on_link_pressed"]

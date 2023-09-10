@@ -22,6 +22,10 @@ func generate_request():
 	posted_request = true
 
 
+func rate_requested_build(req):
+	pass
+
+
 func getClientId():
 	if !id: id = Utils.generate_id(10)
 	return id

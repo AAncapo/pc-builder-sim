@@ -97,9 +97,6 @@ interactionPoint = NodePath("Position3D2")
 [node name="BuildModeUI" parent="buildbench" index="3"]
 visible = false
 
-[node name="cbuttons" parent="buildbench/BuildModeUI/b_installed_components/PanelContainer/VBoxContainer/ScrollContainer" index="0"]
-margin_bottom = 561.0
-
 [node name="Position3D2" type="Position3D" parent="buildbench"]
 transform = Transform( 0.963942, 0.0217955, -0.265217, 1.35792e-08, 0.996641, 0.0819038, 0.266111, -0.0789505, 0.960704, -0.0285745, 0.118605, 0.277371 )
 

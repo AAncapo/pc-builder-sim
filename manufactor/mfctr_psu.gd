@@ -3,6 +3,8 @@ class_name PsuManufactor extends Manufactor
 var component_class = 'psu'
 func generate_components():
 	var psus = []
+	var cdata = {}
+	cdata.installed = false
 	cdata.id = Utils.generate_id()
 	cdata.class_ = component_class
 	cdata.name_ = 'PSU EVGA 600w'

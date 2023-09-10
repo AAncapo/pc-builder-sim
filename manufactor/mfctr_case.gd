@@ -3,6 +3,8 @@ class_name CaseManufactor extends Manufactor
 var component_class = 'case'
 func generate_components():
 	var cases = []
+	var cdata = {}
+	cdata.installed = false
 	cdata.id = Utils.generate_id()
 	cdata.class_ = component_class
 	cdata.name_ = 'CASE Thermaltake 222 EVo'

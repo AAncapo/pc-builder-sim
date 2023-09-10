@@ -12,3 +12,5 @@ signal component_installed(cdata)
 signal component_uninstalled(cdata)
 signal no_slot_available(cdata)
 signal component_already_installed(cdata)
+
+signal item_uploaded(data)

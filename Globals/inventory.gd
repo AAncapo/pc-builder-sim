@@ -6,23 +6,32 @@ signal removed_item(item_data)
 var items = []
 
 
-func add_item(item:Dictionary, override: bool):
+func add_item(item_data:Dictionary, override: bool):
 	for i in items:
-		if i.id == item.id:
+		if i.data.id == item_data.id:
 			if !override:
-				item['id'] = Utils.generate_id()
+				item_data['id'] = Utils.generate_id()
 			else:
-				i.queue_free()
-	items.append(item)
-	
-	emit_signal("added_item",item)
+				items.remove(items.find(i))
+	var path
+	path = str("res://item/components/custom_components/starter_",item_data.class_,".tscn") if item_data.class_ != 'build' else str("res://item/build/build.tscn")
+	var new_item = load(path).instance()
+	new_item.data = item_data
+	items.append(new_item)
+	emit_signal("added_item",new_item.data)
 
 
 func remove_item(item_data):
 	for i in items:
-		print(i.data.id,' ',item_data.id)
-		if i.data.id==item_data.id:
-			i.queue_free()
+		if i.data.id == item_data.id:
+			items.remove(items.find(i))
 			emit_signal("removed_item",item_data)
-			print('removed')
 			return
+
+
+func get_item_from_dict(data:Dictionary) -> Item:
+	var item
+	for i in items:
+		if i.data.id == data.id:
+			item = i
+	return item

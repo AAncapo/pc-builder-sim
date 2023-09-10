@@ -1,5 +1,3 @@
 class_name Item extends Spatial
 
-var data = {
-	'installed':false
-}
+var data = {}

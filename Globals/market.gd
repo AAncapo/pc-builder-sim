@@ -1,6 +1,5 @@
 extends Node  ## Market ##
 
-#onready var manufactr = $manufactor
 var manufactors = []
 var world_items = {
 	#item_class : [all_items]
@@ -20,8 +19,12 @@ func _ready():
 	]
 	for m in manufactors:
 		var mnfctr = m
-		world_items[m.component_class] = mnfctr.generate_components()
-	
+		var generate_per_item = 5
+		if m.component_class != 'cpu':
+			for i in generate_per_item:
+				world_items[m.component_class] = mnfctr.generate_components()
+		else:
+			world_items[m.component_class] = mnfctr.generate_components()
 	
 	for _i in range(10):
 		clients.append(generate_client())

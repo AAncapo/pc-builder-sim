@@ -2,7 +2,7 @@ class_name wComponentDetails extends Control
 
 signal _pressed(_deal)
 
-var item_linked: Dictionary
+var item_linked: Dictionary setget setValues
 var is_new := true setget setIsNew
 var price := 0.00 setget setPrice
 var description setget setDescription
@@ -10,13 +10,14 @@ var posted_date setget setPostedDate
 var icon setget setIcon
 
 
-func set_values(item:Dictionary,_new:bool, _price:float, date = 'now'):
-	item_linked = item
-	self.is_new = _new
-	self.price = _price
+func setValues(value):
+	item_linked = value
+	$HBoxContainer/link.text = str(item_linked.name_)
+	self.is_new = true
+	self.price = 0.00
 #	self.icon = item_linked.icon_
 	self.description = item_linked.name_
-	self.posted_date = date
+	self.posted_date = 'now'
 
 
 func setIsNew(value):

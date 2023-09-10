@@ -8,6 +8,7 @@ var button_temp = preload("res://gui/item_button.tscn")
 func _ready():
 	Inventory.connect("added_item",self,"_on_item_added")
 	Inventory.connect("removed_item",self,"_on_item_removed")
+	Events.connect("component_installed",self,"_on_component_installed")
 
 
 func _on_item_added(new_item):
@@ -29,16 +30,22 @@ func _on_button_pressed(button):
 
 
 func _on_item_removed(item_data):
-	var list = component_list if item_data.item_class != 'build' else build_list
+	var list = component_list if item_data.class_ != 'build' else build_list
 	for b in list.get_items():
 		if b.item_linked.id == item_data.id:
 			b.queue_free()
 			return
 
 
+func _on_component_installed(cdata):
+	var components = component_list.get_items()
+	for c in components:
+		if c.item_linked.id == cdata.id:
+			Inventory.remove_item(cdata)
+
+
 func _on_builds_bttn_pressed():
 	$"%build_bc".visible = !$"%build_bc".visible
-
 
 func _on_components_bttn_pressed():
 	$"%comp_bc".visible = !$"%comp_bc".visible

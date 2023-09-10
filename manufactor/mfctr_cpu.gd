@@ -5,7 +5,7 @@ var manufactor_name = 'CORE'
 var currentSerie:int = 100
 var serieStep:int = 55 if randf()<0.5 else 200
 
-const LAST_GEN:int = 10
+const LAST_GEN:int = 5
 var currentGen:int = 1
 
 const MAX_CORES:int = 24
@@ -46,6 +46,8 @@ func generate_components() -> Array:
 				currentCoreCount += coreStep
 			
 			var name_ = str(manufactor_name,' ',specs['generation'],specs['serie'],' ',specs['cores'],'-core ',specs['base_frequency'],'Ghz')
+			var cdata = {}
+			cdata.installed = false
 			cdata.id = Utils.generate_id()
 			cdata.class_ = component_class
 			cdata.name_ = name_

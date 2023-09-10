@@ -41,4 +41,14 @@ mesh = SubResource( 16 )
 [node name="www" parent="." instance=ExtResource( 2 )]
 mouse_filter = 2
 
+[node name="wwwComponentStore" parent="www/TabContainer" index="0"]
+visible = true
+
+[node name="body" parent="www/TabContainer/wwwComponentStore/site/ScrollContainer" index="0"]
+margin_right = 710.0
+margin_bottom = 241.0
+
+[node name="wBazaar" parent="www/TabContainer" index="1"]
+visible = false
+
 [editable path="www"]

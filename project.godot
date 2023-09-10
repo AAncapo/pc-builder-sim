@@ -64,6 +64,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://manufactor/mfctr_cpu.gd"
 }, {
+"base": "HBoxContainer",
+"class": "Filter",
+"language": "GDScript",
+"path": "res://interactables/web/filter.gd"
+}, {
+"base": "Button",
+"class": "FilterButton",
+"language": "GDScript",
+"path": "res://gui/filter_button.gd"
+}, {
 "base": "StaticBody",
 "class": "Interactable",
 "language": "GDScript",
@@ -171,6 +181,8 @@ _global_script_class_icons={
 "CoolerManufactor": "",
 "Cpu": "",
 "CpuManufactor": "",
+"Filter": "",
+"FilterButton": "",
 "Interactable": "",
 "Item": "",
 "ItemsPackage": "",

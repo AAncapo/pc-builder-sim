@@ -33,9 +33,14 @@ func _on_no_slot_available(cdata):
 func _on_component_already_installed(cdata):
 	update_notif_label(str(cdata.name_,' already installed!'))
 
+
 func update_notif_label(new_text):
 	var notif_lbl = $"%Label"
 	notif_lbl.text = new_text
 	notif_lbl.show()
 	yield(get_tree().create_timer(3,true),"timeout")
 	notif_lbl.hide()
+
+
+func _on_b_installed_components__update(b):
+	_update(b)
