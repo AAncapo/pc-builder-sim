@@ -1,8 +1,8 @@
-class_name wRequestPost extends Control
+class_name RequestPost extends Control
 
 signal _pressed(req)
 
-var request: BuildRequest
+var request:Request setget set_values
 
 func set_values(req):
 	request = req

@@ -1,24 +1,20 @@
-extends VBoxContainer
-# items container #
-onready var list =$ScrollContainer/list
+class_name ItemContainer extends VBoxContainer
+
+onready var list = $"%button_list"
+var linkedButton = preload("res://gui/linked_button.tscn")
 var items_owner
 
-func add_item(item_button:Control):
-	list.add_child(item_button)
 
-func get_items():
+func add_item(item:Dictionary, bdisplay_mode=0) -> LinkedButton:
+	var button = linkedButton.instance()
+	button.item_linked = item
+	list.add_child(button)
+	button.display_mode = bdisplay_mode
+	return button
+
+
+func get_items() -> Array:
 	return list.get_children()
 
-func remove_items():
+func remove_items() -> void:
 	Utils.remove_all_children(list)
-
-func _on_filter_button__pressed(button):
-	var tag = button.text.to_lower()
-	
-	var ibs = get_items()
-	for ib in ibs:
-		if tag == 'builds':
-			ib.visible = ib.item_linked.item_class == 'build'
-		if tag == 'components':
-			ib.visible = ib.item_linked.item_class != 'build'
-		

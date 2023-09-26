@@ -1,8 +1,10 @@
 extends Node
 
+signal interact(tag)
+signal init_interaction(obj)
+signal stop_interaction
+
 signal new_package(pckg)
-signal interaction_started(obj)
-signal interaction_ended
 
 signal new_client_request(req)
 signal request_accepted(post)
@@ -14,3 +16,4 @@ signal no_slot_available(cdata)
 signal component_already_installed(cdata)
 
 signal item_uploaded(data)
+signal items_buyed()

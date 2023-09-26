@@ -4,8 +4,8 @@ signal start_new_build
 signal component_selected(cdict)
 signal build_selected(bdict)
 
-onready var binstalled := $"%b_installed_components"
-onready var br_status := $"%request_status"
+onready var bstatus := $"%BuildStatus"
+onready var rstatus := $"%RequestStatus"
 
 
 func _ready():
@@ -15,9 +15,9 @@ func _ready():
 	Events.connect("component_already_installed",self,"_on_component_already_installed")
 
 
-func _update(current_bp):
-	binstalled.update_status(current_bp)
-	br_status.update_br_status(current_bp)
+func _update(current_bp:Build):
+	bstatus.update_status(current_bp)
+	rstatus.update_br_status(current_bp)
 
 
 func _on_new_project_pressed():

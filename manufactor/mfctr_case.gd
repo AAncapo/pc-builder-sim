@@ -10,5 +10,6 @@ func generate_components():
 	cdata.name_ = 'CASE Thermaltake 222 EVo'
 	cdata.specs = {'form_factor':0,'storage_slots':2}
 	cdata.required_components = {'motherboard':{},'psu':{},'storage':{}}
+	cdata.initial_price = 50.00
 	cases.append(cdata)
 	return cases

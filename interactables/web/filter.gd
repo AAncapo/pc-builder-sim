@@ -1,14 +1,18 @@
-class_name Filter extends HBoxContainer
+class_name FilterContainer extends HBoxContainer
 
-signal filtered_by(tag, show_all)
+signal apply_filter(tag, show_all)
+onready var filters = get_children()
+
 
 func _ready():
-	var filters = get_children()
 	for f in filters:
 		f.connect("_pressed",self,"_on_filter")
 
+
 func _on_filter(button):
+	for fbutton in filters:
+		if fbutton != button: fbutton.pressed = false
 	var show_all = false
 	if button.name.to_lower() == 'all':
 		show_all = true
-	emit_signal("filtered_by",button.name.to_lower(),show_all)
+	emit_signal("apply_filter",button.name.to_lower(),show_all)

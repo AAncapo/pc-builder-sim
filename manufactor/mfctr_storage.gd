@@ -9,5 +9,7 @@ func generate_components():
 	cdata.class_ = component_class
 	cdata.name_ = 'HDD Seagate 1TB'
 	cdata.specs = { 'size':1000 }
+	cdata.initial_price = 50.00
+	
 	hdds.append(cdata)
 	return hdds

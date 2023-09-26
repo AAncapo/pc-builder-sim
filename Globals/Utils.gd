@@ -20,6 +20,3 @@ func change_parent(_node:Node, new_parent: Node):
 func remove_all_children(parent):
 	for n in parent.get_children():
 		n.queue_free()
-
-#ui-borders-color: cccccc
-#ui-border-width: 2

@@ -11,6 +11,9 @@ transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.1736
 [node name="s-psu" parent="slots" index="1"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.13378, 0.311386 )
 
+[node name="s-storage" parent="slots" index="2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.295742, -0.290054 )
+
 [node name="s-case_cover" parent="slots" index="3"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.233541, 0.524845, -0.00920779 )
 

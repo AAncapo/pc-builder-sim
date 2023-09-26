@@ -1,6 +1,5 @@
 class_name Component extends Item
 
-
 var slots = []
 var class_: String
 var specs = {}
@@ -38,6 +37,11 @@ func install_component(cdata:Dictionary):
 
 func add_component(cdata, parent):
 	var component = Inventory.get_item_from_dict(cdata)
+	if !component:
+		var path = str("res://item/components/custom_components/starter_",cdata.class_,".tscn")
+		component = load(path).instance()
+		component.data = cdata
+	
 	if component.installed:
 		Events.emit_signal("component_already_installed",cdata.name_)
 		return false

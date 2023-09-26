@@ -8,6 +8,7 @@ var items = []
 
 func add_item(item_data:Dictionary, override: bool):
 	for i in items:
+		#check if item already exists in inventory
 		if i.data.id == item_data.id:
 			if !override:
 				item_data['id'] = Utils.generate_id()
@@ -17,6 +18,7 @@ func add_item(item_data:Dictionary, override: bool):
 	path = str("res://item/components/custom_components/starter_",item_data.class_,".tscn") if item_data.class_ != 'build' else str("res://item/build/build.tscn")
 	var new_item = load(path).instance()
 	new_item.data = item_data
+#	if new_item is Build: new_item.added_components = new_item.data.added_components
 	items.append(new_item)
 	emit_signal("added_item",new_item.data)
 

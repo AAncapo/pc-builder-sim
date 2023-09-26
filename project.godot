@@ -20,9 +20,9 @@ _global_script_classes=[ {
 "path": "res://interactables/buildb/buildbench.gd"
 }, {
 "base": "Node",
-"class": "BuildRequest",
+"class": "BuildGenerator",
 "language": "GDScript",
-"path": "res://interactables/buildb/request.gd"
+"path": "res://item/build/build_generator.gd"
 }, {
 "base": "Component",
 "class": "Case",
@@ -64,15 +64,15 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://manufactor/mfctr_cpu.gd"
 }, {
-"base": "HBoxContainer",
-"class": "Filter",
-"language": "GDScript",
-"path": "res://interactables/web/filter.gd"
-}, {
 "base": "Button",
 "class": "FilterButton",
 "language": "GDScript",
 "path": "res://gui/filter_button.gd"
+}, {
+"base": "HBoxContainer",
+"class": "FilterContainer",
+"language": "GDScript",
+"path": "res://interactables/web/filter.gd"
 }, {
 "base": "StaticBody",
 "class": "Interactable",
@@ -83,6 +83,11 @@ _global_script_classes=[ {
 "class": "Item",
 "language": "GDScript",
 "path": "res://item/item.gd"
+}, {
+"base": "VBoxContainer",
+"class": "ItemContainer",
+"language": "GDScript",
+"path": "res://gui/items_container.gd"
 }, {
 "base": "MeshInstance",
 "class": "ItemsPackage",
@@ -124,11 +129,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://item/components/motherboard.gd"
 }, {
-"base": "KinematicBody",
-"class": "Player",
-"language": "GDScript",
-"path": "res://player/player.gd"
-}, {
 "base": "Component",
 "class": "Psu",
 "language": "GDScript",
@@ -144,10 +144,20 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://interactables/receiver.gd"
 }, {
+"base": "Node",
+"class": "Request",
+"language": "GDScript",
+"path": "res://interactables/buildb/request.gd"
+}, {
 "base": "Resource",
 "class": "RequestDatabase",
 "language": "GDScript",
 "path": "res://request/request_database.gd"
+}, {
+"base": "Control",
+"class": "RequestPost",
+"language": "GDScript",
+"path": "res://interactables/web/request_post.gd"
 }, {
 "base": "Component",
 "class": "Storage",
@@ -159,20 +169,15 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://manufactor/mfctr_storage.gd"
 }, {
-"base": "Control",
-"class": "wComponentDetails",
+"base": "Interactable",
+"class": "Workbench",
 "language": "GDScript",
-"path": "res://interactables/web/w_component_detail.gd"
-}, {
-"base": "Control",
-"class": "wRequestPost",
-"language": "GDScript",
-"path": "res://interactables/web/w_request_post.gd"
+"path": "res://gui/interactables/workbench.gd"
 } ]
 _global_script_class_icons={
 "Build": "",
 "BuildBench": "",
-"BuildRequest": "",
+"BuildGenerator": "",
 "Case": "",
 "CaseManufactor": "",
 "Client": "",
@@ -181,10 +186,11 @@ _global_script_class_icons={
 "CoolerManufactor": "",
 "Cpu": "",
 "CpuManufactor": "",
-"Filter": "",
 "FilterButton": "",
+"FilterContainer": "",
 "Interactable": "",
 "Item": "",
+"ItemContainer": "",
 "ItemsPackage": "",
 "Laptop": "",
 "LinkedButton": "",
@@ -193,15 +199,15 @@ _global_script_class_icons={
 "Memory": "",
 "MoboManufactor": "",
 "Motherboard": "",
-"Player": "",
 "Psu": "",
 "PsuManufactor": "",
 "Receiver": "",
+"Request": "",
 "RequestDatabase": "",
+"RequestPost": "",
 "Storage": "",
 "StorageManufactor": "",
-"wComponentDetails": "",
-"wRequestPost": ""
+"Workbench": ""
 }
 
 [application]
@@ -238,32 +244,12 @@ common/drop_mouse_on_gui_input_disabled=true
 
 [input]
 
-forward={
+prev_mode={
 "deadzone": 0.5,
-"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":87,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":81,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
-back={
-"deadzone": 0.5,
-"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":83,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
- ]
-}
-left={
-"deadzone": 0.5,
-"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":65,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
- ]
-}
-right={
-"deadzone": 0.5,
-"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":68,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
- ]
-}
-interact={
-"deadzone": 0.5,
-"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
- ]
-}
-inventory={
+next_mode={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":69,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]

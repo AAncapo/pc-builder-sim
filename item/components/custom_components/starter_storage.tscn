@@ -6,3 +6,4 @@
 [node name="starter_hdd" instance=ExtResource( 1 )]
 
 [node name="hdd" parent="visual" index="0" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.172305, -0.272112 )

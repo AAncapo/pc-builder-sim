@@ -53,6 +53,7 @@ func generate_components() -> Array:
 			cdata.name_ = name_
 			cdata.specs = specs
 			cdata.required_components = required_components
+			cdata.initial_price = 100.00
 			
 			cpus.append(cdata)
 		currentGen += 1

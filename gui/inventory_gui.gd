@@ -2,7 +2,6 @@ extends Control
 
 onready var component_list = $"%comp_bc"
 onready var build_list = $"%build_bc"
-var button_temp = preload("res://gui/item_button.tscn")
 
 
 func _ready():
@@ -12,20 +11,18 @@ func _ready():
 
 
 func _on_item_added(new_item):
-	var button = button_temp.instance()
-	button.item_linked = new_item
+	var button:LinkedButton
 	if new_item.class_ == 'build':
-		build_list.add_item(button)
+		button = build_list.add_item(new_item)
 	else:
-		component_list.add_item(button)
+		button = component_list.add_item(new_item)
 	button.connect("_pressed",self,"_on_button_pressed")
-	
+
 
 func _on_button_pressed(button):
 	match button.item_linked.class_:
 		'build': owner.emit_signal("build_selected",button.item_linked)
 		_:
-#			button.disabled = true
 			owner.emit_signal("component_selected",button.item_linked)
 
 

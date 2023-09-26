@@ -10,6 +10,7 @@ func generate_components():
 	cdata.name_ = 'MOBO MEGABYTE Z99 DDR3'
 	cdata.specs = { 'form_factor':0, 'memory_slots':2 }
 	cdata.required_components = {'cpu':{},'memory':{}}
+	cdata.initial_price = 100.00
 	
 	mobos.append(cdata)
 	return mobos

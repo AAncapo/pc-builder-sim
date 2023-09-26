@@ -1,14 +1,19 @@
 extends Control
 ## www ##
 
-onready var requestForum := $TabContainer/wwwRequestForum
-onready var componentStore := $TabContainer/wwwComponentStore
+onready var requestForum := $TabContainer/RequestForum
+onready var componentStore := $TabContainer/ComponentStore
+var pckg_tscn = preload("res://packages/package.tscn")
 
 
 func _ready():
-	for _x_ in range(30):
-		componentStore.generate_item_deal()
+	Events.connect("request_accepted",self,"_on_request_accepted")
+	
+	for k in Market.world_items.keys():
+		var item = Market.get_item(k)
+		componentStore.generate_item_deal(item)
 
-
-func _on_close_pressed():
-	Events.emit_signal("interaction_ended")
+func _on_request_accepted(req):
+	var pckg:ItemsPackage = pckg_tscn.instance()
+	pckg.create_new_package(req.client.name_,[req.client.build])
+	Events.emit_signal("new_package",pckg)

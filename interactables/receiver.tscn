@@ -29,6 +29,7 @@ mesh = SubResource( 17 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 2.84217e-14, 0, 1, 0, 0, -0.960956 )
 
 [node name="ReceiverUI" parent="." instance=ExtResource( 1 )]
+visible = false
 mouse_filter = 2
 
 [connection signal="pckg_removed" from="ReceiverUI" to="." method="_on_ReceiverUI_pckg_removed"]

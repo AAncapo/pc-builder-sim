@@ -10,5 +10,6 @@ func generate_components():
 	cdata.name_ = 'RAM Revengeance 16GB 1333Mhz'
 	cdata.specs = { 'size':16 }
 	cdata.required_components = {}
+	cdata.initial_price = 150.00  #50-8gb 150-16gb
 	mems.append(cdata)
 	return mems

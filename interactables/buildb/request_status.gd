@@ -1,9 +1,9 @@
 extends Control
 
 onready var stats = $PanelContainer/VBoxContainer/stats
-var current_build
+var current_build: Dictionary
 
-func update_br_status(b):
+func update_br_status(b:Build):
 	if !b:
 		$PanelContainer/VBoxContainer/bname.text = 'No Build Selected'
 		return
@@ -11,8 +11,8 @@ func update_br_status(b):
 	
 	$PanelContainer/VBoxContainer/bname.text = current_build.name_
 	Utils.remove_all_children(stats)
-	var br:BuildRequest = b.request
-	if br:
+	var br:Request = b.request
+	if br && br.request_class == br.RequestClass.BuildRequest:
 		var br_keys = br.specs.keys()
 		for cname in br_keys:
 			if br.specs[cname].empty():
@@ -36,3 +36,4 @@ func update_br_status(b):
 
 func _on_send_pressed():
 	Events.emit_signal("request_completed",current_build.request)
+	Events.emit_signal("interact",'web')

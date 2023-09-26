@@ -13,7 +13,7 @@ albedo_color = Color( 0.145098, 0.145098, 0.145098, 1 )
 
 [sub_resource type="QuadMesh" id=16]
 
-[node name="laptop" type="StaticBody"]
+[node name="Web" type="StaticBody"]
 collision_layer = 4
 collision_mask = 0
 script = ExtResource( 1 )
@@ -39,16 +39,7 @@ transform = Transform( 1.70169, 0, 0, 0, 0.0432348, 0.99968, 0, -1.7103, 0.02526
 mesh = SubResource( 16 )
 
 [node name="www" parent="." instance=ExtResource( 2 )]
-mouse_filter = 2
-
-[node name="wwwComponentStore" parent="www/TabContainer" index="0"]
-visible = true
-
-[node name="body" parent="www/TabContainer/wwwComponentStore/site/ScrollContainer" index="0"]
-margin_right = 710.0
-margin_bottom = 241.0
-
-[node name="wBazaar" parent="www/TabContainer" index="1"]
 visible = false
+mouse_filter = 2
 
 [editable path="www"]

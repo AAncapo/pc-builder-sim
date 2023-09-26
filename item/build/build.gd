@@ -1,8 +1,14 @@
 class_name Build extends Component
 
 var request
-var added_components = []  #all components installed in build
+var added_components = [] setget initBuild  #dicts
+func initBuild(value):
+	added_components = value
+	for c in added_components:
+		install_component(c)
 
+func _ready():
+	if !data.added_components.empty(): self.added_components = data.added_components
 
 func is_completed() -> bool:
 	for rc in required_components:

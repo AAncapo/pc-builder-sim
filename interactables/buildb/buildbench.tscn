@@ -50,6 +50,7 @@ unique_name_in_owner = true
 transform = Transform( 1, 0, 0, 0, 1, 0, -3.55271e-15, 0, 1, 0, -0.348499, 0 )
 
 [node name="BuildModeUI" parent="." instance=ExtResource( 2 )]
+visible = false
 
 [connection signal="build_selected" from="BuildModeUI" to="." method="_on_BuildModeUI_build_selected"]
 [connection signal="component_selected" from="BuildModeUI" to="." method="_on_BuildModeUI_component_selected"]

@@ -6,14 +6,15 @@ export (NodePath) var uiControl
 onready var ui = get_node_or_null(uiControl)
 
 func _ready():
-	if !has_method('enter'):
-		print('WARNING: interactable ',name,' does not have a "enter()" function')
-	if !has_method('exit'):
-		print('WARNING: interactable ',name,' does not have a "exit()" function')
+	Events.connect("interact",self,"_on_interact")
 
 
 func enter():
 	ui.show()
+	Events.emit_signal("init_interaction",self)
 
 func exit():
 	ui.hide()
+
+func _on_interact(tag):
+	enter() if self.name.to_lower() == tag else exit()

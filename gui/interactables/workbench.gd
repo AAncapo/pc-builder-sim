@@ -1,18 +1,14 @@
-class_name BuildBench extends Interactable
+class_name Workbench extends Interactable
 
-onready var bbase := $"%buildBase"
-var builds setget ,getBuilds
-func getBuilds(): return bbase.get_children()
+onready var bholder := $build_holder
 var dragging := false
-var active_build:Build setget setActiveBuild
+var active_build setget setActiveBuild
 func setActiveBuild(value):
-	if value == null:
-		active_build.queue_free()
-	else:
-		for b in self.builds:
-			b.show() if b == value else b.hide()
 	active_build = value
 	ui._update(active_build)
+	if active_build == null:
+		for b in bholder.get_children():
+			if b.visible: b.queue_free()
 var request_db = preload("res://request/RequestDatabase.tres")
 
 
@@ -30,32 +26,36 @@ func _process(_delta):
 
 func _unhandled_input(event):
 	if event is InputEventMouseMotion && dragging && active_build:
-		active_build.rotate_y(deg2rad(event.relative.x * 0.8))
-		active_build.rotation_degrees.y = wrapf(active_build.rotation_degrees.y, 0.0, 360.0)
+		bholder.rotate_y(deg2rad(event.relative.x * 0.8))
+		bholder.rotation_degrees.y = wrapf(bholder.rotation_degrees.y, 0.0, 360.0)
 
 
 func _on_BuildModeUI_start_new_build():
-	create_new_build()
+	create_new_build(BuildRequest.new())
 
 
-func create_new_build():
-	var bdata = BuildGenerator.generate_build(true)
-	bdata.name_ = 'New Custom Build'
+func create_new_build(req:BuildRequest):
+	var bdata = {}
+	bdata.id = Utils.generate_id()
+	bdata.class_ = 'build'
+	bdata.required_components = {'case':{}}
+	var name_ = str(req.client.name_,"'s ",req.get_request_class(),' PC') if req.client else 'New Custom Build'
+	bdata.name_ = name_
+	bdata.initial_price = 0.00
+	bdata.request = req
+	
 	Inventory.add_item(bdata,true)
 	var build = Inventory.get_item_from_dict(bdata)
-	bbase.add_child(build)
+	bholder.add_child(build)
 
 
 func _on_BuildModeUI_build_selected(bdict):
-	# set as active build if already exists in bbase #
-	for b in self.builds:
-		if b.data.id == bdict.id:
-			self.active_build = b
-			return
-	# instantiate build in bbase if doesnt exists yet #
-	var new_build = Inventory.get_item_from_dict(bdict)
-	bbase.add_child(new_build)
-	self.active_build = self.builds[self.builds.find(new_build)]
+	var builds = bholder.get_children()
+	# show selected build and hide the rest #
+	for b in builds:
+		b.visible = bdict.id == b.data.id
+		# set selected as the current_build #
+		if b.visible: self.active_build = b
 
 
 func _on_BuildModeUI_component_selected(cdict):
@@ -66,10 +66,8 @@ func _on_BuildModeUI_component_selected(cdict):
 
 
 func _on_request_accepted(req):
-#	create_new_build()
-	# buildbench doesnt create 'build bases' for buildRequests anymore
-	# first create a build and then use the sender button to decide which client should receive it
-	request_db.accepted_reqs.append(req) #TODO: remove this from bbench (maybe)
+	create_new_build(req)
+	request_db.accepted_reqs.append(req)
 
 
 func _on_request_completed(req):

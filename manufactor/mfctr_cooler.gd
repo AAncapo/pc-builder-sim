@@ -9,5 +9,6 @@ func generate_components():
 	cdata.class_ = component_class
 	cdata.name_ = 'COOLER CoolerMaster'
 	cdata.specs = {}
+	cdata.initial_price = 10.00
 	coolers.append(cdata)
 	return coolers

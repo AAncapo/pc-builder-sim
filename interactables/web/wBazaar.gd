@@ -1,43 +1,36 @@
 extends Control
 
-onready var postContainer = $site/ScrollContainer/body/posts
+onready var postContainer = $site/ScrollContainer/body/PostContainer
 onready var dialogWindow = $"%AcceptDialog"
-#var items = preload("res://player/inventory.tres")
-var itemButton = preload("res://gui/item_button.tscn")
-var itemList = preload("res://gui/items_container.tscn")
-var postDet = preload("res://interactables/web/www_component_detail.tscn")
-var selected_item: Dictionary
+onready var item_container = dialogWindow.get_node("ItemContainer")
+var selected_items = []
 
 
 func _on_create_post_pressed():
-	Utils.remove_all_children(dialogWindow.get_node("Container"))
-	
-	var item_list = itemList.instance()
-	dialogWindow.get_node("Container").add_child(item_list)
-	
+	item_container.remove_items()
 	for i in Inventory.items:
-		var button: LinkedButton = itemButton.instance()
-		button.item_linked = i.data
-		item_list.add_item(button)
+		var button = item_container.add_item(i.data)
 		button.connect("_pressed",self,"_on_item_selected")
 	dialogWindow.popup()
 
 
 func _on_item_selected(button:LinkedButton):
-	selected_item = button.item_linked
+	if selected_items.has(button.item_linked):
+		selected_items.remove(selected_items.find(button.item_linked))
+		return
+	selected_items.append(button.item_linked)
 
 
 func _on_AcceptDialog_confirmed():
-	if selected_item:
-		add_post(selected_item)
-		
-		# remove item from inventory #
-		Inventory.remove_item(selected_item)
-		Events.emit_signal("item_uploaded",selected_item)
-		selected_item.clear()
+	if !selected_items.empty():
+		for i in selected_items:
+			add_post(i)
+			# remove item from inventory #
+			Inventory.remove_item(i)
+			Events.emit_signal("item_uploaded",i)
+			selected_items.clear()
 
 
 func add_post(item):
-	var post = postDet.instance()
-	post.item_linked = item
-	postContainer.add_child(post)
+	var post = postContainer.add_item(item)
+	post.display_mode = 1
