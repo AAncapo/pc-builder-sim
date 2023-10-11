@@ -8,11 +8,11 @@ enum BuildType {
 	VideoEditing,
 	Modeling,
 	Writing,
-}
+	}
 enum RequestClass {
 	BuildRequest,
 	RepairRequest
-}
+	}
 var request_class = RequestClass.RepairRequest setget setReqClass, getReqClass
 func setReqClass(value):
 	request_class = value
@@ -38,8 +38,3 @@ var client
 var description
 var default_specs = { 'cpu':{},'motherboard':{},'memory':{},'case':{},'storage':{},'cooler':{},'psu':{} }
 var specs = default_specs
-
-
-#func getId():
-#	if !id: id = Utils.generate_id()
-#	return id

@@ -21,7 +21,7 @@ func _ready():
 		CoolerManufactor.new(),
 		]
 	for m in manufactors:
-		world_items[m.component_class] = m.generate_components()
+		world_items[m.component_class] = m.generate_components(20)
 	
 	clients.append(generate_client())
 	#TODO: use wait until tree is ready function

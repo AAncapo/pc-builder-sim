@@ -15,3 +15,6 @@ var threads: int
 #	base_frequency = data.base_frequency
 #	max_frequency = data.max_frequency
 #	threads = data.threads
+
+func apply_thermal_paste():
+	print('applying thermal pse')

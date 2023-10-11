@@ -2,7 +2,7 @@ class_name RequestPost extends Control
 
 signal _pressed(req)
 
-var request:Request setget set_values
+var request setget set_values
 
 func set_values(req):
 	request = req

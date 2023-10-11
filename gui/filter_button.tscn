@@ -10,3 +10,4 @@ script = ExtResource( 1 )
 
 [connection signal="gui_input" from="." to="." method="_on_filter_button_gui_input"]
 [connection signal="pressed" from="." to="." method="_on_filter_button_pressed"]
+[connection signal="toggled" from="." to="." method="_on_filter_button_toggled"]

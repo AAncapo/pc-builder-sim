@@ -1,7 +1,7 @@
 class_name BuildGenerator extends Node
 
 
-static func generate_build(empty_build:bool) -> Dictionary:
+static func generate_build(empty_build:bool, def_cc = null) -> Dictionary:
 	var bdata = {}
 	var added_components = []
 	if !empty_build:
@@ -27,11 +27,16 @@ static func generate_build(empty_build:bool) -> Dictionary:
 		#add psu according to power consumption
 		var psu = Market.get_item('psu')
 		added_components.append(psu)
-	
+	if def_cc:
+		for c in added_components:
+			if c.class_ == def_cc:
+				c.stable = false
+	bdata.node = null
 	bdata.id = Utils.generate_id()
 	bdata.class_ = 'build'
 	bdata.name_ = ''
 	bdata.required_components = {'case':{}}
 	bdata.added_components = added_components
+#	bdata.specs = {}
 	
 	return bdata

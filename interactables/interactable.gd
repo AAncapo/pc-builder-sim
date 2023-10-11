@@ -1,4 +1,4 @@
-class_name Interactable extends StaticBody
+class_name Interactable extends Spatial
 
 export (NodePath) var interactionPoint
 onready var interaction_point = get_node_or_null(interactionPoint)
@@ -17,4 +17,5 @@ func exit():
 	ui.hide()
 
 func _on_interact(tag):
-	enter() if self.name.to_lower() == tag else exit()
+	if self.name.to_lower() == tag: enter() 
+	else: exit()

@@ -2,6 +2,11 @@ extends Control
 
 var current_mode_tag
 
+func _ready():
+	for b in $"%FilterContainer".get_children():
+		b.pressed = false
+
+
 func _unhandled_input(event):
 	if event.is_action_pressed('prev_mode'):
 		var filters:Array = $"%FilterContainer".filters

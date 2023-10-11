@@ -1,7 +1,7 @@
 class_name CpuManufactor extends Manufactor
 
 var component_class = 'cpu'
-var manufactor_name = 'CORE'
+var manufactor_name = 'SAF'
 var currentSerie:int = 100
 var serieStep:int = 55 if randf()<0.5 else 200
 
@@ -20,7 +20,7 @@ var currentFreq:float = 1.0
 var required_components = {'cooler':{}}
 
 
-func generate_components() -> Array:
+func generate_components(_amount) -> Array:
 	var cpus = []
 	while(currentGen <= LAST_GEN):
 		var generated_per_gen = 5 if randf()<0.8 else 7
@@ -28,14 +28,13 @@ func generate_components() -> Array:
 			## generate all cpus for the current model
 			# assign serie
 			var specs = {}
-			specs.generation = currentGen
 			specs.serie = currentSerie
 			currentSerie += serieStep
 			# assign frequency
 			if currentFreq >= MAX_FREQUENCY:
 				currentFreq = MAX_FREQUENCY
-			specs.base_frequency = currentFreq
-			specs.turbo_frequency = currentFreq+rand_range(currentFreq,currentFreq+rand_range(0.5,2.0))
+			specs.clock_speed = stepify(currentFreq,0.0)
+			specs.turbo = stepify(currentFreq+rand_range(currentFreq,currentFreq+rand_range(0.5,2.0)),0.0)
 			
 			currentFreq += freqStep
 			# assign cores
@@ -45,8 +44,10 @@ func generate_components() -> Array:
 			if randf()>0.7:
 				currentCoreCount += coreStep
 			
-			var name_ = str(manufactor_name,' ',specs['generation'],specs['serie'],' ',specs['cores'],'-core ',specs['base_frequency'],'Ghz')
+			var name_ = str(manufactor_name,' ',specs['serie'],' ',specs['cores'],'-core ',specs['clock_speed'],'Ghz')
+			specs.manufactor = manufactor_name
 			var cdata = {}
+			cdata.node = null
 			cdata.installed = false
 			cdata.id = Utils.generate_id()
 			cdata.class_ = component_class
@@ -54,7 +55,8 @@ func generate_components() -> Array:
 			cdata.specs = specs
 			cdata.required_components = required_components
 			cdata.initial_price = 100.00
-			
+			cdata.stable = true
+			cdata.power_consumption = 20
 			cpus.append(cdata)
 		currentGen += 1
 	return cpus

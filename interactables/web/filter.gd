@@ -11,7 +11,8 @@ func _ready():
 
 func _on_filter(button):
 	for fbutton in filters:
-		if fbutton != button: fbutton.pressed = false
+		if fbutton != button: 
+			fbutton.pressed = false
 	var show_all = false
 	if button.name.to_lower() == 'all':
 		show_all = true

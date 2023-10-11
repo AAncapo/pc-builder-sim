@@ -14,11 +14,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://item/build/build.gd"
 }, {
-"base": "Interactable",
-"class": "BuildBench",
-"language": "GDScript",
-"path": "res://interactables/buildb/buildbench.gd"
-}, {
 "base": "Node",
 "class": "BuildGenerator",
 "language": "GDScript",
@@ -74,7 +69,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://interactables/web/filter.gd"
 }, {
-"base": "StaticBody",
+"base": "Spatial",
 "class": "Interactable",
 "language": "GDScript",
 "path": "res://interactables/interactable.gd"
@@ -84,7 +79,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://item/item.gd"
 }, {
-"base": "VBoxContainer",
+"base": "Control",
 "class": "ItemContainer",
 "language": "GDScript",
 "path": "res://gui/items_container.gd"
@@ -99,7 +94,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://interactables/laptop.gd"
 }, {
-"base": "Button",
+"base": "Control",
 "class": "LinkedButton",
 "language": "GDScript",
 "path": "res://gui/linked_button.gd"
@@ -147,7 +142,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "Request",
 "language": "GDScript",
-"path": "res://interactables/buildb/request.gd"
+"path": "res://interactables/workbench/request.gd"
 }, {
 "base": "Resource",
 "class": "RequestDatabase",
@@ -170,13 +165,12 @@ _global_script_classes=[ {
 "path": "res://manufactor/mfctr_storage.gd"
 }, {
 "base": "Interactable",
-"class": "Workbench",
+"class": "WorkBench",
 "language": "GDScript",
-"path": "res://gui/interactables/workbench.gd"
+"path": "res://interactables/workbench/workbench.gd"
 } ]
 _global_script_class_icons={
 "Build": "",
-"BuildBench": "",
 "BuildGenerator": "",
 "Case": "",
 "CaseManufactor": "",
@@ -207,7 +201,7 @@ _global_script_class_icons={
 "RequestPost": "",
 "Storage": "",
 "StorageManufactor": "",
-"Workbench": ""
+"WorkBench": ""
 }
 
 [application]
@@ -233,6 +227,7 @@ gdscript/warnings/return_value_discarded=false
 
 window/size/width=1280
 window/size/height=720
+window/size/always_on_top=true
 window/size/test_width=800
 window/size/test_height=600
 window/stretch/mode="2d"

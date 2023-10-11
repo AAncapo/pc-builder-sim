@@ -15,7 +15,7 @@ func _ready():
 
 func add_package(new_pckg:ItemsPackage):
 	## add new package tab ##
-	var itemlist = buttonContainr.instance()
+	var itemlist:ItemContainer = buttonContainr.instance()
 	itemlist.name = new_pckg.sender
 	itemlist.items_owner = new_pckg
 	pckg_tab_container.add_child(itemlist)
@@ -24,6 +24,8 @@ func add_package(new_pckg:ItemsPackage):
 	var items = new_pckg.pckg_items
 	for i in items:
 		var button = itemlist.add_item(i)
+#		itemlist.show_info = true
+#		itemlist.infopanel_pos = 'right'
 		button.connect("_pressed", self, "_on_itemb_pressed")
 
 

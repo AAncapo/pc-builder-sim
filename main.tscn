@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://player/cam.gd" type="Script" id=1]
 [ext_resource path="res://interactables/receiver.tscn" type="PackedScene" id=2]
@@ -6,10 +6,11 @@
 [ext_resource path="res://gui/filter_button.tscn" type="PackedScene" id=4]
 [ext_resource path="res://main.gd" type="Script" id=5]
 [ext_resource path="res://gui/fonts/roboto_bold_18.tres" type="DynamicFont" id=6]
-[ext_resource path="res://interactables/buildb/buildbench.tscn" type="PackedScene" id=7]
+[ext_resource path="res://interactables/workbench/workbench.tscn" type="PackedScene" id=7]
 [ext_resource path="res://gui/themes/mode_selection_theme.tres" type="Theme" id=8]
 [ext_resource path="res://gui/ui_controller.gd" type="Script" id=9]
 [ext_resource path="res://interactables/web/filter.gd" type="Script" id=10]
+[ext_resource path="res://config_menu.gd" type="Script" id=11]
 
 [sub_resource type="CubeMesh" id=1]
 flip_faces = true
@@ -46,7 +47,8 @@ bg_color = Color( 0.156863, 0.156863, 0.156863, 1 )
 script = ExtResource( 5 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
-transform = Transform( 0.930238, 0.257673, -0.261269, 0, 0.711989, 0.70219, 0.366956, -0.653204, 0.66232, 0, 0, 0 )
+transform = Transform( -0.647898, -0.315571, 0.693284, -0.29578, 0.942956, 0.152801, -0.701956, -0.106059, -0.704279, 0, 0, 0 )
+light_color = Color( 0.8, 0.8, 0.8, 1 )
 light_energy = 0.5
 shadow_enabled = true
 shadow_color = Color( 0.74902, 0.74902, 0.74902, 1 )
@@ -106,14 +108,15 @@ transform = Transform( 0.760032, 0, 0.649886, 0, 1, 0, -0.649886, 0, 0.760032, -
 interactionPoint = NodePath("Position3D2")
 
 [node name="Position3D2" type="Position3D" parent="Interactables/web"]
-transform = Transform( 1, 0, 0, 0, 0.829584, 0.558382, 0, -0.558382, 0.829584, -0.0128356, 0.743865, 0.253438 )
+transform = Transform( 1, 0, 0, 0, 0.829584, 0.558382, 0, -0.558382, 0.829584, -0.0128354, 0.743865, 0.253438 )
 
-[node name="buildbench" parent="Interactables" instance=ExtResource( 7 )]
-transform = Transform( -0.957993, 0, 0.286792, 0, 1, 0, -0.286792, 0, -0.957993, -2.14792, 1.27134, 3.51128 )
+[node name="workbench" parent="Interactables" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.14792, 1.27134, 3.51128 )
 interactionPoint = NodePath("Position3D2")
 
-[node name="Position3D2" type="Position3D" parent="Interactables/buildbench"]
-transform = Transform( 0.963942, 0.0217955, -0.265217, 1.35792e-08, 0.996641, 0.0819038, 0.266111, -0.0789505, 0.960703, -0.668038, 0.316083, 2.59372 )
+[node name="Position3D2" type="Position3D" parent="Interactables/workbench"]
+unique_name_in_owner = true
+transform = Transform( -0.965925, 0, 0.258819, 0, 1, 0, -0.258819, 0, -0.965925, 0.597733, 0.316083, -2.33134 )
 
 [node name="receiver" parent="Interactables" instance=ExtResource( 2 )]
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4.84346, 0, 0 )
@@ -135,6 +138,7 @@ script = ExtResource( 9 )
 
 [node name="balance" type="Label" parent="Control"]
 unique_name_in_owner = true
+visible = false
 margin_right = 200.0
 margin_bottom = 30.0
 grow_horizontal = 2
@@ -151,12 +155,12 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer"]
+[node name="ModeSelection" type="HBoxContainer" parent="Control/VBoxContainer"]
 margin_right = 1270.0
 margin_bottom = 30.0
 alignment = 1
 
-[node name="q" type="Label" parent="Control/VBoxContainer/HBoxContainer"]
+[node name="q" type="Label" parent="Control/VBoxContainer/ModeSelection"]
 margin_left = 411.0
 margin_top = 5.0
 margin_right = 431.0
@@ -169,54 +173,62 @@ text = "Q"
 align = 1
 valign = 1
 
-[node name="PanelContainer" type="PanelContainer" parent="Control/VBoxContainer/HBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="Control/VBoxContainer/ModeSelection"]
 margin_left = 435.0
 margin_right = 835.0
 margin_bottom = 30.0
 rect_min_size = Vector2( 400, 30 )
 theme = ExtResource( 8 )
 
-[node name="FilterContainer" type="HBoxContainer" parent="Control/VBoxContainer/HBoxContainer/PanelContainer"]
+[node name="FilterContainer" type="HBoxContainer" parent="Control/VBoxContainer/ModeSelection/PanelContainer"]
 unique_name_in_owner = true
-margin_left = 2.0
-margin_top = 2.0
-margin_right = 398.0
-margin_bottom = 28.0
+margin_right = 400.0
+margin_bottom = 30.0
 custom_constants/separation = 0
 alignment = 1
 script = ExtResource( 10 )
 
-[node name="buildbench" parent="Control/VBoxContainer/HBoxContainer/PanelContainer/FilterContainer" instance=ExtResource( 4 )]
-margin_right = 132.0
-margin_bottom = 26.0
+[node name="workbench" parent="Control/VBoxContainer/ModeSelection/PanelContainer/FilterContainer" instance=ExtResource( 4 )]
+margin_left = 1.0
+margin_right = 131.0
+margin_bottom = 30.0
 grow_horizontal = 2
 grow_vertical = 2
-rect_min_size = Vector2( 100, 20 )
-size_flags_horizontal = 3
+rect_min_size = Vector2( 130, 30 )
+rect_pivot_offset = Vector2( 65, 15 )
+size_flags_horizontal = 6
+size_flags_vertical = 6
 theme = ExtResource( 8 )
-text = "BUILDBENCH"
+text = "WORKBENCH"
+mod_size = true
 
-[node name="receiver" parent="Control/VBoxContainer/HBoxContainer/PanelContainer/FilterContainer" instance=ExtResource( 4 )]
-margin_left = 132.0
+[node name="receiver" parent="Control/VBoxContainer/ModeSelection/PanelContainer/FilterContainer" instance=ExtResource( 4 )]
+margin_left = 134.0
 margin_right = 264.0
-margin_bottom = 26.0
+margin_bottom = 30.0
 grow_horizontal = 2
 grow_vertical = 2
-rect_min_size = Vector2( 100, 20 )
-size_flags_horizontal = 3
+rect_min_size = Vector2( 130, 30 )
+rect_pivot_offset = Vector2( 65, 15 )
+size_flags_horizontal = 6
+size_flags_vertical = 6
 text = "RECEIVER"
+mod_size = true
 
-[node name="web" parent="Control/VBoxContainer/HBoxContainer/PanelContainer/FilterContainer" instance=ExtResource( 4 )]
-margin_left = 264.0
+[node name="web" parent="Control/VBoxContainer/ModeSelection/PanelContainer/FilterContainer" instance=ExtResource( 4 )]
+margin_left = 266.0
 margin_right = 396.0
-margin_bottom = 26.0
+margin_bottom = 30.0
 grow_horizontal = 2
 grow_vertical = 2
-rect_min_size = Vector2( 100, 20 )
-size_flags_horizontal = 3
+rect_min_size = Vector2( 130, 30 )
+rect_pivot_offset = Vector2( 65, 15 )
+size_flags_horizontal = 2
+size_flags_vertical = 4
 text = "WEB"
+mod_size = true
 
-[node name="e" type="Label" parent="Control/VBoxContainer/HBoxContainer"]
+[node name="e" type="Label" parent="Control/VBoxContainer/ModeSelection"]
 margin_left = 839.0
 margin_top = 5.0
 margin_right = 859.0
@@ -229,4 +241,40 @@ text = "E"
 align = 1
 valign = 1
 
-[connection signal="apply_filter" from="Control/VBoxContainer/HBoxContainer/PanelContainer/FilterContainer" to="Control" method="_on_FilterContainer_apply_filter"]
+[node name="ConfigMenu" type="Control" parent="Control"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -100.0
+margin_top = -200.0
+margin_right = 100.0
+margin_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 400, 400 )
+script = ExtResource( 11 )
+
+[node name="PanelContainer" type="PanelContainer" parent="Control/ConfigMenu"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/ConfigMenu/PanelContainer"]
+margin_right = 400.0
+margin_bottom = 400.0
+
+[node name="Label" type="Label" parent="Control/ConfigMenu/PanelContainer/VBoxContainer"]
+margin_right = 400.0
+margin_bottom = 19.0
+text = "Configuration"
+align = 1
+
+[node name="restart" type="Button" parent="Control/ConfigMenu/PanelContainer/VBoxContainer"]
+margin_top = 23.0
+margin_right = 400.0
+margin_bottom = 45.0
+text = "Restart game"
+
+[connection signal="apply_filter" from="Control/VBoxContainer/ModeSelection/PanelContainer/FilterContainer" to="Control" method="_on_FilterContainer_apply_filter"]
+[connection signal="pressed" from="Control/ConfigMenu/PanelContainer/VBoxContainer/restart" to="Control/ConfigMenu" method="_on_restart_pressed"]

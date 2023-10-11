@@ -1,0 +1,60 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://interactables/workbench/workbench.gd" type="Script" id=1]
+[ext_resource path="res://gui/interactables/workbench_ui.tscn" type="PackedScene" id=2]
+
+[sub_resource type="CubeMesh" id=8]
+
+[sub_resource type="SpatialMaterial" id=9]
+albedo_color = Color( 0.643137, 0.643137, 0.643137, 1 )
+
+[sub_resource type="CubeMesh" id=10]
+
+[node name="workbench" type="Spatial"]
+script = ExtResource( 1 )
+uiControl = NodePath("workbench_ui")
+
+[node name="visuals" type="Spatial" parent="."]
+transform = Transform( 1, 0, -3.55271e-15, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+
+[node name="MeshInstance" type="MeshInstance" parent="visuals"]
+transform = Transform( 1.40211, 0, 0, 0, 0.0718723, 0, 0, 0, 0.657221, 0, -0.414657, 0 )
+mesh = SubResource( 8 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 9 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="visuals"]
+transform = Transform( 0.105727, 0, 0, 0, 0.448526, 0, 0, 0, 0.600278, -1.28478, -0.904023, 0 )
+mesh = SubResource( 10 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 9 )
+
+[node name="MeshInstance3" type="MeshInstance" parent="visuals"]
+transform = Transform( 0.105727, 0, 0, 0, 0.448526, 0, 0, 0, 0.600278, 1.26417, -0.904023, 0 )
+mesh = SubResource( 10 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 9 )
+
+[node name="build_projects" type="Spatial" parent="."]
+
+[node name="buildBase" type="Position3D" parent="build_projects"]
+unique_name_in_owner = true
+transform = Transform( 0.602749, 0, 0.797931, 0, 1, 0, -0.797931, 0, 0.602749, 0, -0.348499, 0 )
+
+[node name="workbench_ui" parent="." instance=ExtResource( 2 )]
+visible = false
+
+[connection signal="item_selected" from="workbench_ui" to="." method="_on_workbench_ui_item_selected"]
+[connection signal="start_new_build" from="workbench_ui" to="." method="_on_BuildModeUI_start_new_build"]
+
+[editable path="workbench_ui"]
+[editable path="workbench_ui/Components"]
+[editable path="workbench_ui/Builds"]
+[editable path="workbench_ui/Builds/VBoxContainer/ItemContainer"]
+[editable path="workbench_ui/InstalledParts/VBoxContainer/specs/case/VBoxContainer/spec"]
+[editable path="workbench_ui/InstalledParts/VBoxContainer/specs/psu/VBoxContainer/spec"]
+[editable path="workbench_ui/InstalledParts/VBoxContainer/specs/motherboard/VBoxContainer/spec"]
+[editable path="workbench_ui/InstalledParts/VBoxContainer/specs/cpu/VBoxContainer/spec"]
+[editable path="workbench_ui/InstalledParts/VBoxContainer/specs/cooler/VBoxContainer/spec"]
+[editable path="workbench_ui/InstalledParts/VBoxContainer/specs/memory/VBoxContainer/spec"]
+[editable path="workbench_ui/InstalledParts/VBoxContainer/specs/storage/VBoxContainer/spec"]

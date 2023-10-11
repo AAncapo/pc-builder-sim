@@ -8,3 +8,5 @@ script = ExtResource( 1 )
 [node name="slots" type="Spatial" parent="."]
 
 [node name="s-case" type="Position3D" parent="slots"]
+
+[node name="s-monitor" type="Position3D" parent="slots"]
