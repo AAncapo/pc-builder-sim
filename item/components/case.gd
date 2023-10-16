@@ -1,9 +1,5 @@
 class_name Case extends Component
 
-enum FormFactor {
-	MidTower
-}
-
 
 func power_switch(pressed:bool, button:Button):
 	button.text = 'ON' if !pressed else 'OFF'

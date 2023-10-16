@@ -4,11 +4,6 @@ signal _pressed(button)
 signal _mouse_enter(button)
 signal _mouse_exit(button)
 
-enum DisplayMode {
-	Simple,
-	Shopping
-	}
-var display_mode = DisplayMode.Simple setget setDisplaymode
 var item_linked: Dictionary setget setItem
 func setItem(value):
 	item_linked = value
@@ -24,7 +19,7 @@ func _ready():
 	self.display_mode = 0
 
 
-func _update(cmp = item_linked):
+func _update(cmp):
 	if cmp != item_linked:
 		return
 	$"%item_name".text = str(cmp.name_)
@@ -33,11 +28,6 @@ func _update(cmp = item_linked):
 		$"%installed".self_modulate = Color(1,1,1,0.5) if !cmp.installed else Color(1,0,0,1)
 	else:
 		$"%installed".hide()
-
-
-func setDisplaymode(value):
-	display_mode = value
-	##TODO
 
 
 func set_toggle(value):

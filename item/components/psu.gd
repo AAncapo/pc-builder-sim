@@ -6,11 +6,6 @@ class_name Psu extends Component
 var total_supply:float
 var supply_left:float
 
-func set_data(value):
-	data = value
-	
-	total_supply = data.specs.wattage
-	supply_left = total_supply
 
 func _init_():
 	supply_left = total_supply

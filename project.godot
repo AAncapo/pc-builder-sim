@@ -24,40 +24,25 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://item/components/case.gd"
 }, {
-"base": "Manufactor",
-"class": "CaseManufactor",
-"language": "GDScript",
-"path": "res://manufactor/mfctr_case.gd"
-}, {
-"base": "Node",
-"class": "Client",
-"language": "GDScript",
-"path": "res://interactables/web/client.gd"
-}, {
 "base": "Item",
 "class": "Component",
 "language": "GDScript",
 "path": "res://item/components/component.gd"
+}, {
+"base": "Area",
+"class": "ComponentSlot",
+"language": "GDScript",
+"path": "res://item/components/slot.gd"
 }, {
 "base": "Component",
 "class": "Cooler",
 "language": "GDScript",
 "path": "res://item/components/cooler.gd"
 }, {
-"base": "Manufactor",
-"class": "CoolerManufactor",
-"language": "GDScript",
-"path": "res://manufactor/mfctr_cooler.gd"
-}, {
 "base": "Component",
 "class": "Cpu",
 "language": "GDScript",
 "path": "res://item/components/cpu.gd"
-}, {
-"base": "Manufactor",
-"class": "CpuManufactor",
-"language": "GDScript",
-"path": "res://manufactor/mfctr_cpu.gd"
 }, {
 "base": "Button",
 "class": "FilterButton",
@@ -67,7 +52,7 @@ _global_script_classes=[ {
 "base": "HBoxContainer",
 "class": "FilterContainer",
 "language": "GDScript",
-"path": "res://interactables/web/filter.gd"
+"path": "res://interactables/web/filter_container.gd"
 }, {
 "base": "Spatial",
 "class": "Interactable",
@@ -99,55 +84,30 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://gui/linked_button.gd"
 }, {
-"base": "Node",
-"class": "Manufactor",
-"language": "GDScript",
-"path": "res://manufactor/manufactor.gd"
-}, {
-"base": "Manufactor",
-"class": "MemManufactor",
-"language": "GDScript",
-"path": "res://manufactor/mfctr_mem.gd"
-}, {
 "base": "Component",
 "class": "Memory",
 "language": "GDScript",
 "path": "res://item/components/memory.gd"
-}, {
-"base": "Manufactor",
-"class": "MoboManufactor",
-"language": "GDScript",
-"path": "res://manufactor/mfctr_mobo.gd"
 }, {
 "base": "Component",
 "class": "Motherboard",
 "language": "GDScript",
 "path": "res://item/components/motherboard.gd"
 }, {
+"base": "KinematicBody",
+"class": "Player",
+"language": "GDScript",
+"path": "res://player.gd"
+}, {
 "base": "Component",
 "class": "Psu",
 "language": "GDScript",
 "path": "res://item/components/psu.gd"
 }, {
-"base": "Manufactor",
-"class": "PsuManufactor",
-"language": "GDScript",
-"path": "res://manufactor/mfctr_psu.gd"
-}, {
 "base": "Interactable",
 "class": "Receiver",
 "language": "GDScript",
 "path": "res://interactables/receiver.gd"
-}, {
-"base": "Node",
-"class": "Request",
-"language": "GDScript",
-"path": "res://interactables/workbench/request.gd"
-}, {
-"base": "Resource",
-"class": "RequestDatabase",
-"language": "GDScript",
-"path": "res://request/request_database.gd"
 }, {
 "base": "Control",
 "class": "RequestPost",
@@ -158,28 +118,15 @@ _global_script_classes=[ {
 "class": "Storage",
 "language": "GDScript",
 "path": "res://item/components/storage.gd"
-}, {
-"base": "Manufactor",
-"class": "StorageManufactor",
-"language": "GDScript",
-"path": "res://manufactor/mfctr_storage.gd"
-}, {
-"base": "Interactable",
-"class": "WorkBench",
-"language": "GDScript",
-"path": "res://interactables/workbench/workbench.gd"
 } ]
 _global_script_class_icons={
 "Build": "",
 "BuildGenerator": "",
 "Case": "",
-"CaseManufactor": "",
-"Client": "",
 "Component": "",
+"ComponentSlot": "",
 "Cooler": "",
-"CoolerManufactor": "",
 "Cpu": "",
-"CpuManufactor": "",
 "FilterButton": "",
 "FilterContainer": "",
 "Interactable": "",
@@ -188,20 +135,13 @@ _global_script_class_icons={
 "ItemsPackage": "",
 "Laptop": "",
 "LinkedButton": "",
-"Manufactor": "",
-"MemManufactor": "",
 "Memory": "",
-"MoboManufactor": "",
 "Motherboard": "",
+"Player": "",
 "Psu": "",
-"PsuManufactor": "",
 "Receiver": "",
-"Request": "",
-"RequestDatabase": "",
 "RequestPost": "",
-"Storage": "",
-"StorageManufactor": "",
-"WorkBench": ""
+"Storage": ""
 }
 
 [application]
@@ -214,8 +154,8 @@ config/icon="res://icon.png"
 
 Events="*res://Globals/Events.gd"
 Utils="*res://Globals/Utils.gd"
-Market="*res://Globals/market.tscn"
 Inventory="*res://Globals/inventory.tscn"
+Market="*res://Globals/market.gd"
 
 [debug]
 
@@ -239,6 +179,11 @@ common/drop_mouse_on_gui_input_disabled=true
 
 [input]
 
+ui_select={
+"deadzone": 0.5,
+"events": [ Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":3,"pressure":0.0,"pressed":false,"script":null)
+ ]
+}
 prev_mode={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":81,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
@@ -252,6 +197,41 @@ next_mode={
 rotate_item={
 "deadzone": 0.5,
 "events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":2,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+forward={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":87,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+back={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":83,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+right={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":68,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+left={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":65,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+toggle_inv={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777218,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+grab_uninstall={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":2,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+release_install={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
  ]
 }
 

@@ -1,11 +1,12 @@
 extends Spatial
 
-var balance: float = 200.00
 
-func _ready():
-	$"%balance".text = str('BALANCE  $',Market.player_balance).pad_decimals(2)
-	Events.connect("items_buyed",self,"_on_items_buyed")
-
-
-func _on_items_buyed():
-	$"%balance".text = str('BALANCE  $',Market.player_balance).pad_decimals(2)
+func _input(event):
+	if event is InputEventKey && event.pressed:
+		if event.scancode == KEY_TAB:
+			$"%InventoryUI".visible = !$"%InventoryUI".visible
+		
+		if event.scancode == KEY_ESCAPE:
+			var mmode = Input.get_mouse_mode()
+			mmode = 0 if mmode == 2 else 2
+			Input.set_mouse_mode(mmode)

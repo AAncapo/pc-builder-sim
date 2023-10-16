@@ -1,31 +1,21 @@
 class_name Component extends Item
 
 signal mouse_selected
-
-#onready var visual = get_node_or_null('visual')
-var power_supply
+export (Color) var placeholder_albedo
+onready var collision_shape = find_node("StaticBody")
 var slots = []
 var installed_components = []  #nodes
-var model_scr = preload("res://item/components/models/component_model.gd")
+var placeholder_mesh: Mesh
 
 
 func _ready():
-#	if visual: 
-#		var model = visual.get_child(0)
-#		model.set_script(model_scr)
-#		model.__init(self)
-	Events.connect("cmp_uninstalled", self, "_on_cmp_uninstalled")
-
-
-func _init_():
-	if data.class_=='case' || data.class_=='build' || data.class_=='psu':
-		return
+	# get data from component_database using node's name
+	for cdata in Market.components_database:
+		if self.name == str(cdata.class,"-",cdata.name):
+			data = cdata
+	collision_shape.owner = self  #ease access to component from the staticBody
 	
-	#if psu...
-	var pb = data.parent_build
-	if pb && pb.psu:
-		power_supply = pb.psu
-		power_supply.supply_left -= data.power_consumption
+	Events.connect("cmp_uninstalled", self, "_on_cmp_uninstalled")
 
 
 func install_component(cdata:Dictionary, pbuild):
@@ -35,7 +25,7 @@ func install_component(cdata:Dictionary, pbuild):
 	
 	slots = $slots.get_children()
 	for s in slots:
-		if s.name == str('s-',cdata.class_):
+		if s.name == str('s-',cdata.class):
 			# if slot have subslots
 			if s.get_child_count() > 0:
 				for ss in s.get_children():
@@ -66,24 +56,13 @@ func add_component(cdata:Dictionary, parent:Node, pbuild):
 	Utils.change_parent(component,parent)
 	installed_components.append(component)
 	cdata.parent_build = pbuild
-	cdata.parent_build[cdata.class_] = component
+	cdata.parent_build[cdata.class] = component
 	Events.emit_signal("cmp_installed",cdata)
 	return true
 
 
-func get_slots_classes_() -> Dictionary:
-	var _slots = {}
-	slots = $slots.get_children()
-	for s in slots:
-		var n:String = s.name
-		n.erase(0,2)  #remove the 's-' in the slot name
-		var subslots = s.get_child_count()
-		_slots[n] = subslots
-	return _slots
-
-
 func uninstall():
-	if data.class_ != 'build':
+	if data.class != 'build':
 		data.parent_build.uninstall_component(data)
 
 
@@ -92,3 +71,20 @@ func _on_cmp_uninstalled(cdata):
 		if ic.data.id == cdata.id:
 			Utils.change_parent(ic, Inventory.item_nodes)
 			installed_components.remove(installed_components.find(ic))
+
+
+func disable_collision(disable:bool):
+	 collision_shape.get_node("CollisionShape").disabled = disable
+
+# set and returns the component mesh to use it as placeholder in slots and surfaces
+func get_placeholder_mesh(meshInstance:MeshInstance) -> Mesh:
+	if !placeholder_mesh:
+		placeholder_mesh = collision_shape.get_parent().mesh
+	
+	var mat = SpatialMaterial.new()
+	mat.flags_transparent = true
+	mat.albedo_color = placeholder_albedo
+	meshInstance.material_override = mat
+	meshInstance.mesh = placeholder_mesh
+	
+	return placeholder_mesh

@@ -1,65 +1,47 @@
 extends Node
-## Market ##
 
-var manufactors = []
-var world_items = {
-	#item_class : [all_items]
-	}
-var clients = []
-var player_balance: float = 1000.00
+var file_path = "res://item_database.json"
+var components = [
+	{'class':"Case",'manufactor':"Sentinel",'model':"XX"},
+	{'class':"Case Cover",'manufactor':"Sentinel",'model':"XX"},
+	{'class':"Motherboard",'manufactor':"MEGABYTE",'model':"Z99 GH-08"},
+	{'class':"PSU",'manufactor':"VEGA",'model':"UnlimitedPower2"},
+	{'class':"CPU",'manufactor':"Ino",'model':"G7-4779k"},
+	{'class':"CPU Cooler",'manufactor':"Fujin",'model':"Black"},
+	{'class':"Memory",'manufactor':"Striker",'model':"D"},
+	{'class':"Storage",'manufactor':"Striker",'model':"HS"},
+	{'class':"Graphics Card",'manufactor':"Asmon",'model':"Razor"},
+	]
+var components_database: Array
 
 
 func _ready():
 	randomize()
-	manufactors = [
-		CpuManufactor.new(),
-		MoboManufactor.new(),
-		CaseManufactor.new(),
-		MemManufactor.new(),
-		PsuManufactor.new(),
-		StorageManufactor.new(),
-		CoolerManufactor.new(),
-		]
-	for m in manufactors:
-		world_items[m.component_class] = m.generate_components(20)
-	
-	clients.append(generate_client())
-	#TODO: use wait until tree is ready function
-	yield(get_tree().create_timer(1.0),"timeout")
-	
-	for cl in clients:
-		cl.generate_request()
+	save_components_data()
+	load_components_data()
 
 
-func get_item(key=null):
-	if key:
-		return world_items[key][randi()%world_items[key].size()]
-	
-	var r_key = world_items.keys()[randi()%world_items.keys().size()]
-	return world_items[r_key][randi()%world_items[r_key].size()]
+func get_item(idx=-1):
+	if idx >= 0:
+		return components_database[idx]
+	return components_database[randi()%components_database.size()]
 
 
-func generate_starter_pckg():
-	var items = []
-	for i in world_items.keys():
-		items.append(world_items.get(i)[0])
-	return items
+func save_components_data():
+	var file = File.new()
+	file.open(file_path, File.WRITE)
+	for c in components:
+		c.id = randi()%999999
+		c.name = str(c['manufactor'],' ',c['model'])
+		c.price = randi()%200
+	file.store_line(to_json(components))
+	file.close()
 
 
-func generate_client() -> Client:
-	var client = Client.new()
-	client.name_ = rnames[randi()%rnames.size()]
-	client.budget = floor(rand_range(500,1000))
-	return client
-
-
-func get_client() -> Client:
-	for cl in clients:
-		if !cl.posted_request:
-			return cl
-	var client = generate_client()
-	clients.append(client)
-	return client
-
-
-var rnames = ['Riri','Linus','Yon','Kiba89','Ancapo','Stiv','Jay','Arnold S.', 'Drake','Marshall','Ye']
+func load_components_data():
+	var file = File.new()
+	if !file.file_exists(file_path):
+		print('no file')
+		return
+	file.open(file_path, File.READ)
+	components_database = parse_json(file.get_as_text())

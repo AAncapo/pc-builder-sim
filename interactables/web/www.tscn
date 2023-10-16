@@ -7,7 +7,7 @@
 [ext_resource path="res://gui/themes/web_browser_theme.tres" type="Theme" id=5]
 [ext_resource path="res://gui/filter_button.tscn" type="PackedScene" id=6]
 [ext_resource path="res://interactables/web/wBazaar.gd" type="Script" id=7]
-[ext_resource path="res://interactables/web/filter.gd" type="Script" id=8]
+[ext_resource path="res://interactables/web/filter_container.gd" type="Script" id=8]
 [ext_resource path="res://gui/items_container.tscn" type="PackedScene" id=9]
 
 [node name="web" type="Control"]

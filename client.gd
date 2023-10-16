@@ -1,4 +1,4 @@
-class_name Client extends Node
+extends Node
 
 var id
 var name_:String  #TODO: name generator
