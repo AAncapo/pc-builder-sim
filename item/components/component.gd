@@ -3,9 +3,9 @@ class_name Component extends Item
 signal mouse_selected
 export (Color) var placeholder_albedo
 onready var collision_shape = find_node("StaticBody")
+var placeholder_v  #model Spatial
 var slots = []
 var installed_components = []  #nodes
-var placeholder_mesh: Mesh
 
 
 func _ready():
@@ -14,6 +14,9 @@ func _ready():
 		if self.name == str(cdata.class,"-",cdata.name):
 			data = cdata
 	collision_shape.owner = self  #ease access to component from the staticBody
+	
+	if get_node("visual").get_child_count() > 0:
+		_init_placeholder_v()
 	
 	Events.connect("cmp_uninstalled", self, "_on_cmp_uninstalled")
 
@@ -76,15 +79,15 @@ func _on_cmp_uninstalled(cdata):
 func disable_collision(disable:bool):
 	 collision_shape.get_node("CollisionShape").disabled = disable
 
-# set and returns the component mesh to use it as placeholder in slots and surfaces
-func get_placeholder_mesh(meshInstance:MeshInstance) -> Mesh:
-	if !placeholder_mesh:
-		placeholder_mesh = collision_shape.get_parent().mesh
+
+func _init_placeholder_v():
+	placeholder_v = get_node("visual").duplicate()
+	get_tree().root.call_deferred("add_child",placeholder_v)
+	var meshInst:MeshInstance = placeholder_v.get_child(0).get_child(0)
 	
 	var mat = SpatialMaterial.new()
 	mat.flags_transparent = true
 	mat.albedo_color = placeholder_albedo
-	meshInstance.material_override = mat
-	meshInstance.mesh = placeholder_mesh
 	
-	return placeholder_mesh
+	meshInst.material_override = mat
+	placeholder_v.hide()

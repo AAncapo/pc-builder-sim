@@ -15,6 +15,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.779468, 0 )
 mesh = SubResource( 1 )
 
 [node name="StaticBody" type="StaticBody" parent="MeshInstance" groups=["surface"]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0196785, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="MeshInstance/StaticBody"]
 shape = SubResource( 2 )

@@ -4,20 +4,15 @@ export (bool) var apply_gravity
 
 onready var cam = $CamBase
 onready var raycast = $"%RayCast"
-onready var placeholder_mInstance := $"%placeholder_mi"
 var gravity = -30
 var max_speed = 8.0
 var velocity = Vector3()
 var m_sens = 0.005
 
-var equipped:Component setget set_equipped_item
+var equipped: Component setget set_equipped_item
 func set_equipped_item(value):
-	$"%CollisionShape".disabled = true if value==null else false
+	$"%CollisionShape".disabled = true if value == null else false
 	equipped = value
-	if equipped != null:
-		equipped.get_placeholder_mesh(placeholder_mInstance)
-	else:
-		$"%placeholder_mi".mesh = null
 
 var rotating_item:bool = false
 var release_pos
@@ -32,7 +27,7 @@ func _input(event):
 		if !rotating_item:
 			self.rotate_y(-event.relative.x * m_sens)
 		else:
-			$"%placeholder_mi".global_rotation.y -= event.relative.x * m_sens
+			equipped.placeholder_v.global_rotation.y -= event.relative.x * m_sens
 		cam.rotate_x(-event.relative.y * m_sens)
 		cam.rotation_degrees.x = clamp(cam.rotation_degrees.x,-70,70)
 
@@ -50,15 +45,16 @@ func _process(delta):
 				# DISPLAY placeholder while item equipped and NOT released
 				release_pos = raycast.get_collision_point()
 				if !rotating_item:
-					$"%placeholder_mi".global_translation = release_pos
-				$"%placeholder_mi".show()
+					equipped.placeholder_v.global_translation = release_pos
+				equipped.placeholder_v.show()
+				print('ee')
 				# ROTATE placeholder while LEFT click is being holded 
 				if Input.is_action_pressed("release_install"):
 					rotating_item = true
 				# RELEASE item when LEFT click is released
 				if Input.is_action_just_released("release_install"):
 					rotating_item = false
-					$"%placeholder_mi".hide()
+					equipped.placeholder_v.hide()
 					var item = release_item(collider.owner,release_pos)
 					release_pos = null
 					if item: item.disable_collision(false)
@@ -99,9 +95,9 @@ func grab_item(item:Item):
 
 func release_item(surface,pos:Vector3):
 	var item = equipped
-	var rot = equipped.global_rotation
+	var rot = equipped.placeholder_v.global_transform
 	Utils.change_parent(item,surface)
 	item.global_transform.origin = pos
-	item.global_rotation = rot
+	item.global_transform = rot
 	self.equipped = null
 	return item
