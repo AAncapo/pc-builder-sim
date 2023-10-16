@@ -54,9 +54,10 @@ transform = Transform( 1, 0, 0, -2.2215e-28, 1, 0, 0, 0, 1, 0, 0.0685915, 0.0020
 shape = SubResource( 3 )
 
 [node name="visual" parent="." index="1"]
-transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.034355, 0, -0.0669019 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.034355, 0, -0.0669019 )
 
 [node name="motherboard" parent="visual" index="0" instance=ExtResource( 2 )]
+transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0 )
 
 [editable path="slots/s-Memory/slot"]
 [editable path="slots/s-Memory/slot2"]

@@ -5,7 +5,5 @@
 
 [node name="CPU Cooler-Fujin Black" instance=ExtResource( 2 )]
 
-[node name="visual" parent="." index="1"]
-transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0.0639594, 0 )
-
 [node name="cpu_fan" parent="visual" index="0" instance=ExtResource( 1 )]
+transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0.06, 0 )

@@ -84,6 +84,7 @@ func _init_placeholder_v():
 	placeholder_v = get_node("visual").duplicate()
 	get_tree().root.call_deferred("add_child",placeholder_v)
 	var meshInst:MeshInstance = placeholder_v.get_child(0).get_child(0)
+	meshInst.get_child(0).queue_free() #remove staticBody
 	
 	var mat = SpatialMaterial.new()
 	mat.flags_transparent = true

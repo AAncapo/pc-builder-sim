@@ -46,8 +46,8 @@ func _process(delta):
 				release_pos = raycast.get_collision_point()
 				if !rotating_item:
 					equipped.placeholder_v.global_translation = release_pos
+					equipped.placeholder_v.global_rotation = raycast.get_collision_normal()
 				equipped.placeholder_v.show()
-				print('ee')
 				# ROTATE placeholder while LEFT click is being holded 
 				if Input.is_action_pressed("release_install"):
 					rotating_item = true
@@ -55,9 +55,8 @@ func _process(delta):
 				if Input.is_action_just_released("release_install"):
 					rotating_item = false
 					equipped.placeholder_v.hide()
-					var item = release_item(collider.owner,release_pos)
+					release_item(collider.owner)
 					release_pos = null
-					if item: item.disable_collision(false)
 
 
 func _physics_process(delta):
@@ -93,11 +92,9 @@ func grab_item(item:Item):
 			self.equipped = item
 
 
-func release_item(surface,pos:Vector3):
-	var item = equipped
+func release_item(surface):
 	var rot = equipped.placeholder_v.global_transform
-	Utils.change_parent(item,surface)
-	item.global_transform.origin = pos
-	item.global_transform = rot
+	Utils.change_parent(equipped,surface)
+	equipped.global_transform = rot
+	equipped.disable_collision(false)
 	self.equipped = null
-	return item
