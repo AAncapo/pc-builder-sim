@@ -29,11 +29,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://item/components/component.gd"
 }, {
-"base": "Area",
-"class": "ComponentSlot",
-"language": "GDScript",
-"path": "res://item/components/slot.gd"
-}, {
 "base": "Component",
 "class": "Cooler",
 "language": "GDScript",
@@ -59,7 +54,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://item/components/motherboard.gd"
 }, {
-"base": "Reference",
+"base": "Spatial",
 "class": "Player",
 "language": "GDScript",
 "path": "res://player/player.gd"
@@ -79,7 +74,6 @@ _global_script_class_icons={
 "BuildGenerator": "",
 "Case": "",
 "Component": "",
-"ComponentSlot": "",
 "Cooler": "",
 "Cpu": "",
 "Item": "",
@@ -100,6 +94,7 @@ config/icon="res://icon.png"
 
 Events="*res://Globals/Events.gd"
 Utils="*res://Globals/Utils.gd"
+ItemDatabase="*res://item_database.gd"
 
 [debug]
 

@@ -1,3 +1,3 @@
 class_name Item extends Spatial
 
-var data
+var data = {'class':"Test"}
