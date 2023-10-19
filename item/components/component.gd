@@ -2,7 +2,7 @@ class_name Component extends Item
 
 signal mouse_selected
 export (Color) var placeholder_albedo
-onready var collision_shape = find_node("StaticBody")
+onready var collision_shape: StaticBody = find_node("StaticBody")
 var placeholder_v  #model Spatial
 var slots = []
 var installed_components = []  #nodes
@@ -14,6 +14,7 @@ func _ready():
 		if self.name == str(cdata.class,"-",cdata.name):
 			data = cdata
 	collision_shape.owner = self  #ease access to component from the staticBody
+#	collision_shape.connect("mouse_entered",self,"_on_collision_shape_m_enter")
 	
 	if get_node("visual").get_child_count() > 0:
 		_init_placeholder_v()
@@ -84,7 +85,8 @@ func _init_placeholder_v():
 	placeholder_v = get_node("visual").duplicate()
 	get_tree().root.call_deferred("add_child",placeholder_v)
 	var meshInst:MeshInstance = placeholder_v.get_child(0).get_child(0)
-	meshInst.get_child(0).queue_free() #remove staticBody
+	for sb in meshInst.get_children():
+		sb.queue_free() #remove staticBody
 	
 	var mat = SpatialMaterial.new()
 	mat.flags_transparent = true
@@ -92,3 +94,6 @@ func _init_placeholder_v():
 	
 	meshInst.material_override = mat
 	placeholder_v.hide()
+
+func _on_collision_shape_m_enter():
+	print('entered')

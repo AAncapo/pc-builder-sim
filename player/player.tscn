@@ -1,0 +1,92 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://player/player.gd" type="Script" id=1]
+
+[sub_resource type="CylinderShape" id=6]
+height = 3.0
+radius = 0.5
+
+[sub_resource type="CubeMesh" id=8]
+
+[sub_resource type="CylinderShape" id=7]
+height = 2.99028
+radius = 0.02
+
+[node name="player" type="KinematicBody"]
+script = ExtResource( 1 )
+apply_gravity = true
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 1.5, 0 )
+shape = SubResource( 6 )
+
+[node name="CamBase" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.59735, -0.5 )
+
+[node name="Camera" type="Camera" parent="CamBase"]
+current = true
+fov = 40.0
+far = 50.0
+
+[node name="hand" type="MeshInstance" parent="CamBase/Camera"]
+unique_name_in_owner = true
+transform = Transform( 0.0574867, 0, 0, 0, 0.0574867, 0, 0, 0, 0.0574867, 0.383823, -0.190519, -1.15923 )
+mesh = SubResource( 8 )
+
+[node name="item_holder" type="Spatial" parent="CamBase/Camera/hand"]
+unique_name_in_owner = true
+transform = Transform( 17.3953, 0, 0, 0, 17.3953, 0, 0, 0, 17.3953, 0, 0, 0 )
+
+[node name="Memory_holder" type="Position3D" parent="CamBase/Camera/hand/item_holder"]
+transform = Transform( 0.964718, 0.258496, -0.0499828, 0.242738, -0.946781, -0.211384, -0.101965, 0.191794, -0.976124, 0, 0, 0 )
+
+[node name="CPU_holder" type="Position3D" parent="CamBase/Camera/hand/item_holder"]
+transform = Transform( 0.967403, 0.248027, -0.0511332, 0.248352, -0.96867, 0, -0.0495312, -0.012699, -0.998692, 0, 0, 0 )
+
+[node name="PSU_holder" type="Position3D" parent="CamBase/Camera/hand/item_holder"]
+transform = Transform( 0.967403, 0.248027, -0.0511332, 0.248352, -0.96867, 0, -0.0495312, -0.012699, -0.998692, 0, 0, 0 )
+
+[node name="Storage_holder" type="Position3D" parent="CamBase/Camera/hand/item_holder"]
+transform = Transform( -0.870245, -0.489958, -0.0511332, -0.4906, 0.871385, -2.54876e-08, 0.0445567, 0.0250859, -0.998692, 0, 0, 0 )
+
+[node name="Motherboard_holder" type="Position3D" parent="CamBase/Camera/hand/item_holder"]
+transform = Transform( -0.414652, -0.240364, 0.877661, -0.543622, 0.838892, -0.0270883, -0.729752, -0.488348, -0.478516, 0, 0, 0 )
+
+[node name="CPU Cooler_holder" type="Position3D" parent="CamBase/Camera/hand/item_holder"]
+transform = Transform( -0.414652, -0.240364, 0.877661, -0.543622, 0.838892, -0.0270883, -0.729752, -0.488348, -0.478516, 0, 0, 0 )
+
+[node name="RayCast" type="RayCast" parent="CamBase/Camera"]
+unique_name_in_owner = true
+enabled = true
+cast_to = Vector3( 0, 0, -3 )
+
+[node name="ColorRect" type="ColorRect" parent="CamBase/Camera/RayCast"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -5.0
+margin_top = -1.0
+margin_right = 5.0
+margin_bottom = 1.0
+mouse_filter = 2
+
+[node name="ColorRect2" type="ColorRect" parent="CamBase/Camera/RayCast"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -1.0
+margin_top = -5.0
+margin_right = 1.0
+margin_bottom = 5.0
+mouse_filter = 2
+
+[node name="Area" type="Area" parent="CamBase/Camera/RayCast"]
+collision_mask = 0
+monitoring = false
+
+[node name="CollisionShape" type="CollisionShape" parent="CamBase/Camera/RayCast/Area"]
+unique_name_in_owner = true
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -1.48109 )
+shape = SubResource( 7 )

@@ -44,45 +44,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://item/components/cpu.gd"
 }, {
-"base": "Button",
-"class": "FilterButton",
-"language": "GDScript",
-"path": "res://gui/filter_button.gd"
-}, {
-"base": "HBoxContainer",
-"class": "FilterContainer",
-"language": "GDScript",
-"path": "res://interactables/web/filter_container.gd"
-}, {
-"base": "Spatial",
-"class": "Interactable",
-"language": "GDScript",
-"path": "res://interactables/interactable.gd"
-}, {
 "base": "Spatial",
 "class": "Item",
 "language": "GDScript",
 "path": "res://item/item.gd"
-}, {
-"base": "Control",
-"class": "ItemContainer",
-"language": "GDScript",
-"path": "res://gui/items_container.gd"
-}, {
-"base": "MeshInstance",
-"class": "ItemsPackage",
-"language": "GDScript",
-"path": "res://packages/package.gd"
-}, {
-"base": "Interactable",
-"class": "Laptop",
-"language": "GDScript",
-"path": "res://interactables/laptop.gd"
-}, {
-"base": "Control",
-"class": "LinkedButton",
-"language": "GDScript",
-"path": "res://gui/linked_button.gd"
 }, {
 "base": "Component",
 "class": "Memory",
@@ -94,25 +59,15 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://item/components/motherboard.gd"
 }, {
-"base": "KinematicBody",
+"base": "Reference",
 "class": "Player",
 "language": "GDScript",
-"path": "res://player.gd"
+"path": "res://player/player.gd"
 }, {
 "base": "Component",
 "class": "Psu",
 "language": "GDScript",
 "path": "res://item/components/psu.gd"
-}, {
-"base": "Interactable",
-"class": "Receiver",
-"language": "GDScript",
-"path": "res://interactables/receiver.gd"
-}, {
-"base": "Control",
-"class": "RequestPost",
-"language": "GDScript",
-"path": "res://interactables/web/request_post.gd"
 }, {
 "base": "Component",
 "class": "Storage",
@@ -127,20 +82,11 @@ _global_script_class_icons={
 "ComponentSlot": "",
 "Cooler": "",
 "Cpu": "",
-"FilterButton": "",
-"FilterContainer": "",
-"Interactable": "",
 "Item": "",
-"ItemContainer": "",
-"ItemsPackage": "",
-"Laptop": "",
-"LinkedButton": "",
 "Memory": "",
 "Motherboard": "",
 "Player": "",
 "Psu": "",
-"Receiver": "",
-"RequestPost": "",
 "Storage": ""
 }
 
@@ -154,8 +100,6 @@ config/icon="res://icon.png"
 
 Events="*res://Globals/Events.gd"
 Utils="*res://Globals/Utils.gd"
-Inventory="*res://Globals/inventory.tscn"
-Market="*res://Globals/market.gd"
 
 [debug]
 
@@ -224,12 +168,12 @@ toggle_inv={
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777218,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
-grab_uninstall={
+drop_release={
 "deadzone": 0.5,
 "events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":2,"pressed":false,"doubleclick":false,"script":null)
  ]
 }
-release_install={
+grab_install={
 "deadzone": 0.5,
 "events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
  ]

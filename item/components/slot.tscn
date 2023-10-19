@@ -15,7 +15,6 @@ transform = Transform( 1, 0, 0, -2.2215e-28, 1, 0, 0, 0, 1, 0, 0, 0.0202327 )
 shape = SubResource( 1 )
 
 [node name="Position3D" type="Position3D" parent="."]
-visible = false
 
 [connection signal="area_entered" from="." to="." method="_on_slot_area_entered"]
 [connection signal="area_exited" from="." to="." method="_on_slot_area_exited"]

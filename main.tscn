@@ -1,19 +1,15 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://table.tscn" type="PackedScene" id=1]
-[ext_resource path="res://gui/items_container.tscn" type="PackedScene" id=2]
 [ext_resource path="res://item/components/CPU Cooler-Fujin Black.tscn" type="PackedScene" id=3]
 [ext_resource path="res://main.gd" type="Script" id=4]
-[ext_resource path="res://gui/themes/base_theme.tres" type="Theme" id=5]
 [ext_resource path="res://item/components/CPU-Ino G7-4779k.tscn" type="PackedScene" id=6]
 [ext_resource path="res://item/components/Storage-Striker HS.tscn" type="PackedScene" id=7]
-[ext_resource path="res://item/components/Case Cover-Sentinel XX.tscn" type="PackedScene" id=8]
 [ext_resource path="res://item/components/Memory-Striker D.tscn" type="PackedScene" id=9]
 [ext_resource path="res://item/components/Case-Sentinel XX.tscn" type="PackedScene" id=10]
 [ext_resource path="res://item/components/Motherboard-MEGABYTE Z99 GH-08.tscn" type="PackedScene" id=11]
-[ext_resource path="res://player.tscn" type="PackedScene" id=12]
-[ext_resource path="res://item/components/PSU-VEGA UnlimitedPower2.tscn" type="PackedScene" id=13]
-[ext_resource path="res://gui.gd" type="Script" id=14]
+[ext_resource path="res://player/player.tscn" type="PackedScene" id=12]
+[ext_resource path="res://gui/gui.gd" type="Script" id=14]
 
 [sub_resource type="CubeMesh" id=1]
 flip_faces = true
@@ -38,6 +34,7 @@ script = ExtResource( 4 )
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 0.236662, -0.936105, 0.26019, -0.195355, 0.216481, 0.956542, -0.95175, -0.277207, -0.131639, 0, 0, 0 )
 shadow_enabled = true
+shadow_color = Color( 0.596078, 0.596078, 0.596078, 1 )
 
 [node name="room" type="MeshInstance" parent="."]
 transform = Transform( 16.0306, 0, 0, 0, 1.5, 0, 0, 0, 14.2956, 0, 1.5, 0 )
@@ -58,30 +55,10 @@ shape = SubResource( 5 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0508652, -3.49941 )
 
 [node name="player" parent="." instance=ExtResource( 12 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.98079 )
 
-[node name="Case Cover-Sentinel XX" parent="." groups=["component"] instance=ExtResource( 8 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.07714, 0.0805616, -1.48484 )
-
-[node name="Case-Sentinel XX" parent="." groups=["component"] instance=ExtResource( 10 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.07714, 0.0484248, 0 )
-
-[node name="CPU Cooler-Fujin Black" parent="." groups=["component"] instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.077, 0, 0.803 )
-
-[node name="CPU-Ino G7-4779k" parent="." groups=["component"] instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.84316, 0.0480244, 0.890712 )
-
-[node name="Memory-Striker D" parent="." groups=["component"] instance=ExtResource( 9 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.54198, 0.0425519, 0 )
-
-[node name="Motherboard-MEGABYTE Z99 GH-08" parent="." groups=["component"] instance=ExtResource( 11 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.16232, 0.0629528, -1.26816 )
-
-[node name="PSU-VEGA UnlimitedPower2" parent="." groups=["component"] instance=ExtResource( 13 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2199, 0.11525, -0.508898 )
-
-[node name="Storage-Striker HS" parent="." groups=["component"] instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.29867, 0.0618943, 0.42618 )
+[node name="CamBase" parent="player" index="1"]
+transform = Transform( 1, 0, 0, 0, 0.503367, 0.864073, 0, -0.864073, 0.503367, 0, 2.5, -0.5 )
 
 [node name="gui" type="Control" parent="."]
 anchor_right = 1.0
@@ -91,40 +68,6 @@ margin_top = 10.0
 margin_right = -10.0
 margin_bottom = -10.0
 script = ExtResource( 14 )
-
-[node name="InventoryUI" type="PanelContainer" parent="gui"]
-unique_name_in_owner = true
-visible = false
-anchor_top = 0.5
-anchor_bottom = 0.5
-margin_top = -310.5
-margin_right = 314.0
-margin_bottom = 310.5
-theme = ExtResource( 5 )
-
-[node name="VBoxContainer" type="VBoxContainer" parent="gui/InventoryUI"]
-margin_left = 2.0
-margin_top = 2.0
-margin_right = 312.0
-margin_bottom = 619.0
-custom_constants/separation = 10
-
-[node name="Label" type="Label" parent="gui/InventoryUI/VBoxContainer"]
-margin_right = 310.0
-margin_bottom = 22.0
-text = "Inventory"
-align = 1
-
-[node name="ItemContainer" parent="gui/InventoryUI/VBoxContainer" instance=ExtResource( 2 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_top = 32.0
-margin_right = 310.0
-margin_bottom = 617.0
-
-[node name="button_list" parent="gui/InventoryUI/VBoxContainer/ItemContainer/ScrollContainer" index="0"]
-margin_right = 310.0
-margin_bottom = 585.0
 
 [node name="fps" type="Label" parent="gui"]
 margin_right = 40.0
@@ -144,6 +87,54 @@ margin_right = 22.5
 margin_bottom = 10.0
 text = "QUIT"
 
+[node name="item_spawner" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.166973, -0.103577 )
+
+[node name="case" type="Position3D" parent="item_spawner"]
+transform = Transform( -4.37114e-08, 0, -1, 1, -4.37114e-08, -4.37114e-08, -4.37114e-08, -1, 1.91069e-15, 0.00824428, 1.29583, -2.50742 )
+
+[node name="Case-Sentinel XX" parent="item_spawner/case" instance=ExtResource( 10 )]
+
+[node name="case2" type="Position3D" parent="item_spawner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.981074, 1.06579, -3.68218 )
+
+[node name="Memory-Striker D" parent="item_spawner/case2" instance=ExtResource( 9 )]
+
+[node name="case3" type="Position3D" parent="item_spawner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.33558, 1.06579, -3.23698 )
+
+[node name="Storage-Striker HS" parent="item_spawner/case3" instance=ExtResource( 7 )]
+
+[node name="case4" type="Position3D" parent="item_spawner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.964585, 1.06579, -2.94019 )
+
+[node name="CPU Cooler-Fujin Black" parent="item_spawner/case4" instance=ExtResource( 3 )]
+
+[node name="case5" type="Position3D" parent="item_spawner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.659545, 1.06579, -2.83301 )
+
+[node name="CPU-Ino G7-4779k" parent="item_spawner/case5" instance=ExtResource( 6 )]
+
+[node name="case6" type="Position3D" parent="item_spawner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.25314, 1.06579, -3.02263 )
+
+[node name="Motherboard-MEGABYTE Z99 GH-08" parent="item_spawner/case6" instance=ExtResource( 11 )]
+
+[node name="case7" type="Position3D" parent="item_spawner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.989318, 1.06579, -3.64096 )
+
+[node name="case8" type="Position3D" parent="item_spawner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.54993, 1.06579, -3.73989 )
+
+[node name="case9" type="Position3D" parent="item_spawner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.75604, 1.06579, -2.79179 )
+
+[node name="case10" type="Position3D" parent="item_spawner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.24396, 1.06579, -2.79179 )
+
+[node name="case11" type="Position3D" parent="item_spawner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.71145, 1.06579, -2.79179 )
+
 [connection signal="pressed" from="gui/Button" to="." method="_on_Button_pressed"]
 
-[editable path="gui/InventoryUI/VBoxContainer/ItemContainer"]
+[editable path="player"]
